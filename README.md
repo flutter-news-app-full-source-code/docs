@@ -1,54 +1,58 @@
-# Starlight Starter Kit: Basics
+# Flutter News App - Documentation
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+This repository contains the source code for the official documentation website for the **[Flutter News App - Full Source Code Toolkit](https://github.com/flutter-news-app-full-source-code)**.
 
-```
-npm create astro@latest -- --template starlight
-```
+<p>
+<a href="https://flutter-news-app-full-source-code.github.io/docs/"><img src="https://img.shields.io/badge/LIVE_DOCS-VIEW-green?style=for-the-badge" alt="Live Docs: View"></a>
+<a href="https://github.com/flutter-news-app-full-source-code"><img src="https://img.shields.io/badge/MAIN_PROJECT-BROWSE-purple?style=for-the-badge" alt="Main Project: Browse"></a>
+</p>
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/withastro/starlight&create_from_path=examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
+---
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## About This Repository
 
-## 🚀 Project Structure
+This site is built using **[Astro](https://astro.build/)**, a modern static site generator. Its purpose is to provide comprehensive guides, tutorials, and API references for our product.
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+This repository is for the documentation content and its website structure only. The source code for the actual software is located in the main organization.
 
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
+## Running the Documentation Site Locally
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+To preview changes or contribute to the documentation, you can run a local development server.
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+1.  **Prerequisites:**
+    *   Ensure [Node.js](https://nodejs.org/) (LTS version) is installed on your system.
 
-Static assets, like favicons, can be placed in the `public/` directory.
+2.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/flutter-news-app-full-source-code/docs.git
+    cd docs
+    ```
 
-## 🧞 Commands
+3.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-All commands are run from the root of the project, from a terminal:
+4.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
+    The site will now be available at `http://localhost:4321`. It will automatically reload as you make changes to the content.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 📝 License
 
-## 👀 Want to learn more?
+## 📝 License
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+This repository uses a dual-licensing model to provide clarity for different types of content.
+
+#### Documentation Content
+
+All prose, tutorials, and narrative content within this documentation are licensed under the **[Creative Commons Attribution 4.0 International License (CC BY 4.0)](./LICENSE)**. This allows our guides to be openly shared and improved by the community.
+
+#### Code Snippets
+
+All code examples and snippets embedded within the documentation are a separate matter. Unless otherwise specified, they are dedicated to the **[Public Domain via CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)**.
+
+This means you are free to copy, paste, modify, and use these illustrative snippets in your own applications without restriction.
+
+This dual-licensing approach ensures our documentation is open and shareable, while protecting the commercial value of the underlying source code product, which is governed by our **[Lifetime Developer License](https://github.com/flutter-news-app-full-source-code/.github/blob/main/LIFETIME_DEVELOPER_LICENSE.md)**.
