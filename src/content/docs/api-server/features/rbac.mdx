@@ -1,0 +1,40 @@
+---
+title: 'Feature: Role-Based Access Control (RBAC)'
+description: An overview of the server's permission system for securing API endpoints and actions.
+---
+
+The API server implements a granular Role-Based Access Control (RBAC) system to ensure that users can only access the data and perform the actions appropriate for their level of authorization.
+
+The system is built around two key concepts: **Roles** and **Permissions**.
+
+### Dual-Role System
+
+Each user in the system has two distinct roles, which combine to define their total permissions:
+
+1.  **`appRole`**: This role governs a user's permissions within the mobile application. The possible values are:
+    *   `guestUser`: For anonymous users with limited access.
+    *   `standardUser`: For authenticated users with regular access.
+    *   `premiumUser`: For subscribed users with access to all app features.
+
+2.  **`dashboardRole`**: This role governs a user's permissions for administrative and content management tasks, primarily through the web dashboard. The possible values are:
+    *   `none`: The default for regular app users with no dashboard access.
+    *   `publisher`: Can manage content like headlines and sources.
+    *   `admin`: Has full control over all system data and settings.
+
+### Permissions
+
+Permissions are specific action strings that follow a `resource.action` format (e.g., `headline.create`, `user.read_owned`). A user's combined roles grant them a set of these permissions.
+
+The `PermissionService` is the core component that checks if a user has a required permission before allowing an action to proceed.
+
+### How It Works in Practice
+
+When a user makes an API request, the following happens:
+
+1.  The **Authentication Middleware** verifies the user's JWT and identifies the user.
+2.  The **Authorization Middleware** determines what permission is required for the requested action (e.g., `headline.create` for a `POST` to `?model=headline`).
+3.  It then asks the `PermissionService`: "Does this user have the `headline.create` permission?"
+4.  The `PermissionService` checks the user's `appRole` and `dashboardRole`, looks up the permissions for those roles in the `role_permissions.dart` map, and returns `true` or `false`.
+5.  If the check passes, the request continues. If it fails, the server returns a `403 Forbidden` error.
+
+This system provides a secure and centralized way to manage access control across the entire API.
