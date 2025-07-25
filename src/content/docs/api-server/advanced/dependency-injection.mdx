@@ -19,7 +19,7 @@ When the server first starts, the `init()` method on this singleton is called. I
 4.  **Initializes Repositories:** Wraps each data client in a `DataRepository`. Repositories provide a clean abstraction layer over the data clients.
 5.  **Initializes Services:** Creates instances of all core business logic services (e.g., `AuthService`, `DashboardSummaryService`), injecting the repositories and other services they depend on.
 
-<Aside type="info">
+<Aside type="note">
 This centralized initialization ensures that all dependencies are ready before the server begins accepting requests and that the dependency graph is correctly resolved.
 </Aside>
 

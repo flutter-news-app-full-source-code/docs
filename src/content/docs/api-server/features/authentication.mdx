@@ -1,5 +1,5 @@
 ---
-title: Feature: Authentication
+title: 'Feature: Authentication'
 description: A deep dive into the API server's authentication flows, including passwordless sign-in, guest accounts, and token management.
 ---
 
@@ -16,7 +16,7 @@ Instead of traditional passwords, the system uses a secure one-time code sent to
 -   **Requesting a Code (`/api/v1/auth/request-code`):** The client sends the user's email to this endpoint. The server generates a 6-digit code, stores it temporarily, and emails it to the user.
 -   **Verifying a Code (`/api/v1/auth/verify-code`):** The client sends the user's email and the 6-digit code. The server validates the code. If correct, it either signs the user in (if they exist) or creates a new account and returns a JWT.
 
-<Aside title="Dashboard Login">
+<Aside type="note" title="Dashboard Login">
 The `request-code` endpoint has a special mode for dashboard logins. If the request includes `"isDashboardLogin": true`, the server first verifies that the user exists and has the necessary `admin` or `publisher` role before sending a code. This prevents unauthorized users from attempting to access the dashboard.
 </Aside>
 
