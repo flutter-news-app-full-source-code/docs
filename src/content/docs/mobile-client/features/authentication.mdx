@@ -1,0 +1,41 @@
+---
+title: Authentication
+description: Learn how user authentication is handled in the mobile client.
+---
+import { Steps } from '@astrojs/starlight/components';
+
+The mobile client features a robust authentication system that supports both email-based sign-in and anonymous guest access. This entire process is managed by the `AuthenticationBloc`.
+
+## The Authentication Flow
+
+The authentication flow is designed to be simple and secure, using a passwordless email and code verification system.
+
+<Steps>
+1.  **Choose Sign-In Method**
+
+    The user is first presented with the `AuthenticationPage`, which offers options to sign in with email or continue anonymously. This page's content adapts based on the context; for example, if an anonymous user is trying to access a feature that requires an account, it will display a prompt to "link" their account.
+
+2.  **Request Code**
+
+    If the user chooses email sign-in, they are navigated to the `RequestCodePage`. Here, they enter their email address. The `AuthenticationBloc` handles an `AuthenticationRequestSignInCodeRequested` event and calls the `AuthRepository` to send a verification code to the user's email.
+
+3.  **Verify Code**
+
+    After a code is sent, the user is taken to the `EmailCodeVerificationPage`. They enter the 6-digit code they received. The `AuthenticationBloc` processes an `AuthenticationVerifyCodeRequested` event, which calls the `AuthRepository` to verify the code.
+
+4.  **Authenticated State**
+
+    Upon successful verification, the `AuthRepository` returns a new `User` object. The `AppBloc` listens for this change and updates its state to `authenticated`, granting the user access to protected features. The router's redirect logic then automatically navigates the user away from the authentication screens to the main app content.
+</Steps>
+
+## Anonymous Access
+
+The app also supports an anonymous sign-in flow. When the user chooses to continue anonymously, the `AuthenticationBloc` dispatches an `AuthenticationAnonymousSignInRequested` event. The `AuthRepository` creates a new anonymous user, and the `AppBloc` transitions to a special `anonymous` state. This allows guest users to browse content with certain limitations, and they can choose to link their account to a permanent email address at any time.
+
+## Core Components
+
+-   **`AuthenticationBloc`**: Located in `lib/authentication/bloc/`, this BLoC orchestrates the entire authentication process. It listens to events from the UI, interacts with the `AuthRepository`, and emits states that reflect the current status of the authentication flow (e.g., `loading`, `failure`, `requestCodeSuccess`).
+
+-   **`AuthRepository`**: A shared package that abstracts the data source for authentication. It makes the actual calls to either the in-memory client (in demo mode) or the API client.
+
+-   **UI Pages**: Located in `lib/authentication/view/`, these widgets provide the user interface for each step of the flow. They dispatch events to the `AuthenticationBloc` and rebuild according to its state.
