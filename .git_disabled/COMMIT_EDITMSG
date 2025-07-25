@@ -1,0 +1,4 @@
+style: remove duplicate license heading
+
+- Removed the duplicate 'License' heading from the README.md file
+- This change improves the readability and structure of the document
