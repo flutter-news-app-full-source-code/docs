@@ -1,0 +1,38 @@
+---
+title: 'Feature: App Configuration'
+description: How to remotely manage the behavior and settings of the mobile application.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The App Configuration section is a powerful feature that allows you to dynamically control the behavior of your live mobile application without needing to submit a new version to the app stores.
+
+<Aside type="caution">
+Changes made in this section can have an immediate impact on all users of your mobile app. Please exercise caution when saving changes.
+</Aside>
+
+The configuration is divided into three main areas:
+
+### Feed Settings
+
+This tab allows you to control settings related to the user's content feed.
+
+-   **User Content Limits:** Define the maximum number of items (topics, sources) a user can follow and the maximum number of headlines they can save. These limits can be set independently for different user roles (Guest, Standard User, Premium User).
+-   **Feed Actions:** Control how often in-feed prompts (like "Rate the App" or "Follow Topics") are displayed to users, with separate settings for Guest and Standard users.
+
+### Advertisements
+
+This tab controls how ads are displayed within the mobile app, allowing you to fine-tune your monetization strategy.
+
+-   **Ad Frequency:** Set how often an ad appears in the content feed (e.g., one ad every 10 headlines).
+-   **Ad Placement:** Define a minimum number of headlines that must appear before the first ad is shown.
+-   **Interstitial Ads:** Configure how many headlines a user must read before a full-screen interstitial ad is displayed.
+
+All ad settings can be configured independently for Guest, Standard, and Premium users.
+
+### General Settings
+
+This tab manages the overall operational status of the mobile app.
+
+-   **Maintenance Mode:** You can remotely place the entire mobile app into maintenance mode, which will display a message to users indicating the app is temporarily unavailable.
+-   **Force Update:** Specify the latest required version of your app. If a user is on an older version, you can force them to update from the app store before they can continue using the app. You can also configure the iOS and Android app store URLs here.

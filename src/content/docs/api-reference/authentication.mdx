@@ -1,0 +1,204 @@
+---
+title: 'API Reference: Authentication'
+description: Detailed documentation for the authentication endpoints.
+---
+
+import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+This section provides a detailed reference for all authentication-related endpoints.
+
+## Endpoints
+
+### Anonymous Sign-In
+
+Creates a new anonymous guest user account. This is typically the first call an app makes on a fresh install to allow users to interact with the app before creating a permanent account.
+
+**Endpoint:** `POST /api/v1/auth/anonymous`
+
+**Authentication:** None required.
+
+#### Success Response (200 OK)
+
+Returns a `SuccessApiResponse` containing an `AuthSuccessResponse` payload with the new anonymous `User` object and a JWT `token`.
+
+<Tabs>
+<TabItem label="Payload">
+```json
+{
+  "data": {
+    "user": {
+      "id": "66a21e2a77f294e7a1f7d41a",
+      "email": "66a21e2a77f294e7a1f7d41a@anonymous.com",
+      "appRole": "guestUser",
+      "dashboardRole": "none",
+      "createdAt": "2024-07-25T09:30:18.000Z",
+      "feedActionStatus": {
+        // ... default statuses
+      }
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+  "metadata": {
+    // ...
+  }
+}
+```
+</TabItem>
+</Tabs>
+
+---
+
+### Request Sign-In Code
+
+Initiates the passwordless sign-in/sign-up process by sending a one-time verification code to the user's email.
+
+**Endpoint:** `POST /api/v1/auth/request-code`
+
+**Authentication:** None required.
+
+#### Request Body
+
+<Tabs>
+<TabItem label="Standard Sign-In">
+```json
+{
+  "email": "test@example.com"
+}
+```
+</TabItem>
+<TabItem label="Dashboard Login">
+```json
+{
+  "email": "admin@example.com",
+  "isDashboardLogin": true
+}
+```
+</TabItem>
+</Tabs>
+
+-   `email` (string, required): The user's email address.
+-   `isDashboardLogin` (boolean, optional): When `true`, the server first verifies the user exists and has the necessary permissions (`admin` or `publisher`) before sending a code. Defaults to `false`.
+
+#### Success Response (202 Accepted)
+
+An empty body with a `202 Accepted` status code indicates the request was successful and the email is being sent.
+
+#### Error Responses
+
+-   `400 Bad Request`: If the email format is invalid or the request body is malformed.
+-   `401 Unauthorized`: If `isDashboardLogin` is true and the user does not exist.
+-   `403 Forbidden`: If `isDashboardLogin` is true and the user exists but lacks dashboard permissions.
+
+---
+
+### Verify Sign-In Code
+
+Completes the sign-in process by verifying the email and code. This single endpoint handles multiple scenarios:
+
+-   Standard user sign-in.
+-   New user sign-up.
+-   Converting an anonymous guest user to a permanent account.
+-   Dashboard user login.
+
+**Endpoint:** `POST /api/v1/auth/verify-code`
+
+**Authentication:**
+-   **Optional:** If a guest user is converting their account, include their anonymous JWT `Bearer` token in the `Authorization` header.
+-   **None:** For standard sign-in/sign-up flows.
+
+#### Request Body
+
+```json
+{
+  "email": "test@example.com",
+  "code": "123456",
+  "isDashboardLogin": false
+}
+```
+
+-   `email` (string, required): The user's email address.
+-   `code` (string, required): The 6-digit verification code sent to the user's email.
+-   `isDashboardLogin` (boolean, optional): Must be `true` if verifying a code for dashboard access. Defaults to `false`.
+
+#### Success Response (200 OK)
+
+Returns a `SuccessApiResponse` containing an `AuthSuccessResponse` payload with the authenticated `User` object and a new JWT `token`.
+
+#### Error Responses
+
+-   `400 Bad Request`: If the code is invalid, expired, or the request body is malformed.
+-   `403 Forbidden`: If `isDashboardLogin` is true and the user lacks dashboard permissions.
+
+---
+
+### Get Current User
+
+Retrieves the full profile of the currently authenticated user.
+
+**Endpoint:** `GET /api/v1/auth/me`
+
+**Authentication:** Required. A valid JWT `Bearer` token must be provided.
+
+#### Success Response (200 OK)
+
+Returns a `SuccessApiResponse` containing the `User` object.
+
+<Tabs>
+<TabItem label="Payload">
+```json
+{
+  "data": {
+    "id": "66a21e2a77f294e7a1f7d41a",
+    "email": "test@example.com",
+    "appRole": "standardUser",
+    "dashboardRole": "none",
+    // ... other user fields
+  },
+  "metadata": {
+    // ...
+  }
+}
+```
+</TabItem>
+</Tabs>
+
+#### Error Responses
+
+-   `401 Unauthorized`: If the token is missing, invalid, or expired.
+
+---
+
+### Sign Out
+
+Performs server-side sign-out actions, primarily invalidating the current JWT to prevent its reuse.
+
+**Endpoint:** `POST /api/v1/auth/sign-out`
+
+**Authentication:** Required. A valid JWT `Bearer` token must be provided.
+
+#### Success Response (204 No Content)
+
+An empty body with a `204 No Content` status code indicates successful sign-out.
+
+#### Error Responses
+
+-   `401 Unauthorized`: If the token is missing, invalid, or expired.
+
+---
+
+### Delete Account
+
+Permanently deletes the authenticated user's account and all associated data (settings, preferences, etc.).
+
+**Endpoint:** `DELETE /api/v1/auth/delete-account`
+
+**Authentication:** Required. A valid JWT `Bearer` token must be provided.
+
+#### Success Response (204 No Content)
+
+An empty body with a `204 No Content` status code indicates successful account deletion.
+
+#### Error Responses
+
+-   `401 Unauthorized`: If the token is missing, invalid, or expired.
+-   `404 Not Found`: If the user to be deleted does not exist.

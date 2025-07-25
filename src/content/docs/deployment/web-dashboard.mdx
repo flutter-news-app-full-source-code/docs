@@ -1,0 +1,75 @@
+---
+title: 'Deployment: Web Dashboard'
+description: A guide to building and deploying the Flutter web dashboard to a production environment.
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+This guide covers the essential steps for deploying the Flutter News App Web Dashboard to a production hosting service.
+
+<Steps>
+1.  **Configure for Production**
+
+    Before building, you must configure the dashboard to connect to your live production API.
+
+    -   Open the file `lib/main.dart`.
+    -   Locate the `appEnvironment` constant.
+    -   Set its value to `AppEnvironment.production`.
+
+    ```dart title="lib/main.dart"
+    // Use `AppEnvironment.production` to connect to a live backend API.
+    const appEnvironment = AppEnvironment.production; 
+    ```
+
+    <Aside>
+    Ensure that the `baseUrl` for the `production` environment in `lib/app/config/app_config.dart` points to the correct URL of your deployed [API Server](/deployment/api-server/).
+    </Aside>
+
+2.  **Build the Web Application**
+
+    Next, create a production-optimized build of the Flutter web app. This compiles the Dart code to JavaScript and bundles all necessary assets for web deployment.
+
+    Run the following command from the root of your web dashboard project:
+    ```bash
+    flutter build web
+    ```
+    This will generate a `build/web` directory containing all the static files for your web application.
+
+3.  **Choose a Hosting Provider**
+
+    You can deploy the contents of the `build/web` directory to any hosting service that supports static websites. Popular and easy-to-use choices include:
+
+    -   [Firebase Hosting](https://firebase.google.com/docs/hosting)
+    -   [Vercel](https://vercel.com/)
+    -   [Netlify](https://www.netlify.com/for/web-applications/)
+    -   [GitHub Pages](https://docs.github.com/en/pages)
+
+4.  **Deploy the Application**
+
+    Follow the deployment instructions for your chosen hosting provider. The general process involves:
+
+    -   Initializing the hosting service in your project directory.
+    -   Specifying the `build/web` directory as the public or publish directory.
+    -   Running the provider's deploy command from your terminal.
+
+    For example, if you were using Firebase Hosting, the commands would look something like this:
+
+    ```bash
+    # Install Firebase CLI (if you haven't already)
+    npm install -g firebase-tools
+
+    # Log in to Firebase
+    firebase login
+
+    # Initialize Firebase in your project
+    firebase init hosting
+
+    # When prompted, set the public directory to "build/web"
+
+    # Deploy to Firebase Hosting
+    firebase deploy
+    ```
+
+    Once the deployment is complete, your web dashboard will be live at the URL provided by your hosting service.
+
+</Steps>

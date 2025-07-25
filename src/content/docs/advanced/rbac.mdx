@@ -1,0 +1,54 @@
+---
+title: 'Advanced: Role-Based Access Control (RBAC)'
+description: An explanation of the API server's permission and role system.
+---
+
+import { Steps, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+The API server implements a robust Role-Based Access Control (RBAC) system to secure its endpoints and data. This system ensures that users can only perform actions and access data that they are explicitly permitted to.
+
+## Core Concepts
+
+### Roles
+
+Every user in the system has two distinct roles that define their capabilities:
+
+-   **`appRole`**: Governs permissions within the mobile application.
+    -   `guestUser`: An anonymous user.
+    -   `standardUser`: A registered user.
+    -   `premiumUser`: A user with a premium subscription.
+-   **`dashboardRole`**: Governs permissions for the web-based content management dashboard.
+    -   `none`: No access to the dashboard.
+    -   `publisher`: Can manage content like headlines.
+    -   `admin`: Has full administrative access.
+
+### Permissions
+
+Permissions are granular strings that represent a specific action on a specific resource, following a `resource.action` format.
+
+**Example:** `headline.create`, `user.read_owned`
+
+### The `PermissionService`
+
+This is the central service responsible for authorization checks. It determines a user's total permissions by combining the permissions granted by their `appRole` and `dashboardRole`. Administrators (`dashboardRole: admin`) are automatically granted all permissions.
+
+## Permission Mapping
+
+The `model_registry.dart` file is the single source of truth for mapping API actions (HTTP methods on specific models) to required permissions.
+
+<Aside type="note">
+This centralized registry allows for easy auditing and modification of access control rules without changing the core logic of the route handlers.
+</Aside>
+
+Here's how it works for the generic `/api/v1/data` endpoint:
+
+1.  A request comes in, e.g., `POST /api/v1/data?model=headline`.
+2.  The middleware identifies the model (`headline`) and the method (`POST`).
+3.  It looks up the `headline` configuration in the `modelRegistry`.
+4.  It finds the permission required for the `postPermission` action, which is `adminOnly`.
+5.  It uses the `PermissionService` to check if the authenticated user has the `admin` role.
+6.  If the check fails, the request is rejected with a `403 Forbidden` error.
+
+### Ownership Checks
+
+For user-owned data (like `user_app_settings`), the registry also specifies when an ownership check is required. If a user tries to `GET /api/v1/data/some_other_user_id?model=user_app_settings`, the `ownershipCheckMiddleware` will intervene. It fetches the item, compares its owner ID to the authenticated user's ID, and rejects the request if they don't match (unless the user is an admin).
