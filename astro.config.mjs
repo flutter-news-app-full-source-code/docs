@@ -52,6 +52,25 @@ export default defineConfig({
 						{ label: 'Deployment', link: '/api-server/deployment' },
 					],
 				},
+								{
+					label: 'Web Dashboard',
+					collapsed: true,
+					items: [
+						{ label: 'Introduction', link: '/web-dashboard/' },
+						{ label: 'Local Setup', link: '/web-dashboard/local-setup' },
+						{
+							label: 'Features',
+							collapsed: true,
+							items: [
+								{ label: 'App Configuration', link: '/web-dashboard/features/app-configuration' },
+								{ label: 'Authentication', link: '/web-dashboard/features/authentication' },
+								{ label: 'Content Management', link: '/web-dashboard/features/content-management' },
+								{ label: 'Dashboard Overview', link: '/web-dashboard/features/dashboard-overview' },
+							],
+						},
+						{ label: 'Deployment', link: '/web-dashboard/deployment' },
+					],
+				},
 				{
 					label: 'Mobile Client',
 					collapsed: true,
@@ -80,25 +99,6 @@ export default defineConfig({
 							],
 						},
 						{ label: 'Deployment', link: '/mobile-client/deployment' },
-					],
-				},
-				{
-					label: 'Web Dashboard',
-					collapsed: true,
-					items: [
-						{ label: 'Introduction', link: '/web-dashboard/' },
-						{ label: 'Local Setup', link: '/web-dashboard/local-setup' },
-						{
-							label: 'Features',
-							collapsed: true,
-							items: [
-								{ label: 'App Configuration', link: '/web-dashboard/features/app-configuration' },
-								{ label: 'Authentication', link: '/web-dashboard/features/authentication' },
-								{ label: 'Content Management', link: '/web-dashboard/features/content-management' },
-								{ label: 'Dashboard Overview', link: '/web-dashboard/features/dashboard-overview' },
-							],
-						},
-						{ label: 'Deployment', link: '/web-dashboard/deployment' },
 					],
 				},
 			],
