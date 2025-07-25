@@ -4,6 +4,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://flutter-news-app-full-source-code.github.io',
+	base: '/docs',
 	integrations: [
 		starlight({
 			title: 'Flutter News App Toolkit',
