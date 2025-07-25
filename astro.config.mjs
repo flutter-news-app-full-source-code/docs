@@ -16,13 +16,6 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: 'Welcome',
-					items: [
-						{ label: 'Introduction', slug: 'welcome/introduction' },
-						// { label: 'Core Philosophy', slug: 'welcome/core-philosophy' },
-					],
-				},
-				{
 					label: 'Getting Started',
 					autogenerate: { directory: 'getting-started' },
 				},
