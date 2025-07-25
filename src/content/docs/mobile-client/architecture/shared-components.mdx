@@ -1,0 +1,35 @@
+---
+title: Shared Components & UI Kit
+description: Discover the reusable widgets and UI conventions that ensure a consistent user experience.
+---
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+A key principle of the mobile client's architecture is the extensive use of shared components to maintain a consistent, high-quality, and maintainable user interface. This is achieved through a combination of a dedicated `ui_kit` package and a local `lib/shared/` directory within the mobile client project.
+
+## The `ui_kit` Package
+
+The `ui_kit` package is a shared library that contains the foundational elements of the application's design system. This includes:
+
+-   **`AppTheme`**: Defines the application's light and dark themes, including color schemes, typography, and sub-theme data for widgets like `Card` and `AppBar`.
+-   **`AppSpacing`**: A collection of `static const double` values for consistent padding, margins, and spacing throughout the UI.
+-   **Core Widgets**: Common, stateless widgets like `LoadingStateWidget` and `FailureStateWidget` that are used across multiple features to provide a uniform user experience for common application states.
+
+By centralizing these core UI elements in a shared package, we ensure that all applications in the ecosystem (mobile, web dashboard) can maintain a consistent visual identity.
+
+## Local Shared Widgets (`lib/shared/widgets/`)
+
+The mobile client's local `lib/shared/widgets/` directory contains reusable widgets that are specific to the mobile app but are used across multiple features. The most prominent examples are the `HeadlineTile` widgets.
+
+<CardGrid>
+	<Card title="HeadlineTileImageTop" icon="view-agenda">
+		This widget is used when the user's feed preference is set to show a large thumbnail. It displays a prominent image at the top of the card, with the title and metadata below.
+	</Card>
+	<Card title="HeadlineTileImageStart" icon="list">
+		Used for the "small thumbnail" feed preference, this widget displays a smaller, square image at the start of the tile, with the title and metadata to the right.
+	</Card>
+	<Card title="HeadlineTileTextOnly" icon="notes">
+		For users who prefer a more compact, text-focused feed, this widget displays only the headline's title and metadata, with no image.
+	</Card>
+</CardGrid>
+
+By abstracting the headline presentation into these shared widgets, the application can easily switch between different display styles based on user settings, and any future design changes only need to be made in one place.
