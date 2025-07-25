@@ -24,27 +24,10 @@ import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
 
 Welcome to the Flutter News App Full Source Code Toolkit. This is more than just an app template; it's a complete, three-part ecosystem designed to work seamlessly together, giving you everything you need to launch, manage, and scale a modern news application.
 
-<div
-	style={{
-		display: 'grid',
-		gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-		gap: '1rem',
-		alignItems: 'stretch',
-	}}
->
-	<Card
-		title="Mobile Client App"
-		icon="phone"
-		style={{
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'space-between',
-		}}
-	>
-		<div>
-			A feature-rich Flutter application for iOS and Android that delivers a
-			beautiful, intuitive news reading experience to your users.
-		</div>
+<CardGrid>
+	<Card title="Mobile Client App" icon="phone">
+		A feature-rich Flutter application for iOS and Android that delivers a
+		beautiful, intuitive news reading experience to your users.
 		<div
 			style={{
 				display: 'flex',
@@ -67,19 +50,9 @@ Welcome to the Flutter News App Full Source Code Toolkit. This is more than just
 			</a>
 		</div>
 	</Card>
-	<Card
-		title="Web Dashboard"
-		icon="laptop"
-		style={{
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'space-between',
-		}}
-	>
-		<div>
-			A comprehensive Flutter web app for administrators and publishers to manage
-			content, configure app settings, and view key analytics.
-		</div>
+	<Card title="Web Dashboard" icon="laptop">
+		A comprehensive Flutter web app for administrators and publishers to manage
+		content, configure app settings, and view key analytics.
 		<div
 			style={{
 				display: 'flex',
@@ -102,19 +75,9 @@ Welcome to the Flutter News App Full Source Code Toolkit. This is more than just
 			</a>
 		</div>
 	</Card>
-	<Card
-		title="API Server"
-		icon="cloud"
-		style={{
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'space-between',
-		}}
-	>
-		<div>
-			A high-performance backend built with Dart Frog, providing robust APIs for
-			authentication, data management, and remote configuration.
-		</div>
+	<Card title="API Server" icon="cloud">
+		A high-performance backend built with Dart Frog, providing robust APIs for
+		authentication, data management, and remote configuration.
 		<div
 			style={{
 				display: 'flex',
@@ -131,7 +94,7 @@ Welcome to the Flutter News App Full Source Code Toolkit. This is more than just
 			</a>
 		</div>
 	</Card>
-</div>
+</CardGrid>
 
 ## Choose Your Path
 
