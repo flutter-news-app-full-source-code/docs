@@ -1,5 +1,5 @@
 ---
-title: 'Welcome'
+title: 'Flutter News App Toolkit'
 description: A complete, production-ready toolkit for building a cross-platform news application.
 template: splash
 hero:
@@ -10,51 +10,120 @@ hero:
     - text: 'Get Started: Local Setup'
       link: /getting-started/
       icon: right-arrow
-    - text: View on GitHub
-      link: https://github.com/flutter-news-app-full-source-code
-      icon: external
+    - text: 'View Live Demos'
+      link: '#ecosystem'
+      icon: 'down-arrow'
       variant: minimal
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
 
-## A Complete, Production-Ready Ecosystem
+<div id="ecosystem">
+	## A Complete, Production-Ready Ecosystem
+</div>
 
 Welcome to the Flutter News App Full Source Code Toolkit. This is more than just an app template; it's a complete, three-part ecosystem designed to work seamlessly together, giving you everything you need to launch, manage, and scale a modern news application.
 
-<CardGrid>
-  <Card title="Mobile Client App" icon="phone">
-    A feature-rich Flutter application for iOS and Android that delivers a beautiful, intuitive news reading experience to your users.
-    <br /><br />
-    <LinkButton href="https://flutter-news-app-full-source-code.github.io/flutter-news-app-mobile-client-full-source-code/" target="_blank">View Live Demo</LinkButton>
-    <a href="/mobile-client/" style={{ display: 'block', marginTop: '0.5rem' }}>Explore Mobile Client Docs &rarr;</a>
-  </Card>
-  <Card title="Web Dashboard" icon="laptop">
-    A comprehensive Flutter web app for administrators and publishers to manage content, configure app settings, and view key analytics.
-    <br /><br />
-    <LinkButton href="https://flutter-news-app-full-source-code.github.io/flutter-news-app-web-dashboard-full-source-code/" target="_blank">View Live Demo</LinkButton>
-    <a href="/web-dashboard/" style={{ display: 'block', marginTop: '0.5rem' }}>Explore Web Dashboard Docs &rarr;</a>
-  </Card>
-  <Card title="API Server" icon="cloud">
-    A high-performance backend built with Dart Frog, providing robust APIs for authentication, data management, and remote configuration.
-    <br /><br />
-    <a href="/api-server/" style={{ display: 'block', marginTop: '0.5rem' }}>Explore API Server Docs &rarr;</a>
-  </Card>
-</CardGrid>
-
-### Built for Quality and Maintainability
-
-This toolkit is built on a foundation of clean architecture and modern best practices. By separating concerns into a layered backend, a powerful admin dashboard, and a user-facing mobile client, you get a system that is robust, scalable, and easy to maintain.
-
-### Next Steps
-
-Ready to get started? Our local setup guides will walk you through running the entire ecosystem on your machine.
-
-<div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-  <LinkButton href="/getting-started/">
-    Begin Local Setup
-  </LinkButton>
-  <LinkButton href="/deployment-guides/" variant="secondary">
-    See Deployment Guides
-  </LinkButton>
+<div
+	style={{
+		display: 'grid',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+		gap: '1rem',
+	}}
+>
+	<Card title="Mobile Client App" icon="phone" style={{ minHeight: '220px' }}>
+		A feature-rich Flutter application for iOS and Android that delivers a
+		beautiful, intuitive news reading experience to your users.
+		<div
+			style={{
+				display: 'flex',
+				gap: '1rem',
+				marginTop: '1.5rem',
+				alignItems: 'center',
+			}}
+		>
+			<LinkButton
+				href="https://flutter-news-app-full-source-code.github.io/flutter-news-app-mobile-client-full-source-code/"
+				target="_blank"
+			>
+				View Demo
+			</LinkButton>
+			<a
+				href="https://github.com/flutter-news-app-full-source-code/flutter-news-app-mobile-client-full-source-code"
+				target="_blank"
+			>
+				Download
+			</a>
+		</div>
+	</Card>
+	<Card title="Web Dashboard" icon="laptop" style={{ minHeight: '220px' }}>
+		A comprehensive Flutter web app for administrators and publishers to manage
+		content, configure app settings, and view key analytics.
+		<div
+			style={{
+				display: 'flex',
+				gap: '1rem',
+				marginTop: '1.5rem',
+				alignItems: 'center',
+			}}
+		>
+			<LinkButton
+				href="https://flutter-news-app-full-source-code.github.io/flutter-news-app-web-dashboard-full-source-code/"
+				target="_blank"
+			>
+				View Demo
+			</LinkButton>
+			<a
+				href="https://github.com/flutter-news-app-full-source-code/flutter-news-app-web-dashboard-full-source-code"
+				target="_blank"
+			>
+				Download
+			</a>
+		</div>
+	</Card>
+	<Card title="API Server" icon="cloud" style={{ minHeight: '220px' }}>
+		A high-performance backend built with Dart Frog, providing robust APIs for
+		authentication, data management, and remote configuration.
+		<div
+			style={{
+				display: 'flex',
+				gap: '1rem',
+				marginTop: '1.5rem',
+				alignItems: 'center',
+			}}
+		>
+			<a
+				href="https://github.com/flutter-news-app-full-source-code/flutter-news-app-api-server-full-source-code"
+				target="_blank"
+			>
+				Download
+			</a>
+		</div>
+	</Card>
 </div>
+
+## Choose Your Path
+
+<CardGrid>
+	<Card title="Start Your 32-Day Trial" icon="laptop">
+		Download the complete source code and run the entire system on your local
+		machine. The trial license allows for a full evaluation of the project's
+		quality and features for 32 days.
+		<div style={{ marginTop: '1.5rem' }}>
+			<LinkButton href="/getting-started/">Begin Local Setup</LinkButton>
+		</div>
+	</Card>
+	<Card title="Purchase a Lifetime License" icon="rocket">
+		A one-time purchase grants you a lifetime commercial license to build,
+		customize, and deploy unlimited applications, complete with lifetime
+		updates.
+		<div style={{ marginTop: '1.5rem' }}>
+			<LinkButton
+				href="https://github.com/sponsors/flutter-news-app-full-source-code"
+				target="_blank"
+			>
+				Purchase License - $248
+			</LinkButton>
+		</div>
+	</Card>
+</CardGrid>
