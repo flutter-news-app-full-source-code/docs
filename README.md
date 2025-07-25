@@ -41,8 +41,6 @@ To preview changes or contribute to the documentation, you can run a local devel
 
 ## 📝 License
 
-## 📝 License
-
 This repository uses a dual-licensing model to provide clarity for different types of content.
 
 #### Documentation Content
