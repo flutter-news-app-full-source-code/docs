@@ -1,0 +1,32 @@
+---
+title: Routing & Navigation
+description: Learn about the navigation structure and routing implementation in the mobile client.
+---
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+Navigation in the mobile client is managed by the powerful `go_router` package. This provides a declarative, URL-based routing system that is robust, type-safe, and easy to maintain. All routing configuration is centralized within the `lib/router/` directory.
+
+## Core Concepts
+
+-   **`GoRouter`**: The main router instance that controls the application's navigation stack. It is configured with a list of routes, redirect logic, and a refresh listener.
+
+-   **`Routes` Class**: A class located in `lib/router/routes.dart` that defines all route paths and names as `static const String` constants. Using named routes (e.g., `context.goNamed(Routes.settingsName)`) instead of raw path strings is a best practice that prevents typos and makes the code more maintainable.
+
+-   **`StatefulShellRoute`**: This is a key component from `go_router` used to implement persistent UI elements, such as the main bottom navigation bar. It wraps the main sections of the app (e.g., Headlines Feed, Search, Account) and manages a separate navigation stack for each section, preserving the navigation state as the user switches between tabs.
+
+## Key Implementations
+
+<CardGrid>
+	<Card title="Centralized Configuration" icon="file-tree">
+		All route definitions are located in `lib/router/router.dart`. This file contains the `GoRouter` setup, including the tree of `GoRoute` and `StatefulShellRoute` widgets that define the entire navigation map of the application.
+	</Card>
+	<Card title="Authentication-Aware Redirects" icon="shield-check">
+		The router is configured with a `redirect` logic that depends on the application's authentication status, which is provided by the `AppBloc`. This ensures that unauthenticated users are automatically redirected to the sign-in page, while authenticated users are directed to the main app content, creating a secure and seamless user experience.
+	</Card>
+	<Card title="Type-Safe Navigation" icon="shield">
+		By using named routes defined in the `Routes` class, navigation calls throughout the app are type-safe. This approach reduces runtime errors and makes it easy to refactor or update routes, as any changes only need to be made in one central location.
+	</Card>
+    <Card title="Passing Arguments" icon="box">
+        The router is used to pass complex data between pages. For example, when navigating to a details page, the full `Headline` object is passed via the `extra` parameter of the navigation call. This is more efficient than passing an ID and re-fetching data that is already available.
+    </Card>
+</CardGrid>
