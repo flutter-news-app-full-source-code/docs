@@ -3,27 +3,27 @@ title: 'Deployment Guides: From Local to Live'
 description: A collection of guides to help you deploy the API server, mobile app, and web dashboard to production environments.
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Timeline, Step } from '@astrojs/starlight/components';
 
 Once you have the ecosystem running locally, the next step is to deploy the components to production. These guides provide step-by-step instructions for preparing and deploying each part of the toolkit.
 
-<CardGrid>
-  <Card title="1. Deploy the API Server" icon="cloud">
-    Learn how to configure and deploy the Dart Frog backend to a production server using Docker.
-    <a href="/docs/api-server/deployment/" style={{ display: 'block', marginTop: '1rem' }}>
-      Go to API Deployment Guide &rarr;
-    </a>
-  </Card>
-  <Card title="2. Deploy the Web Dashboard" icon="laptop">
-    Follow these steps to build and deploy the Flutter web dashboard to a static hosting provider.
-    <a href="/docs/web-dashboard/deployment/" style={{ display: 'block', marginTop: '1rem' }}>
-      Go to Dashboard Deployment Guide &rarr;
-    </a>
-  </Card>
-  <Card title="3. Deploy the Mobile Client" icon="phone">
-    Prepare and build your Flutter mobile app for release on the Apple App Store and Google Play Store.
-    <a href="/docs/mobile-client/deployment/" style={{ display: 'block', marginTop: '1rem' }}>
-      Go to Mobile App Deployment Guide &rarr;
-    </a>
-  </Card>
-</CardGrid>
+<Timeline>
+	<Step title="Deploy the API Server">
+		Learn how to configure and deploy the Dart Frog backend to a production
+		server using Docker.
+
+		[Go to API Deployment Guide &rarr;](/docs/api-server/deployment/)
+	</Step>
+	<Step title="Deploy the Web Dashboard">
+		Follow these steps to build and deploy the Flutter web dashboard to a
+		static hosting provider.
+
+		[Go to Dashboard Deployment Guide &rarr;](/docs/web-dashboard/deployment/)
+	</Step>
+	<Step title="Deploy the Mobile Client">
+		Prepare and build your Flutter mobile app for release on the Apple App
+		Store and Google Play Store.
+
+		[Go to Mobile App Deployment Guide &rarr;](/docs/mobile-client/deployment/)
+	</Step>
+</Timeline>
