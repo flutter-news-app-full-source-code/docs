@@ -8,3 +8,23 @@ The Search feature provides a powerful tool for users to find content across the
 
 ## Core Components
 
+-   **`HeadlinesSearchBloc`**: This is the engine behind the search feature. It manages the state of the search page, handling everything from user input to fetching and paginating results. It is designed to be flexible, allowing it to query different data repositories based on the content type selected by the user.
+
+-   **`HeadlinesSearchPage`**: The primary UI for the search feature. It contains the search bar, a dropdown to select the content type to search for (Headlines, Topics, or Sources), and the results list.
+
+## Key Functionalities
+
+<CardGrid>
+	<Card title="Multi-Model Search" icon="search">
+		A key feature of the search page is the ability to search across different types of content. A dropdown in the AppBar allows the user to switch between searching for **Headlines**, **Topics**, or **Sources**. The `HeadlinesSearchBloc` dynamically adjusts its query and the data repository it targets based on this selection.
+	</Card>
+	<Card title="Real-time Input Handling" icon="keyboard">
+		The search is triggered when the user submits their query from the text field in the AppBar. The UI includes a clear button that appears as soon as the user starts typing, providing a smooth user experience.
+	</Card>
+	<Card title="Paginated Results" icon="arrow-down">
+		For queries that return a large number of results, the search page supports infinite scrolling. As the user scrolls to the bottom of the results list, the `HeadlinesSearchBloc` fetches the next page of data, ensuring the app remains responsive and efficient.
+	</Card>
+    <Card title="Contextual Result Display" icon="list">
+        The search results are displayed using context-appropriate widgets. Headlines are rendered using the shared `HeadlineTile` widgets, while Topics and Sources are displayed using their own dedicated item widgets (`TopicItemWidget`, `SourceItemWidget`), ensuring that each result is presented clearly and effectively.
+    </Card>
+</CardGrid>
