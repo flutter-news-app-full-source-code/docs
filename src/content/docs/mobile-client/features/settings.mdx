@@ -1,0 +1,37 @@
+---
+title: Settings
+description: Learn how users can customize the application's appearance, language, and feed display.
+---
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+The Settings section provides users with granular control over their application experience, allowing them to tailor the appearance, language, and content display to their personal preferences.
+
+## Core Components
+
+-   **`SettingsBloc`**: This BLoC is the central hub for all user-configurable settings. It is responsible for loading the `UserAppSettings` object for the current user from the repository. If no settings exist (e.g., for a new user), it creates a default set and persists them. It handles events for every individual setting change, updating the state and saving the changes back to the repository.
+
+-   **`SettingsPage`**: The main entry point for the settings feature. It provides a menu of setting categories, such as Language, Appearance, and Feed Display.
+
+-   **Sub-Pages**: The settings are organized into several dedicated sub-pages for clarity:
+    -   `LanguageSettingsPage`: Allows the user to select their preferred language.
+    -   `AppearanceSettingsPage`: A menu that leads to theme and font settings.
+    -   `ThemeSettingsPage`: For choosing between light/dark/system themes and selecting an accent color.
+    -   `FontSettingsPage`: For adjusting text size, font family, and font weight.
+    -   `FeedSettingsPage`: For configuring how headlines are displayed in the feed (e.g., image style).
+
+## Key Functionalities
+
+<CardGrid>
+	<Card title="Persistent User Settings" icon="save">
+		All settings are managed through the `UserAppSettings` model and are persisted per-user via the `DataRepository`. When a user changes a setting, the `SettingsBloc` updates its state and immediately calls the repository to save the change, ensuring preferences are retained across sessions.
+	</Card>
+	<Card title="Comprehensive Appearance Control" icon="palette">
+		Users have extensive control over the app's look and feel. They can switch between light, dark, and system themes, choose from multiple accent colors, select different font families, adjust the global text size, and even change the font weight for better readability.
+	</Card>
+	<Card title="Feed Customization" icon="feed">
+		The `FeedSettingsPage` allows users to customize how headlines are presented in their feed. For example, they can choose between different image styles: a large image at the top, a small thumbnail, or a text-only view for a more compact layout.
+	</Card>
+    <Card title="Reactive UI Updates" icon="cycle">
+        When a setting is changed in the `SettingsBloc`, it also notifies the main `AppBloc` via an `AppSettingsRefreshed` event. This triggers the `AppBloc` to reload the settings and apply the changes globally, ensuring that the entire application UI instantly reflects the user's new preferences.
+    </Card>
+</CardGrid>
