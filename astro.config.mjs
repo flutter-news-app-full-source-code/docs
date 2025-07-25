@@ -34,6 +34,10 @@ export default defineConfig({
 					label: 'Web Dashboard',
 					autogenerate: { directory: 'web-dashboard' },
 				},
+				{
+					label: 'Mobile Client',
+					autogenerate: { directory: 'mobile-client' },
+				},
 			],
 		}),
 	],
