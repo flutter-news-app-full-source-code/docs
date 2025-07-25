@@ -16,23 +16,86 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: 'Welcome',
+					label: 'Start Here',
 					items: [
-						{ label: 'Introduction', link: '/introduction' },
-						{ label: 'Core Philosophy', link: '/core-philosophy' },
+						{ label: 'Getting Started', link: '/getting-started' },
+						{ label: 'Deployment Guides', link: '/deployment-guides' },
 					],
 				},
 				{
 					label: 'API Server',
-					autogenerate: { directory: 'api-server' },
+					collapsed: true,
+					items: [
+						{ label: 'Introduction', link: '/api-server/' },
+						{ label: 'Local Setup', link: '/api-server/local-setup' },
+						{
+							label: 'Features',
+							collapsed: true,
+							items: [
+								{ label: 'Authentication', link: '/api-server/features/authentication' },
+								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
+								{ label: 'RBAC', link: '/api-server/features/rbac' },
+							],
+						},
+						{
+							label: 'Advanced',
+							collapsed: true,
+							items: [
+								{ label: 'Dependency Injection', link: '/api-server/advanced/dependency-injection' },
+								{ label: 'Middleware', link: '/api-server/advanced/middleware' },
+							],
+						},
+						{ label: 'Deployment', link: '/api-server/deployment' },
+					],
 				},
 				{
 					label: 'Mobile Client',
-					autogenerate: { directory: 'mobile-client' },
+					collapsed: true,
+					items: [
+						{ label: 'Introduction', link: '/mobile-client/' },
+						{ label: 'Local Setup', link: '/mobile-client/local-setup' },
+						{
+							label: 'Architecture',
+							collapsed: true,
+							items: [
+								{ label: 'Routing', link: '/mobile-client/architecture/routing' },
+								{ label: 'Shared Components', link: '/mobile-client/architecture/shared-components' },
+							],
+						},
+						{
+							label: 'Features',
+							collapsed: true,
+							items: [
+								{ label: 'Account', link: '/mobile-client/features/account' },
+								{ label: 'Authentication', link: '/mobile-client/features/authentication' },
+								{ label: 'Entity Details', link: '/mobile-client/features/entity-details' },
+								{ label: 'Headline Details', link: '/mobile-client/features/headline-details' },
+								{ label: 'Headlines Feed', link: '/mobile-client/features/headlines-feed' },
+								{ label: 'Search', link: '/mobile-client/features/search' },
+								{ label: 'Settings', link: '/mobile-client/features/settings' },
+							],
+						},
+						{ label: 'Deployment', link: '/mobile-client/deployment' },
+					],
 				},
 				{
 					label: 'Web Dashboard',
-					autogenerate: { directory: 'web-dashboard' },
+					collapsed: true,
+					items: [
+						{ label: 'Introduction', link: '/web-dashboard/' },
+						{ label: 'Local Setup', link: '/web-dashboard/local-setup' },
+						{
+							label: 'Features',
+							collapsed: true,
+							items: [
+								{ label: 'App Configuration', link: '/web-dashboard/features/app-configuration' },
+								{ label: 'Authentication', link: '/web-dashboard/features/authentication' },
+								{ label: 'Content Management', link: '/web-dashboard/features/content-management' },
+								{ label: 'Dashboard Overview', link: '/web-dashboard/features/dashboard-overview' },
+							],
+						},
+						{ label: 'Deployment', link: '/web-dashboard/deployment' },
+					],
 				},
 			],
 		}),
