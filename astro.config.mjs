@@ -16,20 +16,23 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: 'Getting Started',
-					autogenerate: { directory: 'getting-started' },
+					label: 'Welcome',
+					items: [
+						{ label: 'Introduction', link: '/introduction' },
+						{ label: 'Core Philosophy', link: '/core-philosophy' },
+					],
 				},
 				{
-					label: 'Deployment Guides',
-					autogenerate: { directory: 'deployment' },
-				},
-				{
-					label: 'Web Dashboard',
-					autogenerate: { directory: 'web-dashboard' },
+					label: 'API Server',
+					autogenerate: { directory: 'api-server' },
 				},
 				{
 					label: 'Mobile Client',
 					autogenerate: { directory: 'mobile-client' },
+				},
+				{
+					label: 'Web Dashboard',
+					autogenerate: { directory: 'web-dashboard' },
 				},
 			],
 		}),
