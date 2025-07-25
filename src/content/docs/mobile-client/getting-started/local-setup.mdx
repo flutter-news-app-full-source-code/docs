@@ -1,0 +1,68 @@
+---
+title: Local Setup Guide
+description: Learn how to set up and run the Flutter mobile client on your local machine.
+---
+import { Steps } from '@astrojs/starlight/components';
+
+This guide provides step-by-step instructions to get the Flutter mobile client running on your local machine for development and testing.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+- **Flutter SDK**: The mobile client is a Flutter application. Please follow the official [Flutter installation guide](https://flutter.dev/docs/get-started/install) for your operating system.
+- **An IDE**: A code editor like [VS Code](https://code.visualstudio.com/) with the Flutter extension or [Android Studio](https://developer.android.com/studio).
+
+## Understanding the Environments
+
+The application can be run in three different environments, configured in `lib/main.dart`:
+
+- `AppEnvironment.demo`: This is the default environment. It uses an in-memory data store (`DataInMemory`) populated with mock data. This is perfect for quickly running the app and exploring the UI without needing a live backend. The app also wraps itself in the `DevicePreview` package in this mode, allowing you to see how it looks on various devices.
+- `AppEnvironment.development`: This environment is configured to connect to a local instance of the API server. It uses the `DataApi` client to make live HTTP requests.
+- `AppEnvironment.production`: This environment points to your live, deployed API server.
+
+You can change the active environment by modifying the `appEnvironment` constant in `lib/main.dart`:
+
+```dart title="lib/main.dart"
+// Define the current application environment (production/development/demo).
+const appEnvironment = AppEnvironment.demo;
+```
+
+## Dependency Injection
+
+The application's dependencies, such as repositories and data clients, are initialized in the `bootstrap.dart` file. This function reads the selected `AppEnvironment` and injects the appropriate data clients.
+
+For example, in `demo` mode, it injects `AuthInmemory` and `DataInMemory` clients. In `development` or `production` mode, it sets up an `HttpClient` and injects `AuthApi` and `DataApi` clients to communicate with the backend. This clean separation makes the app highly testable and configurable.
+
+## Running the Application
+
+<Steps>
+1.  **Navigate to the Project Directory**
+
+    Open your terminal and navigate to the mobile client's root directory:
+    ```sh
+    cd apps/flutter-news-app-mobile-client-full-source-code
+    ```
+
+2.  **Get Dependencies**
+
+    Run the following command to fetch all the required packages from `pubspec.yaml`:
+    ```sh
+    flutter pub get
+    ```
+
+3.  **Select a Device**
+
+    Ensure you have a simulator running (iOS) or an emulator running (Android), or a physical device connected. You can see a list of available devices with:
+    ```sh
+    flutter devices
+    ```
+
+4.  **Run the App**
+
+    Start the application using the `flutter run` command. By default, this will launch the app in `demo` mode.
+    ```sh
+    flutter run
+    ```
+</Steps>
+
+The application should now be running on your selected device. Because it's in `demo` mode, you can immediately start exploring the UI and features with the pre-loaded mock data.
