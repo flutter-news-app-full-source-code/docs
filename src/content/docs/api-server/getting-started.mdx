@@ -1,0 +1,59 @@
+---
+title: Getting Started (Local Setup)
+description: A step-by-step guide to configuring and running the API server on your local machine.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This guide will walk you through setting up the API server in a local development environment.
+
+<Steps>
+1.  **Prerequisites**
+
+    Ensure you have the following software installed on your system:
+    -   **Dart SDK:** Version `3.0.0` or higher.
+    -   **MongoDB:** Version `5.0` or higher is recommended.
+    -   **Dart Frog CLI:** Install it globally by running:
+        ```bash
+        dart pub global activate dart_frog_cli
+        ```
+
+2.  **Clone the Repository**
+
+    If you haven't already, clone the repository to your local machine.
+
+    ```bash
+    git clone https://github.com/flutter-news-app-full-source-code/flutter-news-app-api-server-full-source-code.git
+    cd flutter-news-app-api-server-full-source-code
+    ```
+
+3.  **Configure Environment Variables**
+
+    The server requires a `.env` file for configuration. Copy the example file to create your own:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Next, open the new `.env` file and update the variables with your local configuration values. At a minimum, you must set the `DATABASE_URL` to point to your local MongoDB instance.
+
+4.  **Install Dependencies**
+
+    Navigate to the server's root directory and fetch the required Dart packages:
+
+    ```bash
+    dart pub get
+    ```
+
+5.  **Run the Development Server**
+
+    Start the Dart Frog development server:
+
+    ```bash
+    dart_frog dev
+    ```
+
+    The API will now be running and available at `http://localhost:8080`.
+
+    On its first startup, the server will automatically connect to your MongoDB database and seed it with initial data (countries, topics, users, etc.). This seeding process is idempotent, meaning you can safely restart the server multiple times without creating duplicate data.
+</Steps>
