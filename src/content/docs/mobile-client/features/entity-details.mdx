@@ -1,0 +1,30 @@
+---
+title: Entity Details
+description: Learn how the app displays detailed pages for topics and sources.
+---
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+The Entity Details page is a versatile component designed to display a detailed view for content entities like **Topics** and **Sources**. It serves as a hub for a specific entity, showing its description and a feed of all related headlines.
+
+## Core Components
+
+-   **`EntityDetailsBloc`**: The BLoC that powers this feature. It is responsible for fetching the primary entity's data (e.g., the `Topic` object) and then fetching a paginated list of `Headline` items that are associated with that entity. It also syncs with the `AccountBloc` to manage the "follow" status of the entity.
+
+-   **`EntityDetailsPage`**: The main UI widget. It can be initialized in two ways: by passing a full entity object (like a `Topic` or `Source`) or by passing an `entityId` and `contentType`. The page displays the entity's details at the top and a scrollable list of related headlines below.
+
+## Key Functionalities
+
+<CardGrid>
+	<Card title="Generic and Reusable" icon="puzzle">
+		This page is designed to be generic. The same `EntityDetailsPage` is used to display information for both Topics and Sources, reducing code duplication and ensuring a consistent user experience across different content types.
+	</Card>
+	<Card title="Dynamic Content Loading" icon="list-ordered">
+		The page first loads the details of the entity itself. Once the entity is loaded, the `EntityDetailsBloc` begins fetching the associated headlines, with support for infinite scrolling to load more articles as the user scrolls down.
+	</Card>
+	<Card title="Follow/Unfollow Actions" icon="user-check">
+		A prominent "follow" button allows users to follow or unfollow the displayed topic or source. This action is dispatched to the `AccountBloc`. The `EntityDetailsBloc` subscribes to state changes from the `AccountBloc` to reactively update the UI of the follow button.
+	</Card>
+    <Card title="Integrated Feed" icon="newspaper">
+        The list of related headlines is not just a simple list; it's a fully integrated feed. The `FeedInjectorService` is used to dynamically insert ads and other content into the headline list, just like in the main headlines feed.
+    </Card>
+</CardGrid>
