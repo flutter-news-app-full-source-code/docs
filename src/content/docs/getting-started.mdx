@@ -3,29 +3,29 @@ title: 'Getting Started: Local Setup'
 description: An overview of the local setup process for the entire Flutter News App ecosystem.
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Timeline, Step } from '@astrojs/starlight/components';
 
 Welcome to the local setup guide for the Flutter News App Toolkit. To get the full ecosystem running on your local machine, you will need to set up each of the three core components: the **API Server**, the **Web Dashboard**, and the **Mobile Client**.
 
 Follow the guides below in the recommended order to ensure a smooth setup process.
 
-<CardGrid>
-  <Card title="1. Set Up the API Server" icon="cloud">
-    Start by getting the backend running. The API server handles data, authentication, and configuration for both the dashboard and the mobile app.
-    <a href="/docs/api-server/local-setup/" style={{ display: 'block', marginTop: '1rem' }}>
-      Go to API Setup Guide &rarr;
-    </a>
-  </Card>
-  <Card title="2. Set Up the Web Dashboard" icon="laptop">
-    Next, run the web-based administrative dashboard. You'll use this to manage content and configure the application.
-    <a href="/docs/web-dashboard/local-setup/" style={{ display: 'block', marginTop: '1rem' }}>
-      Go to Dashboard Setup Guide &rarr;
-    </a>
-  </Card>
-  <Card title="3. Set Up the Mobile Client" icon="phone">
-    Finally, set up the Flutter mobile app for iOS and Android to see the end-user experience.
-    <a href="/docs/mobile-client/local-setup/" style={{ display: 'block', marginTop: '1rem' }}>
-      Go to Mobile App Setup Guide &rarr;
-    </a>
-  </Card>
-</CardGrid>
+<Timeline>
+	<Step title="Set Up the API Server">
+		Start by getting the backend running. The API server handles data,
+		authentication, and configuration for both the dashboard and the mobile app.
+
+		[Go to API Setup Guide &rarr;](/docs/api-server/local-setup/)
+	</Step>
+	<Step title="Set Up the Web Dashboard">
+		Next, run the web-based administrative dashboard. You'll use this to manage
+		content and configure the application.
+
+		[Go to Dashboard Setup Guide &rarr;](/docs/web-dashboard/local-setup/)
+	</Step>
+	<Step title="Set Up the Mobile Client">
+		Finally, set up the Flutter mobile app for iOS and Android to see the
+		end-user experience.
+
+		[Go to Mobile App Setup Guide &rarr;](/docs/mobile-client/local-setup/)
+	</Step>
+</Timeline>
