@@ -1,0 +1,51 @@
+---
+title: 'Feature: Generic Data API'
+description: An explanation of the powerful, model-driven generic data endpoint for managing all application content.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+A key architectural feature of the API server is its generic data endpoint, located at `/api/v1/data`. Instead of having separate endpoints for each data type (e.g., `/headlines`, `/topics`), this single, powerful endpoint can manage multiple data models through a simple query parameter.
+
+This approach simplifies the API surface, reduces code duplication, and makes the system highly extensible.
+
+### How It Works
+
+A client makes a standard REST request (GET, POST, PUT, DELETE) to the `/api/v1/data` endpoint and specifies the target data type using the `?model=` query parameter.
+
+**Example: Fetching all headlines**
+```http
+GET /api/v1/data?model=headline
+```
+
+**Example: Fetching a single topic by its ID**
+```http
+GET /api/v1/data/some-topic-id?model=topic
+```
+
+### The Model Registry
+
+The magic behind this generic endpoint is the **Model Registry** (`model_registry.dart`). This is a central map that links the string name of a model (e.g., `"headline"`) to a configuration object (`ModelConfig`).
+
+Each `ModelConfig` contains all the information the generic endpoint needs to handle a specific model, including:
+-   **Deserialization:** A function to convert incoming JSON into the correct Dart object.
+-   **ID Extraction:** A function to get the unique ID from a model instance.
+-   **Ownership Information:** A function to identify the owner of a user-specific item (like `user_app_settings`).
+-   **Authorization Rules:** A detailed permission configuration for every HTTP method (GET, POST, PUT, DELETE), specifying who is allowed to perform each action.
+
+### Supported Models
+
+The generic data endpoint can manage the following models out-of-the-box:
+-   `headline`
+-   `topic`
+-   `source`
+-   `country`
+-   `user`
+-   `user_app_settings`
+-   `user_content_preferences`
+-   `remote_config`
+-   `dashboard_summary`
+
+<Aside type="note">
+Some actions are intentionally unsupported through this generic endpoint for security or logical reasons. For example, creating a new user is handled exclusively by the dedicated `/api/v1/auth/verify-code` endpoint, not by a POST request to `?model=user`. These restrictions are defined in the `ModelConfig` for each model.
+</Aside>
