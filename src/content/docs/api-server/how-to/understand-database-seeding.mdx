@@ -1,0 +1,31 @@
+---
+title: Understand Database Seeding
+description: Learn how the API server automatically seeds the database with initial data on startup.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+To ensure the application has essential data from the very beginning, the API server includes an automatic database seeding process. This process runs every time the server starts up, populating the database with a predefined set of data, such as countries, topics, sources, and initial user accounts.
+
+### How It Works
+
+When you run `dart_frog dev`, the server's initialization logic (`AppDependencies.init()`) calls the `DatabaseSeedingService`. This service performs the following actions:
+
+1.  **Ensures Indexes:** It first ensures that all necessary MongoDB indexes exist on the collections. This is critical for performance, especially for text searches and for the automatic cleanup of expired tokens.
+
+2.  **Upserts Data:** For each data type (e.g., `Country`, `Topic`), the service reads a list of predefined "fixture" data from the `core` package. It then uses a bulk `upsert` operation to write this data to the database.
+
+<Aside type="tip" title="What is an 'Upsert'?">
+An "upsert" is a combination of "update" and "insert". If a document with a specific `_id` already exists in the database, it gets updated with the data from the fixture. If it doesn't exist, it gets inserted.
+</Aside>
+
+### Why This is Important: Idempotency
+
+The use of `upsert` makes the seeding process **idempotent**. This is a key concept meaning you can run the process multiple times, and the end result will be the same as if it had been run only once.
+
+-   **Safe to Restart:** You can stop and start the server as many times as you like without creating duplicate data.
+-   **Consistent State:** It guarantees that your development environment always starts with a known, consistent set of data, which is crucial for reliable testing and development.
+
+### The Fixture Data
+
+The initial data is defined in the `core` package, ensuring it can be shared and understood by other parts of the ecosystem if needed. The `DatabaseSeedingService` uses deterministic `ObjectId` values based on the `id` strings in the fixture files, which allows for the creation of predictable relationships between documents (e.g., linking a `Headline` to a specific `Source`).
