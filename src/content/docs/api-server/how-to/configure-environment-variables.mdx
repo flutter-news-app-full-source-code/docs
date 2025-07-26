@@ -1,0 +1,89 @@
+---
+title: Configure Environment Variables
+description: A detailed guide to setting up the .env file for the API server.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The API server uses an `.env` file to manage environment-specific configuration, such as database connection strings and secret keys. This approach keeps sensitive data out of your source code.
+
+This guide explains each variable found in the `.env.example` file.
+
+### Creating Your `.env` File
+
+First, copy the example file to create your local configuration file. Run this command from the `flutter-news-app-api-server-full-source-code` directory:
+
+```bash
+cp .env.example .env
+```
+
+Now, open the new `.env` file and fill in the values as described below.
+
+---
+
+### Required Variables
+
+These variables are essential for the server to function correctly.
+
+#### `DATABASE_URL`
+The full connection string for your MongoDB instance. The application cannot start without a valid database connection.
+
+-   **Local Development:** `mongodb://localhost:27017/your_db_name`
+-   **Production:** Use the connection string provided by your database hosting service (e.g., MongoDB Atlas).
+
+<Aside type="tip">
+For guidance on setting up a local MongoDB instance, see the [Configure MongoDB](/docs/api-server/how-to/configure-mongodb) guide.
+</Aside>
+
+#### `JWT_SECRET_KEY`
+A long, complex, and randomly generated secret used for signing JSON Web Tokens (JWTs). This key is critical for securing user authentication.
+
+-   **How to Generate:** You can use any secure random string generator. For example, the `dcli_scripts` package can generate one for you:
+    ```bash
+    dart pub global activate dcli_scripts
+    dcli_scripts create_key
+    ```
+-   **Security:** Never commit this key to version control or expose it publicly.
+
+#### `SENDGRID_API_KEY`
+Your API key for the SendGrid service, which is used to send transactional emails like One-Time Passwords (OTPs).
+
+-   **How to Obtain:**
+    1.  Create a [SendGrid account](https://signup.sendgrid.com/).
+    2.  Navigate to **Settings > API Keys** in your SendGrid dashboard.
+    3.  Create a new API key with "Full Access" or restricted permissions for sending mail.
+    4.  Copy the generated key and paste it here.
+
+#### `DEFAULT_SENDER_EMAIL`
+The email address that will appear as the sender for all transactional emails. This should be an email address you have verified with SendGrid.
+
+#### `OTP_TEMPLATE_ID`
+The ID of the dynamic email template in SendGrid used for sending OTP codes.
+
+-   **How to Obtain:**
+    1.  In your SendGrid dashboard, go to **Email API > Dynamic Templates**.
+    2.  Create a new template. The template must include a variable for the code (e.g., `{{otp_code}}`).
+    3.  Copy the Template ID and paste it here.
+
+---
+
+### Optional Variables
+
+These variables have default values but can be customized for your environment.
+
+#### `JWT_EXPIRY_HOURS`
+The duration, in hours, for which a JWT is valid.
+-   **Default:** `1` (1 hour)
+
+#### `CORS_ALLOWED_ORIGIN`
+The specific origin URL of your web client (e.g., the Flutter Web Dashboard) that is allowed to make requests to this API. This is **required for production** to prevent Cross-Origin Resource Sharing (CORS) errors.
+-   **Example:** `https://dashboard.yourdomain.com`
+
+<Aside type="caution">
+For more details on CORS, see the [Configure CORS](/docs/api-server/how-to/configure-cors) guide.
+</Aside>
+
+#### `SENDGRID_API_URL`
+The base URL for the SendGrid API.
+-   **Default:** `https://api.sendgrid.com`
+-   **EU Accounts:** If your SendGrid account is based in the EU, you may need to set this to `https://api.eu.sendgrid.com`.

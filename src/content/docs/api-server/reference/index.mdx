@@ -1,0 +1,77 @@
+---
+title: API Reference
+description: A complete reference for the Flutter News App API, covering authentication, data access, and error handling.
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Welcome to the complete API reference for the Flutter News App backend. This section provides detailed information about every endpoint, including request formats, response payloads, and authentication requirements.
+
+## Base URL & Versioning
+
+All API endpoints are prefixed with a base URL and a version number.
+
+-   **Base URL:** `http://localhost:8080` (for local development)
+-   **API Version:** `v1`
+
+The full path for an endpoint will look like: `http://localhost:8080/api/v1/...`
+
+## Authentication
+
+Most endpoints require authentication. The API uses **Bearer Token** authentication, where a valid JSON Web Token (JWT) must be included in the `Authorization` header of your requests.
+
+```
+Authorization: Bearer <YOUR_JWT_TOKEN>
+```
+
+You can obtain a token through the endpoints detailed in the [Authentication Guide](./authentication/).
+
+## Standard Responses
+
+The API uses a standardized format for both successful and error responses to ensure consistency.
+
+### Success Response
+
+Successful requests (HTTP `200 OK`, `201 Created`) will return a JSON object with the following structure:
+
+```json
+{
+  "data": {
+    // The main data payload, which can be an object or an array
+  },
+  "metadata": {
+    "requestId": "a-unique-request-id",
+    "timestamp": "2023-10-27T10:00:00.000Z"
+  }
+}
+```
+
+### Error Response
+
+Failed requests will return an appropriate HTTP status code (e.g., `400`, `401`, `403`, `404`, `500`) and a JSON body with a consistent error structure:
+
+```json
+{
+  "error": {
+    "code": "errorCode",
+    "message": "A descriptive error message."
+  }
+}
+```
+
+<Aside type="note">
+For a detailed list of possible error codes and their meanings, please see the [Error Handling Guide](../features/error-handling/).
+</Aside>
+
+## API Endpoint Guides
+
+<CardGrid>
+	<Card title="Authentication" icon="lock">
+		Endpoints for user sign-up, sign-in, and session management.
+    [Read more &rarr;](/docs/api-server/api-reference/authentication/)
+	</Card>
+	<Card title="Data Access" icon="document">
+		The generic endpoint for all CRUD operations on data models.
+    [Read more &rarr;](/docs/api-server/api-reference/data-access/)
+	</Card>
+</CardGrid>

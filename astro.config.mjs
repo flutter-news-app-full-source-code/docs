@@ -20,8 +20,10 @@ export default defineConfig({
 				{
 					label: 'Start Here',
 					items: [
-						{ label: 'Getting Started', link: '/getting-started' },
-						{ label: 'Deployment Guides', link: '/deployment-guides' },
+						{ label: 'Introduction', link: '/start-here/introduction' },
+						{ label: 'Local Setup', link: '/start-here/local-setup' },
+						// { label: 'Core Philosophy', link: '/start-here/core-philosophy' },
+						{ label: 'Deployment Guides', link: '/start-here/deployment-guides' },
 					],
 				},
 				{
@@ -34,17 +36,46 @@ export default defineConfig({
 							label: 'Features',
 							collapsed: true,
 							items: [
+								{ label: 'Overview', link: '/api-server/features/' },
 								{ label: 'Authentication', link: '/api-server/features/authentication' },
+								{ label: 'User Data Sync', link: '/api-server/features/user-data-sync' },
+								{ label: 'Email Service', link: '/api-server/features/email-service' },
 								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
 								{ label: 'RBAC', link: '/api-server/features/rbac' },
+								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
+								{ label: 'Remote Configuration', link: '/api-server/features/remote-config' },
 							],
 						},
 						{
-							label: 'Advanced',
+							label: 'How-To Guides',
 							collapsed: true,
 							items: [
-								{ label: 'Dependency Injection', link: '/api-server/advanced/dependency-injection' },
-								{ label: 'Middleware', link: '/api-server/advanced/middleware' },
+								{ label: 'Overview', link: '/api-server/how-to/' },
+								{ label: 'Configure Environment Variables', link: '/api-server/how-to/configure-environment-variables' },
+								{ label: 'Configure MongoDB', link: '/api-server/how-to/configure-mongodb' },
+								{ label: 'Configure CORS', link: '/api-server/how-to/configure-cors' },
+								{ label: 'Implement an Alternative Email Client', link: '/api-server/how-to/implement-alternative-email-client' },
+							],
+						},
+						{
+							label: 'Architecture',
+							collapsed: true,
+							items: [
+								{ label: 'Overview', link: '/api-server/architecture/' },
+								{ label: 'Dependency Injection', link: '/api-server/architecture/dependency-injection' },
+								{ label: 'Middleware', link: '/api-server/architecture/middleware' },
+								{ label: 'Data Seeding & Fixtures', link: '/api-server/architecture/data-seeding-and-fixtures' },
+								{ label: 'Generic Data Endpoint', link: '/api-server/architecture/generic-data-endpoint' },
+							],
+						},
+						{
+							label: 'Reference',
+							collapsed: true,
+							items: [
+								{ label: 'Overview', link: '/api-server/api-reference/' },
+								{ label: 'Authentication', link: '/api-server/api-reference/authentication' },
+								{ label: 'Data Access', link: '/api-server/api-reference/data-access' },
+								{ label: 'Core Data Models', link: '/api-server/api-reference/core-models' },
 							],
 						},
 						{ label: 'Deployment', link: '/api-server/deployment' },

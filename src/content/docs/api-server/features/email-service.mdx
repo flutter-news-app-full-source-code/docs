@@ -1,0 +1,30 @@
+---
+title: Email Service
+description: Learn about the API server's transactional email capabilities.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The API server includes a flexible service for sending transactional emails, which are essential for user authentication flows like sending One-Time Passwords (OTPs).
+
+### Core Components
+
+The email functionality is built on a clean, decoupled architecture:
+
+1.  **`EmailClient` Interface:** This is an abstract class that defines the contract for any email-sending service. It requires a single method, `sendTransactionalEmail`.
+
+2.  **`EmailSendGrid` Implementation:** The default implementation provided in the toolkit uses the SendGrid service. It handles the specifics of making API calls to SendGrid.
+
+3.  **`EmailRepository`:** This repository acts as a layer between the business logic and the email client. It abstracts away the specific client being used.
+
+4.  **`AuthService`:** The authentication service uses the `EmailRepository` to trigger sending OTP emails during the sign-in process.
+
+### How it Works
+
+When a user requests a sign-in code, the `AuthService` calls the `EmailRepository`, which in turn calls the configured `EmailClient` (by default, `EmailSendGrid`). This layered approach means the `AuthService` doesn't need to know or care about *how* the email is sent, only that it *can* be sent.
+
+<Aside type="tip" title="Architectural Benefit">
+This decoupled design makes the system highly maintainable and flexible. If you ever want to switch from SendGrid to another email provider (like Mailgun or AWS SES), you only need to create a new class that implements the `EmailClient` interface and update a single line in the dependency injection configuration.
+
+For a practical example, see the [Implement an Alternative Email Client](/docs/api-server/how-to/implement-alternative-email-client) guide.
+</Aside>
