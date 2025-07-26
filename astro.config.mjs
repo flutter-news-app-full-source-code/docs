@@ -39,6 +39,7 @@ export default defineConfig({
 								{ label: 'Authentication', link: '/api-server/features/authentication' },
 								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
 								{ label: 'RBAC', link: '/api-server/features/rbac' },
+								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
 							],
 						},
 						{
@@ -47,6 +48,16 @@ export default defineConfig({
 							items: [
 								{ label: 'Dependency Injection', link: '/api-server/advanced/dependency-injection' },
 								{ label: 'Middleware', link: '/api-server/advanced/middleware' },
+								{ label: 'Core Data Models', link: '/api-server/advanced/core-models' },
+							],
+						},
+						{
+							label: 'API Reference',
+							collapsed: true,
+							items: [
+								{ label: 'Overview', link: '/api-server/api-reference/' },
+								{ label: 'Authentication', link: '/api-server/api-reference/authentication' },
+								{ label: 'Data Access', link: '/api-server/api-reference/data-access' },
 							],
 						},
 						{ label: 'Deployment', link: '/api-server/deployment' },
