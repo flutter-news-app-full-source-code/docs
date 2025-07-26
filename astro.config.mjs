@@ -20,8 +20,10 @@ export default defineConfig({
 				{
 					label: 'Start Here',
 					items: [
-						{ label: 'Getting Started', link: '/getting-started' },
-						{ label: 'Deployment Guides', link: '/deployment-guides' },
+						{ label: 'Introduction', link: '/start-here/introduction' },
+						{ label: 'Local Setup', link: '/start-here/local-setup' },
+						// { label: 'Core Philosophy', link: '/start-here/core-philosophy' },
+						{ label: 'Deployment Guides', link: '/start-here/deployment-guides' },
 					],
 				},
 				{
