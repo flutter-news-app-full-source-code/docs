@@ -36,16 +36,33 @@ export default defineConfig({
 							label: 'Features',
 							collapsed: true,
 							items: [
+								{ label: 'Overview', link: '/api-server/features/' },
 								{ label: 'Authentication', link: '/api-server/features/authentication' },
+								{ label: 'User Data Sync', link: '/api-server/features/user-data-sync' },
+								{ label: 'Email Service', link: '/api-server/features/email-service' },
 								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
 								{ label: 'RBAC', link: '/api-server/features/rbac' },
 								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
+								{ label: 'Remote Configuration', link: '/api-server/features/remote-config' },
+							],
+						},
+						{
+							label: 'How-To Guides',
+							collapsed: true,
+							items: [
+								{ label: 'Overview', link: '/api-server/how-to/' },
+								{ label: 'Configure Environment Variables', link: '/api-server/how-to/configure-environment-variables' },
+								{ label: 'Configure MongoDB', link: '/api-server/how-to/configure-mongodb' },
+								{ label: 'Configure CORS', link: '/api-server/how-to/configure-cors' },
+								{ label: 'Implement an Alternative Email Client', link: '/api-server/how-to/implement-alternative-email-client' },
+								{ label: 'Understand Database Seeding', link: '/api-server/how-to/understand-database-seeding' },
 							],
 						},
 						{
 							label: 'Advanced',
 							collapsed: true,
 							items: [
+								{ label: 'Overview', link: '/api-server/advanced/' },
 								{ label: 'Dependency Injection', link: '/api-server/advanced/dependency-injection' },
 								{ label: 'Middleware', link: '/api-server/advanced/middleware' },
 							],
