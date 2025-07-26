@@ -1,0 +1,31 @@
+---
+title: How-To Guides
+description: Practical guides for specific configuration and setup tasks for the API server.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+This section provides practical, step-by-step guides for specific configuration and setup tasks related to the API server.
+
+<CardGrid>
+  <Card title="Configure Environment Variables" icon="document">
+    A detailed guide to setting up your `.env` file.
+    [Read more &rarr;](/docs/api-server/how-to/configure-environment-variables/)
+  </Card>
+  <Card title="Configure MongoDB" icon="database">
+    Learn how to set up a local MongoDB instance using Docker.
+    [Read more &rarr;](/docs/api-server/how-to/configure-mongodb/)
+  </Card>
+  <Card title="Configure CORS" icon="shield">
+    Understand and configure Cross-Origin Resource Sharing for production.
+    [Read more &rarr;](/docs/api-server/how-to/configure-cors/)
+  </Card>
+  <Card title="Implement an Alternative Email Client" icon="email">
+    See how to swap out the default email service with your own implementation.
+    [Read more &rarr;](/docs/api-server/how-to/implement-alternative-email-client/)
+  </Card>
+  <Card title="Understand Database Seeding" icon="seed">
+    Learn how the server automatically populates the database with initial data.
+    [Read more &rarr;](/docs/api-server/how-to/understand-database-seeding/)
+  </Card>
+</CardGrid>
