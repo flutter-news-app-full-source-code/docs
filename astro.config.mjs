@@ -43,7 +43,6 @@ export default defineConfig({
 								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
 								{ label: 'RBAC', link: '/api-server/features/rbac' },
 								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
-								{ label: 'Remote Configuration', link: '/api-server/features/remote-config' },
 							],
 						},
 						{
