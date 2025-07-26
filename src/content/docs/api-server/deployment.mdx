@@ -5,48 +5,40 @@ description: Learn how to deploy the API server to a production environment.
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-This guide provides the steps to deploy the API server for production use. The recommended method is to build a Docker container and host it on a cloud service that supports containers.
+This guide outlines the strategy for deploying the API server to a production environment. The recommended method is to use Docker, which creates a portable and consistent container for your application.
+
+<Aside>
+The world of cloud hosting and deployment tools evolves rapidly. Instead of providing specific commands that could become outdated, this guide focuses on the essential steps and links to the official documentation for the relevant services. This ensures you always have access to the most current and accurate instructions.
+</Aside>
 
 <Steps>
 1.  **Configure Production Environment Variables**
 
-    Before building your application for production, you must configure your environment variables. Unlike the `.env` file used for local development, production environments should use the hosting provider's system for managing secrets (e.g., GitHub Secrets for build pipelines, or environment variable settings in your hosting dashboard).
+    Your first step is to prepare the production configuration for the server. Unlike local development which uses a `.env` file, in production you will use your hosting provider's interface to set environment variables securely.
 
-    The following variables are **required** for production:
-    -   `DATABASE_URL`: The connection string for your production MongoDB database.
-    -   `JWT_SECRET_KEY`: A long, complex, and secret string for signing authentication tokens.
-    -   `SENDGRID_API_KEY`: Your API key for the SendGrid service.
-    -   `DEFAULT_SENDER_EMAIL`: The email address used to send transactional emails (like OTP codes).
-    -   `OTP_TEMPLATE_ID`: The ID of your dynamic email template in SendGrid.
+    For a detailed explanation of each required variable, please see the [Configure Environment Variables](/docs/api-server/how-to/configure-environment-variables) guide.
 
-    You should also set `JWT_ISSUER` to the public URL of your API.
+2.  **Choose a Deployment Strategy**
 
-2.  **Build the Docker Container**
+    The API server repository includes a `Dockerfile`, which allows for two main deployment strategies:
 
-    The API server repository includes a `Dockerfile` that simplifies the process of creating a production-ready container. This file handles setting up the Dart environment, installing dependencies, and creating an optimized production build of the server.
-
-    To build the container locally, run the following command from the root of the `flutter-news-app-api-server-full-source-code` directory:
-
-    ```bash
-    docker build -t your-api-server-image .
-    ```
-
-    Replace `your-api-server-image` with a name for your Docker image.
+    -   **Deploying a Pre-built Image:** You build the Docker image on your local machine or in a CI/CD pipeline, push it to a container registry (like Docker Hub, Google Container Registry, or Amazon ECR), and then your hosting provider pulls the image from the registry.
+    -   **Deploying from Source:** You connect your Git repository directly to the hosting provider, and it uses the `Dockerfile` to build and deploy the image for you.
 
 3.  **Deploy to a Hosting Provider**
 
-    Once you have built the Docker image, you can deploy it to any hosting provider that supports Docker containers. You will typically push your image to a container registry (like Docker Hub, Google Container Registry, or Amazon ECR) and then deploy it from there.
-
-    Popular choices for hosting Docker containers include:
+    Choose a hosting provider that supports Docker container deployments. Popular and well-documented options include:
     -   [Google Cloud Run](https://cloud.google.com/run/docs/deploying)
     -   [Amazon Elastic Container Service (ECS)](https://aws.amazon.com/ecs/)
-    -   [DigitalOcean App Platform](https://www.digitalocean.com/docs/app-platform/how-to/deploy-from-dockerfile/)
-    -   [Render](https://render.com/docs/deploy-a-docker-image)
+    -   [DigitalOcean App Platform](https://www.digitalocean.com/docs/app-platform/)
+    -   [Render](https://render.com/docs/docker)
 
-    Follow your chosen provider's documentation for deploying a container from an image or a `Dockerfile`. During the setup process on the hosting platform, you will need to configure the environment variables mentioned in Step 1.
+    Follow the official documentation from your chosen provider to deploy your container. During the setup process, you will be prompted to configure the environment variables from Step 1.
+
+4.  **Configure CORS**
+
+    For your web-based dashboard to communicate with the API in production, you must correctly configure Cross-Origin Resource Sharing (CORS).
+
+    For instructions, see the [Configure CORS](/docs/api-server/how-to/configure-cors) guide.
 
 </Steps>
-
-<Aside type="caution" title="CORS Configuration">
-For your web-based dashboard to communicate with the API in production, you must correctly configure Cross-Origin Resource Sharing (CORS). Set the `CORS_ALLOWED_ORIGIN` environment variable on your server to the exact URL of your deployed web dashboard (e.g., `https://dashboard.yourdomain.com`).
-</Aside>
