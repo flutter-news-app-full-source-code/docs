@@ -1,0 +1,30 @@
+---
+title: User Data Sync
+description: Learn how the API server seamlessly converts anonymous guest users into permanent accounts.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+A key feature of the API server's authentication system is its ability to provide a seamless experience for users who start using the app anonymously and later decide to create a permanent account. All of their data, such as saved headlines and followed topics, is automatically carried over.
+
+### The Guest User Flow
+
+1.  **Anonymous Sign-In:** When a new user opens the mobile app for the first time, the app can perform an "anonymous sign-in". The API server creates a temporary `guestUser` account and returns an authentication token for it.
+
+2.  **Data Accumulation:** The guest user can now use the app normally. They can save headlines, follow topics, and customize their settings. All this data is associated with their temporary `guestUser` ID.
+
+### The Conversion Process
+
+When the guest user decides to create a permanent account (e.g., by providing their email and verifying a code), the `AuthService` handles the conversion intelligently:
+
+1.  **Email Verification:** The user provides an email and completes the standard verification process.
+
+2.  **Account Check:** The server checks if a permanent account with the verified email *already exists*.
+
+    -   **Scenario A: Account Already Exists:** If a user with that email is found, the server signs them into their existing account. The temporary `guestUser` account and its associated data are deleted, and a new token for the permanent account is issued. This prevents account duplication.
+
+    -   **Scenario B: No Account Exists:** If no account is found for the email, the server **converts** the existing `guestUser` record into a `standardUser`. It updates the user's record with the verified email and changes their role.
+
+<Aside type="success" title="Seamless Transition">
+Because the user's unique ID remains the same during the conversion, all of their existing data (`UserContentPreferences`, `UserAppSettings`, etc.) is automatically retained. From the user's perspective, their account is simply "linked" to their email with no loss of data.
+</Aside>
