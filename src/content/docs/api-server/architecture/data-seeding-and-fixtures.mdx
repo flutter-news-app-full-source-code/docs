@@ -1,0 +1,34 @@
+---
+title: Data Seeding & Fixtures
+description: Learn about the architectural decision behind the API server's automatic database seeding process.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+A key architectural feature of the API server is its automatic and idempotent database seeding process. This ensures that a developer can get a fully functional environment running with a consistent set of baseline data, simply by starting the server.
+
+### The Architectural Goal
+
+The primary goal of this system is to **guarantee a consistent and predictable state** for development and testing environments. Without it, developers would need to manually populate the database, leading to inconsistencies and a slower setup process.
+
+This is achieved through two core components:
+
+1.  **Shared Fixtures:** A centralized set of predefined data is located in the `core` package. This data includes essential items like countries, news topics, sources, and default user accounts. Placing it in `core` makes this baseline data accessible to the entire ecosystem, ensuring all components (API, mobile client, tests) can be built against the same foundational dataset.
+
+2.  **Idempotent Seeding Service:** The `DatabaseSeedingService` on the API server is designed to be **idempotent**.
+
+<Aside type="tip" title="What is Idempotency?">
+An idempotent operation is one that can be applied multiple times without changing the result beyond the initial application. In this context, it means you can restart the server as many times as you want, and the database will always end up in the same correct state, without creating duplicate entries.
+</Aside>
+
+### Implementation Details
+
+The service achieves idempotency by using MongoDB's `upsert` functionality. For each item in the fixture data, it attempts to find a document with a matching, deterministic `_id`.
+
+-   If the document exists, it is **updated** with the values from the fixture.
+-   If it does not exist, it is **inserted**.
+
+This architectural choice provides significant benefits:
+-   **Reliability:** Eliminates "it works on my machine" problems caused by database inconsistencies.
+-   **Efficiency:** Drastically speeds up the onboarding process for new developers.
+-   **Maintainability:** Fixture data is managed in one central, version-controlled location.
