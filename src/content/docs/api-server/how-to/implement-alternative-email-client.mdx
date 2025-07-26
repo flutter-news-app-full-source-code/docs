@@ -1,0 +1,113 @@
+---
+title: Implement an Alternative Email Client
+description: Learn how to swap out the default SendGrid email client with a different provider, demonstrating the architecture's flexibility.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+One of the key architectural benefits of this API server is its use of dependency injection and interfaces (API contracts), which makes it easy to swap out core services like the email client. By default, the server uses SendGrid, but you can replace it with any other provider (e.g., Mailgun, AWS SES, or even a local SMTP server for testing) without altering the core business logic.
+
+This guide demonstrates the value of this architecture by walking you through the process of creating and integrating a custom email client.
+
+### The `EmailClient` Interface
+
+The core of this flexibility is the `EmailClient` abstract class, defined in the `email_client` package. Any email service you wish to use must have a corresponding class that implements this interface.
+
+The contract is simple:
+
+```dart
+// path: packages/email_client/lib/src/email_client.dart
+abstract class EmailClient {
+  const EmailClient();
+
+  Future<void> sendTransactionalEmail({
+    required String senderEmail,
+    required String recipientEmail,
+    required String templateId,
+    required Map<String, dynamic> templateData,
+  });
+}
+```
+
+### Example: Creating a Logging-Only Email Client
+
+Let's create a simple "logging" email client that doesn't actually send emails but instead prints the details to the console. This is useful for local development or testing.
+
+1.  **Create the Implementation File:**
+    Create a new file, for example, `packages/email_logging/lib/src/email_logging.dart`.
+
+2.  **Implement the `EmailClient`:**
+
+    ```dart
+    import 'package:email_client/email_client.dart';
+    import 'package:logging/logging.dart';
+
+    class EmailLogging implements EmailClient {
+      EmailLogging({required this.log});
+
+      final Logger log;
+
+      @override
+      Future<void> sendTransactionalEmail({
+        required String senderEmail,
+        required String recipientEmail,
+        required String templateId,
+        required Map<String, dynamic> templateData,
+      }) async {
+        log.info('--- 📧 Mock Email Sent ---');
+        log.info('Sender: $senderEmail');
+        log.info('Recipient: $recipientEmail');
+        log.info('Template ID: $templateId');
+        log.info('Template Data: $templateData');
+        log.info('-------------------------');
+        // In a real implementation, this is where you would
+        // make the API call to your email provider.
+        return Future.value();
+      }
+    }
+    ```
+
+### Integrating the New Client
+
+Swapping the implementation is the easiest part. You only need to change a single part of the dependency injection setup.
+
+Open the dependency configuration file: `apps/flutter-news-app-api-server-full-source-code/lib/src/config/app_dependencies.dart`.
+
+<Tabs>
+<TabItem label="Before (Default)">
+```dart
+// ...
+// Configure the HTTP client for SendGrid.
+final sendGridHttpClient = HttpClient(
+  baseUrl: '$sendGridApiBase/v3',
+  tokenProvider: () async => EnvironmentConfig.sendGridApiKey,
+  logger: Logger('EmailSendgridClient'),
+);
+
+// Initialize the SendGrid email client with the dedicated HTTP client.
+final emailClient = EmailSendGrid(
+  httpClient: sendGridHttpClient,
+  log: Logger('EmailSendgrid'),
+);
+
+emailRepository = EmailRepository(emailClient: emailClient);
+// ...
+```
+</TabItem>
+<TabItem label="After (Custom)">
+```dart
+// ...
+// Initialize your custom logging email client.
+final emailClient = EmailLogging(
+  log: Logger('EmailLogging'),
+);
+
+emailRepository = EmailRepository(emailClient: emailClient);
+// ...
+```
+</TabItem>
+</Tabs>
+
+<Aside type="success">
+**That's it!** The entire application will now use your `EmailLogging` client instead of `EmailSendGrid`. The `AuthService`, which is responsible for sending OTP codes, depends on the `EmailRepository`, which in turn depends on the `EmailClient` interface. Because we swapped the concrete implementation at the highest level, the change propagates through the entire system without any other code modifications.
+</Aside>
