@@ -1,0 +1,35 @@
+---
+title: Configure CORS
+description: Learn how to configure Cross-Origin Resource Sharing (CORS) for the API server.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Cross-Origin Resource Sharing (CORS) is a security feature that browsers use to restrict web pages from making requests to a different domain than the one that served the page. For your Flutter Web Dashboard to communicate with the API server in a production environment, you must explicitly tell the server to allow requests from the dashboard's domain.
+
+### How it Works in This Project
+
+The API server has built-in middleware that handles CORS. By default, it is configured to allow requests from `localhost` during development, so you don't need to worry about it on your local machine.
+
+However, for a deployed production environment, you **must** set the `CORS_ALLOWED_ORIGIN` environment variable.
+
+### Configuration
+
+1.  **Identify Your Web Dashboard's URL:**
+    Determine the exact URL where your Flutter Web Dashboard will be hosted.
+    -   Example: `https://dashboard.yourdomain.com`
+
+2.  **Set the Environment Variable:**
+    In your production hosting environment (e.g., Google Cloud Run, Render, DigitalOcean App Platform), set the `CORS_ALLOWED_ORIGIN` environment variable to your dashboard's URL.
+
+    ```env
+    CORS_ALLOWED_ORIGIN="https://dashboard.yourdomain.com"
+    ```
+
+<Aside type="caution" title="Be Specific">
+Do not use a wildcard (`*`) for the allowed origin in production, as it is insecure. Always specify the exact URL of your web client. The server is configured to only allow a single, specific origin.
+</Aside>
+
+### Troubleshooting
+
+If you encounter CORS errors in your browser's developer console (e.g., `Access to fetch at '...' from origin '...' has been blocked by CORS policy`), it almost always means the `CORS_ALLOWED_ORIGIN` is either not set or does not exactly match the URL of your running web application.
