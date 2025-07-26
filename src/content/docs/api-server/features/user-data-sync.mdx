@@ -25,6 +25,6 @@ When the guest user decides to create a permanent account (e.g., by providing th
 
     -   **Scenario B: No Account Exists:** If no account is found for the email, the server **converts** the existing `guestUser` record into a `standardUser`. It updates the user's record with the verified email and changes their role.
 
-<Aside type="success" title="Seamless Transition">
+<Aside type="note" title="Seamless Transition">
 Because the user's unique ID remains the same during the conversion, all of their existing data (`UserContentPreferences`, `UserAppSettings`, etc.) is automatically retained. From the user's perspective, their account is simply "linked" to their email with no loss of data.
 </Aside>

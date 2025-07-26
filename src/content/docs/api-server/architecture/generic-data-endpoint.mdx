@@ -44,7 +44,7 @@ When a request comes in, the server's middleware looks up the `model` parameter 
 2.  Forward the request to the correct generic `DataRepository`.
 3.  Deserialize and serialize data using the correct model class.
 
-<Aside type="success" title="Architectural Benefits">
+<Aside type="note" title="Architectural Benefits">
 -   **DRY (Don't Repeat Yourself):** Eliminates redundant route handlers for CRUD operations.
 -   **Consistency:** Provides a uniform API for all data models.
 -   **Extensibility:** Adding CRUD support for a new data model is as simple as adding a new entry to the `model_registry`.
