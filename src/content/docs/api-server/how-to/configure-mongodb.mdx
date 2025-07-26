@@ -1,0 +1,52 @@
+---
+title: Configure MongoDB for Local Development
+description: Learn how to set up a local MongoDB instance for the API server.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The API server requires a MongoDB database to store all its data, including headlines, users, and settings. For local development, running a MongoDB instance directly on your machine using Docker is the recommended approach as it provides a clean, isolated, and consistent environment.
+
+### Using Docker (Recommended)
+
+1.  **Install Docker:**
+    If you don't have it already, download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/) for your operating system. This application will manage your Docker images and containers.
+
+2.  **Pull and Run the MongoDB Image:**
+    Open your terminal and run the following command. This single command will automatically:
+    a.  Download the latest official `mongo` image from Docker Hub if you don't have it locally.
+    b.  Create and start a new container from that image.
+
+    ```bash
+    docker run --name mongodb-local -p 27017:27017 -d mongo:latest
+    ```
+
+    **Command Breakdown:**
+    -   `--name mongodb-local`: Assigns a memorable name to your container for easy management.
+    -   `-p 27017:27017`: Maps port `27017` inside the container to port `27017` on your local machine, allowing the API server to connect.
+    -   `-d`: Runs the container in "detached" mode, meaning it runs in the background.
+    -   `mongo:latest`: Specifies the official MongoDB image to use.
+
+3.  **Verify the Container is Running:**
+    You can check that your container started successfully by running:
+    ```bash
+    docker ps
+    ```
+    You should see `mongodb-local` in the list of running containers.
+
+### Updating Your `.env` File
+
+Once your local MongoDB instance is running, you need to tell the API server how to connect to it.
+
+Open your `.env` file and set the `DATABASE_URL` variable:
+
+```env
+DATABASE_URL="mongodb://localhost:27017/flutter_news_app_db"
+```
+
+-   `localhost:27017`: This is the default host and port for a local MongoDB instance.
+-   `flutter_news_app_db`: You can name your database anything you like. The server will create it automatically on first connection if it doesn't exist.
+
+<Aside type="tip">
+For a complete overview of all environment variables, see the [Configure Environment Variables](/docs/api-server/how-to/configure-environment-variables) guide.
+</Aside>
