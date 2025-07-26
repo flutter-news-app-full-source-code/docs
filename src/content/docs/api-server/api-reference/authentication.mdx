@@ -1,0 +1,123 @@
+---
+title: Authentication API
+description: Detailed reference for the authentication endpoints.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This section details the endpoints used for user authentication, including sign-in, sign-up, and session management.
+
+## Endpoints
+
+### Request Sign-In Code
+
+Initiates the sign-in or sign-up process by sending a one-time verification code to the user's email.
+
+-   **Method:** `POST`
+-   **Path:** `/api/v1/auth/request-code`
+-   **Body (JSON):**
+    ```json
+    {
+      "email": "user@example.com",
+      "isDashboardLogin": false
+    }
+    ```
+    -   `email` (string, required): The user's email address.
+    -   `isDashboardLogin` (boolean, optional): Set to `true` when signing in to the admin dashboard. This enforces stricter validation, ensuring the user exists and has the required permissions before sending a code. Defaults to `false`.
+
+-   **Success Response:**
+    -   `202 Accepted`: The request has been accepted, and the email is being sent.
+
+-   **Error Responses:**
+    -   `400 Bad Request`: The email format is invalid, or the request body is malformed.
+    -   `401 Unauthorized`: (`isDashboardLogin: true` only) The user does not exist.
+    -   `403 Forbidden`: (`isDashboardLogin: true` only) The user exists but lacks the required permissions for dashboard access.
+
+### Verify Sign-In Code
+
+Verifies the one-time code to complete the sign-in/sign-up process.
+
+-   **Method:** `POST`
+-   **Path:** `/api/v1/auth/verify-code`
+-   **Body (JSON):**
+    ```json
+    {
+      "email": "user@example.com",
+      "code": "123456"
+    }
+    ```
+    -   `email` (string, required): The user's email address.
+    -   `code` (string, required): The 6-digit verification code sent to the user's email.
+
+-   **Success Response:**
+    -   `200 OK`: Returns a standard success response with an `AuthSuccessResponse` payload.
+        ```json
+        {
+          "data": {
+            "user": { ... }, // The full User object
+            "token": "ey..." // The JWT authentication token
+          },
+          "metadata": { ... }
+        }
+        ```
+
+-   **Error Responses:**
+    -   `400 Bad Request`: The code is invalid, expired, or the request body is malformed.
+
+<Aside type="note">
+If an authenticated guest user calls this endpoint, their guest account will be seamlessly converted into a new permanent account or merged with an existing one.
+</Aside>
+
+### Sign In Anonymously
+
+Creates a temporary guest account for users who have not yet registered.
+
+-   **Method:** `POST`
+-   **Path:** `/api/v1/auth/anonymous`
+-   **Body:** None
+
+-   **Success Response:**
+    -   `200 OK`: Returns a standard success response with an `AuthSuccessResponse` payload, containing the new guest `User` object and a JWT.
+
+### Get Current User
+
+Retrieves the profile of the currently authenticated user.
+
+-   **Method:** `GET`
+-   **Path:** `/api/v1/auth/me`
+-   **Authentication:** Required (Bearer Token)
+
+-   **Success Response:**
+    -   `200 OK`: Returns a standard success response with the full `User` object as the data payload.
+
+-   **Error Responses:**
+    -   `401 Unauthorized`: The provided token is missing, invalid, or expired.
+
+### Sign Out
+
+Performs server-side sign-out actions, primarily invalidating the current authentication token.
+
+-   **Method:** `POST`
+-   **Path:** `/api/v1/auth/sign-out`
+-   **Authentication:** Required (Bearer Token)
+-   **Body:** None
+
+-   **Success Response:**
+    -   `204 No Content`: The token has been successfully invalidated.
+
+-   **Error Responses:**
+    -   `401 Unauthorized`: The provided token is missing, invalid, or expired.
+
+### Delete Account
+
+Permanently deletes the authenticated user's account and all associated data.
+
+-   **Method:** `DELETE`
+-   **Path:** `/api/v1/auth/delete-account`
+-   **Authentication:** Required (Bearer Token)
+
+-   **Success Response:**
+    -   `204 No Content`: The account has been successfully deleted.
+
+-   **Error Responses:**
+    -   `401 Unauthorized`: The provided token is missing, invalid, or expired.
