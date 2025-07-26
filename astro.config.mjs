@@ -47,7 +47,7 @@ export default defineConfig({
 							],
 						},
 						{
-							label: 'How-To Guides',
+							label: 'Guides',
 							collapsed: true,
 							items: [
 								{ label: 'Overview', link: '/api-server/how-to/' },
@@ -72,10 +72,10 @@ export default defineConfig({
 							label: 'Reference',
 							collapsed: true,
 							items: [
-								{ label: 'Overview', link: '/api-server/api-reference/' },
-								{ label: 'Authentication', link: '/api-server/api-reference/authentication' },
-								{ label: 'Data Access', link: '/api-server/api-reference/data-access' },
-								{ label: 'Core Data Models', link: '/api-server/api-reference/core-models' },
+								{ label: 'Overview', link: '/api-server/reference/' },
+								{ label: 'Authentication', link: '/api-server/reference/authentication' },
+								{ label: 'Data Access', link: '/api-server/reference/data-access' },
+								{ label: 'Core Data Models', link: '/api-server/reference/core-models' },
 							],
 						},
 						{ label: 'Deployment', link: '/api-server/deployment' },
