@@ -31,13 +31,13 @@ This guide will walk you through setting up the API server in a local developmen
 
     The API server requires a MongoDB database. For local development, the recommended approach is to use Docker.
 
-    For a complete walkthrough, follow the [Configure MongoDB for Local Development](/docs/api-server/how-to/configure-mongodb) guide.
+    For a complete walkthrough, follow the [Configure MongoDB for Local Development](/docs/api-server/guides/configure-mongodb) guide.
 
 4.  **Configure Environment Variables**
 
     The server uses a `.env` file to manage secrets and configuration. You will need to create this file and populate it with the correct values for your local environment.
 
-    For a detailed walkthrough, follow the [Configure Environment Variables](/docs/api-server/how-to/configure-environment-variables) guide.
+    For a detailed walkthrough, follow the [Configure Environment Variables](/docs/api-server/guides/configure-environment-variables) guide.
 
 5.  **Install Dependencies**
 
@@ -61,5 +61,5 @@ This guide will walk you through setting up the API server in a local developmen
 
     On its first startup, the server automatically connects to your MongoDB database and seeds it with initial data (countries, topics, users, etc.). This process is idempotent, meaning you can safely restart the server multiple times without creating duplicate data.
 
-    For more details on how this works, see the [Understand Database Seeding](/docs/api-server/how-to/understand-database-seeding) guide.
+    For more details on how this works, see the [Understand Database Seeding](/docs/api-server/guides/understand-database-seeding) guide.
 </Steps>

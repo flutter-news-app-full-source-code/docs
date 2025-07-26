@@ -26,5 +26,5 @@ When a user requests a sign-in code, the `AuthService` calls the `EmailRepositor
 <Aside type="tip" title="Architectural Benefit">
 This decoupled design makes the system highly maintainable and flexible. If you ever want to switch from SendGrid to another email provider (like Mailgun or AWS SES), you only need to create a new class that implements the `EmailClient` interface and update a single line in the dependency injection configuration.
 
-For a practical example, see the [Implement an Alternative Email Client](/docs/api-server/how-to/implement-alternative-email-client) guide.
+For a practical example, see the [Implement an Alternative Email Client](/docs/api-server/guides/implement-alternative-email-client) guide.
 </Aside>

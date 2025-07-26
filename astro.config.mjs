@@ -50,11 +50,11 @@ export default defineConfig({
 							label: 'Guides',
 							collapsed: true,
 							items: [
-								{ label: 'Overview', link: '/api-server/how-to/' },
-								{ label: 'Configure Environment Variables', link: '/api-server/how-to/configure-environment-variables' },
-								{ label: 'Configure MongoDB', link: '/api-server/how-to/configure-mongodb' },
-								{ label: 'Configure CORS', link: '/api-server/how-to/configure-cors' },
-								{ label: 'Implement an Alternative Email Client', link: '/api-server/how-to/implement-alternative-email-client' },
+								{ label: 'Overview', link: '/api-server/guides/' },
+								{ label: 'Configure Environment Variables', link: '/api-server/guides/configure-environment-variables' },
+								{ label: 'Configure MongoDB', link: '/api-server/guides/configure-mongodb' },
+								{ label: 'Configure CORS', link: '/api-server/guides/configure-cors' },
+								{ label: 'Implement an Alternative Email Client', link: '/api-server/guides/implement-alternative-email-client' },
 							],
 						},
 						{
