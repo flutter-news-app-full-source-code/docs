@@ -1,0 +1,67 @@
+---
+title: Core Data Models
+description: A reference for the primary data models used across the API.
+---
+
+This page provides a reference for the core data models returned by the API.
+
+## Common Fields
+
+All primary data models (e.g., `Headline`, `Topic`, `Source`, `Country`) share a common set of fields for identification and tracking.
+
+-   `id` (string): The unique identifier for the document (UUID).
+-   `createdAt` (string, ISO 8601): The timestamp when the document was created.
+-   `updatedAt` (string, ISO 8601): The timestamp of the last update.
+-   `status` (string): The content status. Can be `active`, `draft`, or `archived`.
+
+## Models
+
+### User
+
+Represents a user account in the system.
+
+-   `id` (string): The unique user ID.
+-   `email` (string): The user's email address.
+-   `appRole` (string): The user's role within the mobile app (`guestUser`, `standardUser`, `premiumUser`).
+-   `dashboardRole` (string): The user's role for the admin dashboard (`none`, `publisher`, `admin`).
+-   `createdAt` (string, ISO 8601): The timestamp of account creation.
+-   `feedActionStatus` (object): A map tracking the user's interaction with in-feed calls-to-action.
+
+### Headline
+
+Represents a single news article.
+
+-   `title` (string): The headline of the article.
+-   `excerpt` (string): A short summary of the article.
+-   `url` (string): The URL to the full article.
+-   `imageUrl` (string): The URL to an associated image.
+-   `source` (Source): The embedded source object.
+-   `eventCountry` (Country): The embedded country object where the event took place.
+-   `topic` (Topic): The embedded topic object.
+
+### Topic
+
+Represents a news category.
+
+-   `name` (string): The display name of the topic (e.g., "Technology").
+-   `description` (string): A brief description of the topic.
+-   `iconUrl` (string): A URL to an icon representing the topic.
+
+### Source
+
+Represents a news publisher.
+
+-   `name` (string): The name of the news source (e.g., "TechCrunch").
+-   `description` (string): A brief description of the source.
+-   `url` (string): The homepage URL of the source.
+-   `sourceType` (string): The type of source (e.g., `newsAgency`, `blog`).
+-   `language` (string): The primary language of the source (e.g., "en").
+-   `headquarters` (Country): The embedded country object where the source is based.
+
+### Country
+
+Represents a country.
+
+-   `isoCode` (string): The two-letter ISO 3166-1 alpha-2 code (e.g., "US").
+-   `name` (string): The common name of the country (e.g., "United States").
+-   `flagUrl` (string): A URL to an image of the country's flag.
