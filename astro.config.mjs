@@ -55,20 +55,21 @@ export default defineConfig({
 								{ label: 'Configure MongoDB', link: '/api-server/how-to/configure-mongodb' },
 								{ label: 'Configure CORS', link: '/api-server/how-to/configure-cors' },
 								{ label: 'Implement an Alternative Email Client', link: '/api-server/how-to/implement-alternative-email-client' },
-								{ label: 'Understand Database Seeding', link: '/api-server/how-to/understand-database-seeding' },
 							],
 						},
 						{
-							label: 'Advanced',
+							label: 'Architecture',
 							collapsed: true,
 							items: [
-								{ label: 'Overview', link: '/api-server/advanced/' },
-								{ label: 'Dependency Injection', link: '/api-server/advanced/dependency-injection' },
-								{ label: 'Middleware', link: '/api-server/advanced/middleware' },
+								{ label: 'Overview', link: '/api-server/architecture/' },
+								{ label: 'Dependency Injection', link: '/api-server/architecture/dependency-injection' },
+								{ label: 'Middleware', link: '/api-server/architecture/middleware' },
+								{ label: 'Data Seeding & Fixtures', link: '/api-server/architecture/data-seeding-and-fixtures' },
+								{ label: 'Generic Data Endpoint', link: '/api-server/architecture/generic-data-endpoint' },
 							],
 						},
 						{
-							label: 'API Reference',
+							label: 'Reference',
 							collapsed: true,
 							items: [
 								{ label: 'Overview', link: '/api-server/api-reference/' },
