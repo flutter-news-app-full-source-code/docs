@@ -1,0 +1,40 @@
+---
+title: Error Handling
+description: An overview of the standardized error responses from the API.
+---
+
+The API uses a standardized error response format and a consistent set of error codes to make error handling predictable for client applications.
+
+## Error Response Structure
+
+All failed requests will return a JSON body with the following structure:
+
+```json
+{
+  "error": {
+    "code": "errorCode",
+    "message": "A descriptive error message explaining what went wrong."
+  }
+}
+```
+
+-   `code` (string): A machine-readable error code.
+-   `message` (string): A human-readable description of the error.
+
+## Common Error Codes
+
+The following table lists the most common error codes and their corresponding HTTP status codes.
+
+| HTTP Status | Error Code             | Description                                                                                             |
+| :---------- | :--------------------- | :------------------------------------------------------------------------------------------------------ |
+| `400`       | `badRequest`           | The request was malformed, such as having invalid JSON or incorrect parameter formats.                  |
+| `400`       | `invalidInput`         | A specific field in the request body or query parameter was invalid or missing.                         |
+| `401`       | `unauthorized`         | Authentication is required, but the request lacks a valid Bearer token. This can also mean the token is expired or has been invalidated (e.g., after sign-out). |
+| `401`       | `authenticationFailed` | The provided credentials (e.g., verification code) are incorrect.                                       |
+| `403`       | `forbidden`            | The authenticated user does not have the necessary permissions to perform the requested action.           |
+| `404`       | `notFound`             | The requested resource (e.g., an item with a specific ID) could not be found.                           |
+| `409`       | `conflict`             | The request could not be completed due to a conflict with the current state of the resource.            |
+| `500`       | `serverError`          | A generic error occurred on the server.                                                                 |
+| `500`       | `operationFailed`      | A specific, known operation failed on the server for an unexpected reason.                              |
+| `500`       | `unknownError`         | An unexpected and unhandled error occurred on the server.                                               |
+| `503`       | `networkError`         | The server is temporarily unable to handle the request due to a downstream network issue.               |
