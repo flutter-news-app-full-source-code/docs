@@ -13,10 +13,10 @@ This guide demonstrates the value of this architecture by walking you through th
 
 The core of this flexibility is the `EmailClient` abstract class, defined in the `email_client` package. Any email service you wish to use must have a corresponding class that implements this interface.
 
-The contract is simple:
+The contract, defined in the `email_client` package, is simple:
 
 ```dart
-// path: packages/email_client/lib/src/email_client.dart
+// lib/src/email_client.dart
 abstract class EmailClient {
   const EmailClient();
 
@@ -34,7 +34,7 @@ abstract class EmailClient {
 Let's create a simple "logging" email client that doesn't actually send emails but instead prints the details to the console. This is useful for local development or testing.
 
 1.  **Create the Implementation File:**
-    Create a new file, for example, `packages/email_logging/lib/src/email_logging.dart`.
+    You can create a new implementation anywhere, but for this example, let's assume you create a new local file for testing purposes.
 
 2.  **Implement the `EmailClient`:**
 
@@ -71,7 +71,7 @@ Let's create a simple "logging" email client that doesn't actually send emails b
 
 Swapping the implementation is the easiest part. You only need to change a single part of the dependency injection setup.
 
-Open the dependency configuration file: `apps/flutter-news-app-api-server-full-source-code/lib/src/config/app_dependencies.dart`.
+Open the dependency configuration file within the API server project: `lib/src/config/app_dependencies.dart`.
 
 <Tabs>
 <TabItem label="Before (Default)">
