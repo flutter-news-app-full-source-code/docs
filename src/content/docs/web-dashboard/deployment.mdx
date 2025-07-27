@@ -5,10 +5,10 @@ description: A guide to building and deploying the Flutter web dashboard to a pr
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-This guide covers the essential steps for deploying the Flutter News App Web Dashboard to a production hosting service.
+This guide outlines the process for deploying the Flutter News App Web Dashboard.
 
 <Aside>
-The world of web hosting evolves quickly. To ensure you have the most reliable and up-to-date instructions, this guide focuses on the core deployment process and links to the official documentation for several popular hosting providers. This approach empowers you to use the best practices recommended directly by the services themselves.
+To ensure you have the most reliable and up-to-date instructions, this guide will direct you to the official Flutter documentation. The process of building and deploying a Flutter web app is well-documented by the Flutter team, and their guide is the definitive resource for this task.
 </Aside>
 
 <Steps>
@@ -29,27 +29,13 @@ The world of web hosting evolves quickly. To ensure you have the most reliable a
     Ensure that the `baseUrl` for the `production` environment in `lib/app/config/app_config.dart` points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
     </Aside>
 
-2.  **Build the Web Application**
+2.  **Follow the Official Flutter Deployment Guide**
 
-    Next, create a production-optimized build of the Flutter web app. This compiles your Dart code to JavaScript and bundles all necessary assets into a single directory for web deployment.
+    The Flutter team provides a comprehensive guide that covers everything you need to know about building and deploying a Flutter web application. This includes compiling your Dart code to JavaScript and deploying the output to various hosting services.
 
-    Run the following command from the root of your web dashboard project:
-    ```bash
-    flutter build web
-    ```
-    This command will generate a `build/web` directory containing all the static files required to run your web application.
+    Please follow the official guide here:
+    **[Build and release a web app](https://flutter.dev/docs/deployment/web)**
 
-3.  **Deploy to a Hosting Provider**
-
-    The contents of the `build/web` directory can be deployed to any hosting service that supports static websites. We recommend choosing a provider with a strong global CDN to ensure fast load times for your users.
-
-    Follow the official deployment guide for your chosen provider, using `build/web` as your publish directory:
-
-    -   **Firebase Hosting:** [Official Deployment Guide](https://firebase.google.com/docs/hosting/quickstart)
-    -   **Vercel:** [Official Deployment Guide for Flutter](https://vercel.com/guides/deploying-flutter-to-vercel)
-    -   **Netlify:** [Official Deployment Guide](https://docs.netlify.com/site-deploys/create-deploys/)
-    -   **GitHub Pages:** [Official Deployment Guide](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
-
-    Once the deployment is complete, your web dashboard will be live at the URL provided by your hosting service.
+    This guide will walk you through the `flutter build web` command and provide best practices for hosting the contents of the generated `build/web` directory.
 
 </Steps>
