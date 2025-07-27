@@ -1,23 +1,23 @@
 ---
 title: 'Guide: Customizing the UI Theme'
-description: A practical, step-by-step guide to customizing the UI theme by taking ownership of the ui_kit package.
+description: A practical, step-by-step guide to customizing the UI theme by creating a private copy of the ui_kit package.
 ---
 import { Steps, Aside } from '@astrojs/starlight/components';
 
 This guide provides a hands-on, practical walkthrough of the most common and impactful customization task: changing the application's visual theme. 
 
-By following this guide, you will learn the complete, end-to-end workflow for modifying a shared package and seeing that change reflected in both the Mobile Client and the Web Dashboard. This process is the key to unlocking the full customization potential of the toolkit.
+By following this guide, you will learn the complete, end-to-end workflow for modifying a shared package and seeing that change reflected in both the Mobile Client and the Web Dashboard.
 
 ### The Goal
 
-Our goal is to change the default blue accent color of the application to a new color, for example, deep purple. To do this, we will take ownership of the `ui_kit` package, modify its theme file, and then instruct both of our Flutter applications to use our modified version.
+Our goal is to change the default blue accent color of the application to a new color, for example, deep purple. To do this, we will create a private copy of the `ui_kit` package, modify its theme file, and then instruct both of our Flutter applications to use our modified version.
 
 <Steps>
-1.  **Take Ownership of the `ui_kit` Package**
+1.  **Host a Private Copy of the `ui_kit` Package**
 
     Before you can change any code, you must have your own version of the `ui_kit` package hosted in a private repository.
 
-    -   Follow the [**Taking Ownership of Packages**](/docs/architecture/02-taking-ownership-of-packages/) guide from start to finish, but for the `ui_kit` repository.
+    -   Follow the [**Hosting Packages for Customization**](/docs/customization/hosting-packages-for-customization/) guide from start to finish, but for the `ui_kit` repository.
     -   **Clone URL:** `https://github.com/flutter-news-app-full-source-code/ui-kit.git`
 
     Once you have successfully pushed the `ui_kit` code to your own private GitHub repository, you are ready to proceed.
@@ -30,7 +30,7 @@ Our goal is to change the default blue accent color of the application to a new 
     -   Locate the `_commonSubThemesData` constant. This is where you can make global changes to widget styles.
     -   Let's change the `appBarBackgroundSchemeColor` to `primary` to make the app bar more prominent.
 
-    ```dart title="packages/ui-kit/lib/src/theme/app_theme.dart"
+    ```dart title="ui_kit/lib/src/theme/app_theme.dart"
     const FlexSubThemesData _commonSubThemesData = FlexSubThemesData(
       // ...
       // Change the app bar background color
@@ -90,4 +90,4 @@ Our goal is to change the default blue accent color of the application to a new 
 
 ### Conclusion
 
-You have successfully completed the core customization workflow. You now have a privately owned and modified `ui_kit` package that is consumed by both of your client applications. You can use this exact same process to customize any other shared package in the toolkit.
+You have successfully completed the core customization workflow. You now have a privately hosted and modified `ui_kit` package that is consumed by both of your client applications. You can use this exact same process to customize any other shared package in the toolkit.
