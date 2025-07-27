@@ -17,15 +17,10 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				{
-					label: 'Start Here',
-					items: [
-						{ label: 'Introduction', link: '/start-here/introduction' },
-						{ label: 'Local Setup', link: '/start-here/local-setup' },
-						// { label: 'Core Philosophy', link: '/start-here/core-philosophy' },
-						{ label: 'Deployment Guides', link: '/start-here/deployment-guides' },
-					],
-				},
+				{ label: 'Introduction', link: 'introduction' },
+				{ label: 'Core Philosophy', link: 'core-philosophy' },
+				{ label: 'Local Setup', link: 'local-setup' },
+				{ label: 'Deployment', link: 'deployment' },
 				{
 					label: 'API Server',
 					collapsed: true,
