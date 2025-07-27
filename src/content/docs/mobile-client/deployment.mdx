@@ -4,20 +4,18 @@ description: A guide to building and deploying the Flutter mobile app for Androi
 ---
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-This guide provides a high-level overview of the tasks required to build and deploy the Flutter News App Mobile Client to the Google Play Store and Apple App Store.
+This guide outlines the process for deploying the Flutter News App Mobile Client to the Google Play Store and Apple App Store.
 
-For detailed, step-by-step instructions, this guide will link to the official Flutter and platform documentation. These are the definitive resources and are always kept up-to-date.
+<Aside>
+To ensure you have the most reliable and up-to-date instructions, this guide focuses on the project-specific configuration you need to complete. For the deployment itself, we will refer you to the official Flutter documentation, which is the definitive resource for releasing mobile applications.
+</Aside>
 
-### Prerequisites
+### Pre-Deployment Configuration
 
-Before you begin, you will need active developer accounts for the platforms you are targeting:
--   **Google Play Console:** [developer.android.com/distribute](https://developer.android.com/distribute)
--   **Apple Developer Program:** [developer.apple.com/programs](https://developer.apple.com/programs/)
+Before you can build the app for production, you must configure it to connect to your live API server.
 
 <Steps>
-1.  **Configure for Production**
-
-    First, ensure the app is configured to connect to your live production API.
+1.  **Set the Production Environment**
 
     -   Open the file `lib/main.dart`.
     -   Locate the `appEnvironment` constant.
@@ -28,32 +26,18 @@ Before you begin, you will need active developer accounts for the platforms you 
     const appEnvironment = AppEnvironment.production; 
     ```
 
-    <Aside>
-    Ensure that the `baseUrl` for the `production` environment in `lib/app/config/app_config.dart` points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
-    </Aside>
+2.  **Verify the API Base URL**
 
-2.  **Follow the Official Flutter Deployment Guides**
-
-    The Flutter team provides comprehensive guides that cover every aspect of building and releasing your application. Please follow the official guide for each platform you intend to deploy to.
-
-    #### **Android (Google Play Store)**
-
-    The official guide covers essential steps including:
-    -   Updating the Package ID (`applicationId`).
-    -   Generating app icons.
-    -   Creating an upload keystore and configuring app signing.
-    -   Building the app bundle (`.aab`) for release.
-
-    **[Official Guide: Build and release an Android app](https://docs.flutter.dev/deployment/android)**
-
-    #### **iOS (Apple App Store)**
-
-    The official guide covers essential steps including:
-    -   Updating the Bundle Identifier and Display Name in Xcode.
-    -   Generating the app icon set.
-    -   Configuring app signing with your Apple Developer account.
-    -   Building the release archive (`.ipa`) for upload.
-
-    **[Official Guide: Build and release an iOS app](https://docs.flutter.dev/deployment/ios)**
+    -   Open the file `lib/app/config/app_config.dart`.
+    -   Ensure that the `baseUrl` for the `production` case points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
 
 </Steps>
+
+### Building and Releasing
+
+Once your configuration is ready, you can proceed with building and releasing the application. The official Flutter documentation provides comprehensive, platform-specific guides that cover every required step, from generating app icons to configuring code signing and uploading to the stores.
+
+Following these official guides is the recommended and most reliable path to a successful release.
+
+-   **[Official Guide: Build and release an Android app](https://docs.flutter.dev/deployment/android)**
+-   **[Official Guide: Build and release an iOS app](https://docs.flutter.dev/deployment/ios)**

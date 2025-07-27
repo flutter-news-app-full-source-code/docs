@@ -1,5 +1,5 @@
 ---
-title: 'Your Flutter News App - Ready to Launch'
+title: 'Your Full-Stack Flutter News App - Ready to Launch'
 description: A complete, production-ready toolkit for building a cross-platform news application.
 template: splash
 hero:
@@ -8,21 +8,23 @@ hero:
     file: ../../assets/flutter-news-app-full-source-code-logo.png
   actions:
     - text: 'Get Started: Local Setup'
-      link: /docs/getting-started/
+      link: /docs/local-setup/
       icon: right-arrow
     - text: 'View Live Demos'
-      link: '#ecosystem'
+      link: '#toolkit-components'
       icon: 'down-arrow'
       variant: minimal
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
 
-<div id="ecosystem">
-	## A Complete, Production-Ready Ecosystem
-</div>
+## A Complete, Production-Ready Toolkit
 
-Welcome to the Flutter News App Full Source Code Toolkit. This is more than just an app template; it's a complete, three-part ecosystem designed to work seamlessly together, giving you everything you need to launch, manage, and scale a modern news application.
+Welcome to the Flutter News App Full Source Code Toolkit. This is more than just an app template; it's a complete, three-part toolkit designed to work seamlessly together, giving you everything you need to launch, manage, and scale a modern news application from a solid, well-architected foundation.
+
+<div id="toolkit-components">
+	### The Toolkit Components
+</div>
 
 <CardGrid>
 	<Card title="Mobile Client App" icon="phone">
@@ -46,7 +48,7 @@ Welcome to the Flutter News App Full Source Code Toolkit. This is more than just
 				href="https://github.com/flutter-news-app-full-source-code/flutter-news-app-mobile-client-full-source-code"
 				target="_blank"
 			>
-				Download
+				Browse on GitHub
 			</a>
 		</div>
 	</Card>
@@ -71,7 +73,7 @@ Welcome to the Flutter News App Full Source Code Toolkit. This is more than just
 				href="https://github.com/flutter-news-app-full-source-code/flutter-news-app-web-dashboard-full-source-code"
 				target="_blank"
 			>
-				Download
+				Browse on GitHub
 			</a>
 		</div>
 	</Card>
@@ -92,25 +94,33 @@ Welcome to the Flutter News App Full Source Code Toolkit. This is more than just
 				href="https://github.com/flutter-news-app-full-source-code/flutter-news-app-api-server-full-source-code"
 				target="_blank"
 			>
-				Download
+				Browse on GitHub
 			</a>
 		</div>
 	</Card>
 </div>
 
-## Choose Your Path
+## How the Toolkit Fits Together
+
+The **API Server** is the central brain. Both the **Mobile Client** and the **Web Dashboard** communicate with it to fetch data, authenticate users, and retrieve configuration. The **Web Dashboard** is used to populate the content that the **Mobile Client** displays.
+
+This separation of concerns makes the toolkit robust and flexible. You can manage your entire platform from the web and deliver updates to your mobile users instantly.
+
+## Get Started: Try, Evaluate, and Launch
+
+This toolkit is source-available, allowing you to explore the code and ensure it meets your standards before making a commitment.
 
 <CardGrid>
-	<Card title="Start Your 32-Day Trial" icon="laptop">
+	<Card title="Start Your Free Trial" icon="laptop">
 		Download the complete source code and run the entire system on your local
-		machine. The trial license allows for a full evaluation of the project's
-		quality and features for 32 days.
+		machine. The PolyForm Free Trial license allows for a full evaluation of the project's
+		quality and features.
 		<div style={{ marginTop: '1.5rem' }}>
-			<LinkButton href="/docs/getting-started/">Begin Local Setup</LinkButton>
+			<LinkButton href="/docs/local-setup/">Begin Local Setup</LinkButton>
 		</div>
 	</Card>
 	<Card title="Purchase a Lifetime License" icon="rocket">
-		A one-time purchase grants you a lifetime commercial license to build,
+		Ready to go live? A one-time purchase grants you a lifetime commercial license to build,
 		customize, and deploy unlimited applications, complete with lifetime
 		updates.
 		<div style={{ marginTop: '1.5rem' }}>

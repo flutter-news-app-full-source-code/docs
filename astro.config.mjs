@@ -17,15 +17,9 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				{
-					label: 'Start Here',
-					items: [
-						{ label: 'Introduction', link: '/start-here/introduction' },
-						{ label: 'Local Setup', link: '/start-here/local-setup' },
-						// { label: 'Core Philosophy', link: '/start-here/core-philosophy' },
-						{ label: 'Deployment Guides', link: '/start-here/deployment-guides' },
-					],
-				},
+				{ label: 'Core Philosophy', link: 'core-philosophy' },
+				{ label: 'Local Setup', link: 'local-setup' },
+				{ label: 'Deployment', link: 'deployment' },
 				{
 					label: 'API Server',
 					collapsed: true,
@@ -100,7 +94,7 @@ export default defineConfig({
 							label: 'Architecture',
 							collapsed: true,
 							items: [
-								{ label: 'Overview', link: '/web-dashboard/architecture/overview' },
+								{ label: 'Overview', link: '/web-dashboard/architecture/index' },
 								{ label: 'State Management (BLoC)', link: '/web-dashboard/architecture/state-management' },
 								{ label: 'Routing (go_router)', link: '/web-dashboard/architecture/routing' },
 							],

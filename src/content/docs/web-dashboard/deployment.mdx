@@ -5,16 +5,18 @@ description: A guide to building and deploying the Flutter web dashboard to a pr
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-This guide outlines the process for deploying the Flutter News App Web Dashboard.
+This guide outlines the process for deploying the Flutter News App Web Dashboard to a production environment.
 
 <Aside>
-To ensure you have the most reliable and up-to-date instructions, this guide will direct you to the official Flutter documentation. The process of building and deploying a Flutter web app is well-documented by the Flutter team, and their guide is the definitive resource for this task.
+To ensure you have the most reliable and up-to-date instructions, this guide focuses on the project-specific configuration you need to complete. For the deployment itself, we will refer you to the official Flutter documentation, which is the definitive resource for this task.
 </Aside>
 
-<Steps>
-1.  **Configure for Production**
+### Pre-Deployment Configuration
 
-    Before building, you must configure the dashboard to connect to your live production API.
+Before you can build the dashboard for production, you must configure it to connect to your live API server.
+
+<Steps>
+1.  **Set the Production Environment**
 
     -   Open the file `lib/main.dart`.
     -   Locate the `appEnvironment` constant.
@@ -25,17 +27,17 @@ To ensure you have the most reliable and up-to-date instructions, this guide wil
     const appEnvironment = AppEnvironment.production; 
     ```
 
-    <Aside>
-    Ensure that the `baseUrl` for the `production` environment in `lib/app/config/app_config.dart` points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
-    </Aside>
+2.  **Verify the API Base URL**
 
-2.  **Follow the Official Flutter Deployment Guide**
-
-    The Flutter team provides a comprehensive guide that covers everything you need to know about building and deploying a Flutter web application. This includes compiling your Dart code to JavaScript and deploying the output to various hosting services.
-
-    Please follow the official guide here:
-    **[Build and release a web app](https://flutter.dev/docs/deployment/web)**
-
-    This guide will walk you through the `flutter build web` command and provide best practices for hosting the contents of the generated `build/web` directory.
+    -   Open the file `lib/app/config/app_config.dart`.
+    -   Ensure that the `baseUrl` for the `production` case points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
 
 </Steps>
+
+### Building and Deploying
+
+Once your configuration is ready, you can proceed with building and deploying the application. The official Flutter documentation provides a comprehensive guide that covers compiling your Dart code to JavaScript and deploying the output to various hosting services.
+
+Following the official guide is the recommended and most reliable path to a successful deployment.
+
+**[Official Guide: Build and release a web app](https://flutter.dev/docs/deployment/web)**
