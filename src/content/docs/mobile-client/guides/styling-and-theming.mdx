@@ -1,0 +1,52 @@
+---
+title: 'Guide: Styling & Theming'
+description: Learn how to customize the application's visual appearance.
+---
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+The mobile client's visual appearance is managed by a centralized theming system located in the `ui_kit` package. This allows for consistent styling and easy customization of the app's look and feel. The system is built on top of the powerful `flex_color_scheme` package.
+
+### Core Theming Files
+
+All theme-related logic is located in `packages/ui-kit/lib/src/theme/app_theme.dart`. This file contains:
+
+-   **`lightTheme()` and `darkTheme()`**: These functions generate the `ThemeData` for the light and dark modes of the application.
+-   **`_commonSubThemesData`**: A constant that defines shared customizations for common widgets like `Card`, `AppBar`, and `InputDecorator`.
+-   **`_customizeTextTheme()`**: A helper function that applies user-selected font sizes and weights to the base `TextTheme`.
+-   **`_getGoogleFontTextTheme()`**: A helper that maps a font family name (e.g., "Roboto") to the corresponding text theme function from the `google_fonts` package.
+
+### How to Customize the Theme
+
+#### 1. Changing Colors
+
+The application uses predefined color schemes from `FlexColorScheme`. You can change the active color scheme by modifying the `AppAccentTheme` enum in `packages/core/lib/src/enums/app_enums.dart` and updating the `_mapAppAccentTheme` helper in `lib/app/bloc/app_bloc.dart`.
+
+To add a completely new custom color scheme:
+1.  Define your custom `FlexSchemeData` in `app_theme.dart`.
+2.  Add a new value to the `AppAccentTheme` enum.
+3.  Update the `_mapAppAccentTheme` helper in `AppBloc` to map your new enum value to your custom scheme.
+
+#### 2. Customizing Widget Styles
+
+You can change the default appearance of common widgets by modifying the `_commonSubThemesData` constant in `app_theme.dart`.
+
+For example, to change the default elevation of all cards in the app:
+
+```dart title="packages/ui-kit/lib/src/theme/app_theme.dart"
+const FlexSubThemesData _commonSubThemesData = FlexSubThemesData(
+  // ...
+  cardElevation: 4.0,
+  // ...
+);
+```
+
+#### 3. Adding a New Font
+
+To make a new font available for users to select:
+1.  Add the font to your project assets and declare it in `pubspec.yaml`.
+2.  Add the new font name to the list of available fonts in `lib/settings/view/font_settings_page.dart`.
+3.  Update the `_getGoogleFontTextTheme` helper in `app_theme.dart` to map the new font name to its `GoogleFonts` text theme function.
+
+<Aside>
+For a deep dive into the capabilities of `flex_color_scheme`, please refer to its excellent [official documentation](https://docs.flexcolorscheme.com/).
+</Aside>
