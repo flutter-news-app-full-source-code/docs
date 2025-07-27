@@ -94,7 +94,7 @@ export default defineConfig({
 							label: 'Architecture',
 							collapsed: true,
 							items: [
-								{ label: 'Overview', link: '/web-dashboard/architecture/overview' },
+								{ label: 'Overview', link: '/web-dashboard/architecture/index' },
 								{ label: 'State Management (BLoC)', link: '/web-dashboard/architecture/state-management' },
 								{ label: 'Routing (go_router)', link: '/web-dashboard/architecture/routing' },
 							],
