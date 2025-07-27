@@ -1,20 +1,20 @@
 ---
-title: Taking Ownership of Packages
-description: A step-by-step guide to cloning, hosting, and managing the shared packages for customization.
+title: 'Hosting Packages for Customization'
+description: A step-by-step guide to creating your own version of the shared packages to enable modification.
 ---
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-To unlock the full power of the Flutter News App Toolkit and make it truly your own, you must take ownership of the shared packages. The applications (Mobile Client, Web Dashboard) are designed to be customized, but the deepest and most impactful changes—like altering data models or redesigning the UI theme—happen within the shared packages.
+To enable customization of the Flutter News App Toolkit, you must host your own version of the shared packages. The applications (Mobile Client, Web Dashboard) are designed to be customized, but the deepest and most impactful changes—like altering data models or redesigning the UI theme—happen within the shared packages.
 
-This guide will walk you through the essential, one-time process of moving a shared package from the original public repository into your own private repository.
+This guide will walk you through the essential process of creating a private copy of a shared package from the original public repository.
 
 <Aside type="caution" title="Critical Step">
 This is the most important guide for customizing the toolkit. You must follow this process for **any shared package** you intend to modify.
 </Aside>
 
-### Why You Must Host the Packages Yourself
+### Why You Must Host a Private Copy
 
--   **To Enable Customization:** You cannot push changes to the original public repositories. To modify a package, you need your own version that you control.
+-   **To Enable Modification:** You cannot push changes to the original public repositories. To modify a package, you need your own version that you control.
 -   **For Privacy and Control:** Hosting the packages in your own private repositories ensures that your proprietary changes, business logic, and customizations remain confidential.
 -   **To Manage Updates:** It gives you full control over when and how you pull in future updates from the original toolkit.
 
@@ -69,6 +69,6 @@ Let's walk through the process using the `core` package as an example. You will 
 
 </Steps>
 
-**Congratulations!** You have now successfully taken ownership of the `core` package. It is now hosted in your private repository, and you are free to make any modifications you need.
+You have now successfully created a private copy of the `core` package. It is now hosted in your private repository, ready for any modifications you need to make.
 
-The next step is to tell your applications (Mobile Client, Web Dashboard) to use *your* version of the package instead of the original one. The next guide, [**Guide: Customizing the UI Theme**](/docs/architecture/03-guide-customizing-the-ui/), will walk you through this process in a practical, hands-on example.
+The next step is to tell your applications (Mobile Client, Web Dashboard) to use *your* version of the package instead of the original one. The next guide, [**Guide: Customizing the UI Theme**](/docs/customization/guide-customizing-the-ui/), will walk you through this process in a practical, hands-on example.
