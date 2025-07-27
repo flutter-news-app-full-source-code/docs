@@ -21,6 +21,24 @@ export default defineConfig({
 				{ label: 'Local Setup', link: '/local-setup' },
 				{ label: 'Deployment', link: '/deployment' },
 				{
+					label: 'Architecture & Customization',
+					collapsed: false,
+					items: [
+						{
+							label: 'Understanding the Toolkit Architecture',
+							link: '/architecture/01-toolkit-architecture',
+						},
+						{
+							label: 'Taking Ownership of Packages',
+							link: '/architecture/02-taking-ownership-of-packages',
+						},
+						{
+							label: 'Guide: Customizing the UI Theme',
+							link: '/architecture/03-guide-customizing-the-ui',
+						},
+					],
+				},
+				{
 					label: 'API Server',
 					collapsed: true,
 					items: [
