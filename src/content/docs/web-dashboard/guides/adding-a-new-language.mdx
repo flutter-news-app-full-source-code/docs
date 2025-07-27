@@ -1,0 +1,73 @@
+---
+title: Adding a New Language
+description: A guide for developers on how to add a new language for localization.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+The web dashboard is built with localization in mind, making it straightforward to add support for new languages. The process involves creating a new `.arb` file and updating a few places in the code.
+
+<Steps>
+1.  **Create a New `.arb` File**
+
+    Application strings are stored in Application Resource Bundle (`.arb`) files located in `lib/l10n/arb/`.
+
+    -   Duplicate the `app_en.arb` file.
+    -   Rename the new file to `app_<language_code>.arb`, where `<language_code>` is the two-letter ISO 639-1 code for the new language (e.g., `app_es.arb` for Spanish).
+    -   Translate all the string values in the new file.
+
+2.  **Update `l10n.yaml`**
+
+    The `l10n.yaml` file in the root of the project configures the code generation for localization.
+
+    -   Open `l10n.yaml`.
+    -   Add your new `.arb` file to the list.
+
+    ```yaml title="l10n.yaml"
+    arb-dir: lib/l10n/arb
+    template-arb-file: app_en.arb
+    output-localization-file: app_localizations.dart
+    ```
+
+3.  **Run Code Generation**
+
+    Flutter's localization tool will automatically generate the necessary Dart code to support the new language.
+
+    Run the following command in your terminal:
+    ```bash
+    flutter gen-l10n
+    ```
+
+4.  **Update the Settings Page**
+
+    To make the new language selectable by the user, you need to add it to the settings page UI.
+
+    -   Open `lib/settings/view/settings_page.dart`.
+    -   Locate the `_LanguageSelectionList` widget.
+    -   Add the new language code to the `_supportedLanguages` list.
+    -   Add a case to the `_getLanguageName` method to provide a display name for the new language.
+
+    ```dart title="lib/settings/view/settings_page.dart"
+    class _LanguageSelectionList extends StatelessWidget {
+      // ...
+
+      String _getLanguageName(AppLanguage language, AppLocalizations l10n) {
+        switch (language) {
+          case 'en':
+            return l10n.englishLanguage;
+          case 'ar':
+            return l10n.arabicLanguage;
+          // Add your new language here
+          case 'es':
+            return 'Español'; // This should come from your .arb file
+        }
+      }
+
+      // Add your new language code here
+      static const List<AppLanguage> _supportedLanguages = ['en', 'ar', 'es'];
+    }
+    ```
+
+</Steps>
+
+After completing these steps, the new language will be fully integrated into the web dashboard.
