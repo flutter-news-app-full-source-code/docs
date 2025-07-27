@@ -1,0 +1,59 @@
+---
+title: Understanding the Toolkit Architecture
+description: An overview of the multi-repository architecture and how the apps and packages work together.
+---
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Welcome to the architectural overview of the Flutter News App Toolkit. Understanding the structure of the toolkit is the first and most important step to customizing it effectively and making it your own.
+
+This toolkit is not a single, monolithic application. Instead, it is a collection of independent projects—three applications and a suite of shared packages—that work together. This is a deliberate and professional architectural choice that provides significant long-term benefits.
+
+### The Multi-Repository Philosophy
+
+The toolkit is divided into two main categories of repositories:
+
+<CardGrid>
+	<Card title="Applications" icon="laptop">
+		These are the user-facing projects that you will build and deploy. Each one is a standalone application in its own repository.
+        - **Mobile Client:** The Flutter app for iOS and Android.
+        - **Web Dashboard:** The Flutter web app for administration.
+        - **API Server:** The Dart Frog backend.
+	</Card>
+	<Card title="Shared Packages" icon="puzzle">
+		These are Dart packages that contain shared code, logic, and UI components. They are consumed by the applications as dependencies.
+        - **`core`**: Contains all shared data models and exceptions.
+        - **`data_repository`**: Handles the business logic for data fetching.
+        - **`ui_kit`**: Provides shared widgets, themes, and constants.
+        - ...and many others.
+	</Card>
+</CardGrid>
+
+### Why Is It Structured This Way?
+
+This decoupled, multi-repository approach is a best practice for building large, maintainable systems.
+
+-   **Code Reusability:** The `core` package ensures that the Mobile Client and the API Server are always using the exact same data models. The `ui_kit` ensures both Flutter apps have a consistent look and feel. This is the essence of **DRY (Don't Repeat Yourself)**.
+-   **Separation of Concerns:** Each piece of the toolkit has a single, clear responsibility. The `auth_repository` only handles authentication logic. The `http_client` only handles making network requests. This makes the code easier to understand, test, and debug.
+-   **Maintainability:** When you need to change the theme of your apps, you only need to edit the `ui_kit` package. When you need to add a new field to a data model, you only edit the `core` package. The changes then propagate to the consuming applications when you update the dependency.
+
+### How It All Connects: `pubspec.yaml`
+
+The link between the applications and the shared packages is the `pubspec.yaml` file in each application. When you first get the code, these files point to the original public GitHub repositories for each package.
+
+```yaml title="Example from an app's pubspec.yaml"
+dependencies:
+  # This app depends on the `core` package...
+  core:
+    # ...and it fetches it from this Git repository.
+    git:
+      url: https://github.com/flutter-news-app-full-source-code/core.git
+  
+  # It also depends on the `ui_kit` package.
+  ui_kit:
+    git:
+      url: https://github.com/flutter-news-app-full-source-code/ui-kit.git
+```
+
+<Aside type="tip">
+To truly customize the toolkit, you will need to host these packages in your own private repositories and update this `pubspec.yaml` file to point to your versions. The next guide will walk you through this essential process.
+</Aside>
