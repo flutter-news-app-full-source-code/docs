@@ -90,10 +90,35 @@ export default defineConfig({
 							label: 'Features',
 							collapsed: true,
 							items: [
+								{ label: 'Dashboard Overview', link: '/web-dashboard/features/dashboard-overview' },
+								{ label: 'Content Management', link: '/web-dashboard/features/content-management' },
 								{ label: 'App Configuration', link: '/web-dashboard/features/app-configuration' },
 								{ label: 'Authentication', link: '/web-dashboard/features/authentication' },
-								{ label: 'Content Management', link: '/web-dashboard/features/content-management' },
-								{ label: 'Dashboard Overview', link: '/web-dashboard/features/dashboard-overview' },
+							],
+						},
+						{
+							label: 'Architecture',
+							collapsed: true,
+							items: [
+								{ label: 'Overview', link: '/web-dashboard/architecture/overview' },
+								{ label: 'State Management (BLoC)', link: '/web-dashboard/architecture/state-management' },
+								{ label: 'Routing (go_router)', link: '/web-dashboard/architecture/routing' },
+							],
+						},
+						{
+							label: 'Guides',
+							collapsed: true,
+							items: [
+								{ label: 'Theming & Customization', link: '/web-dashboard/guides/theming-and-customization' },
+								{ label: 'Adding a New Language', link: '/web-dashboard/guides/adding-a-new-language' },
+							],
+						},
+						{
+							label: 'Manuals',
+							collapsed: true,
+							items: [
+								{ label: 'Managing Content', link: '/web-dashboard/manuals/managing-content' },
+								{ label: 'Configuring the Mobile App', link: '/web-dashboard/manuals/configuring-the-app' },
 							],
 						},
 						{ label: 'Deployment', link: '/web-dashboard/deployment' },
