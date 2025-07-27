@@ -134,8 +134,21 @@ export default defineConfig({
 							label: 'Architecture',
 							collapsed: true,
 							items: [
-								{ label: 'Routing', link: '/mobile-client/architecture/routing' },
+								{ label: 'Overview', link: '/mobile-client/architecture/' },
+								{ label: 'State Management (BLoC)', link: '/mobile-client/architecture/state-management' },
+								{ label: 'Routing & Navigation', link: '/mobile-client/architecture/routing' },
+								{ label: 'Error Handling', link: '/mobile-client/architecture/error-handling' },
 								{ label: 'Shared Components', link: '/mobile-client/architecture/shared-components' },
+							],
+						},
+						{
+							label: 'Guides',
+							collapsed: true,
+							items: [
+								{ label: 'Creating a New Feature', link: '/mobile-client/guides/creating-a-new-feature' },
+								{ label: 'Adding a New Setting', link: '/mobile-client/guides/adding-a-new-setting' },
+								{ label: 'Styling & Theming', link: '/mobile-client/guides/styling-and-theming' },
+								{ label: 'Localization', link: '/mobile-client/guides/localization' },
 							],
 						},
 						{
