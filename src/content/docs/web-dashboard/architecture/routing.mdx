@@ -1,0 +1,36 @@
+---
+title: Routing (go_router)
+description: An explanation of how navigation and routing are handled in the web dashboard using go_router.
+---
+
+Navigation within the web dashboard is managed by the powerful [`go_router`](https://pub.dev/packages/go_router) package. This provides a robust, URL-based routing system that is essential for a web application.
+
+Our routing configuration is centralized in the `lib/router/` directory.
+
+### `StatefulShellRoute` for Persistent Navigation
+
+The main dashboard interface, which includes the top app bar and the side navigation rail, is built using a `StatefulShellRoute`. This is a specialized route type from `go_router` that is perfect for creating scaffolded UI with persistent navigation.
+
+It allows us to define several independent navigation "branches," one for each of our main sections:
+-   Dashboard
+-   Content Management
+-   App Configuration
+
+When a user navigates between these sections, `StatefulShellRoute` preserves the state of each branch, including the scroll position and any nested navigation.
+
+### Authentication and Redirects
+
+The router is tightly integrated with the `AppBloc` to handle authentication-based redirects automatically.
+
+-   The `GoRouter` is configured with a `refreshListenable` that listens to changes in the authentication status from the `AppBloc`.
+-   A `redirect` function checks the user's authentication status on every navigation change.
+    -   If an unauthenticated user tries to access any page other than the sign-in page, they are automatically redirected to `/authentication`.
+    -   If an authenticated user tries to access the sign-in page, they are automatically redirected to the main `/dashboard`.
+
+This ensures that the application's routes are always protected and that users are guided to the correct screen based on their session status.
+
+### Named Routes
+
+To prevent the use of hardcoded URL strings and to make navigation more maintainable, we use **named routes**. All route paths and names are defined as constants in the `lib/router/routes.dart` file.
+
+When navigating, we use methods like `context.goNamed('routeName')` instead of `context.go('/some/path')`. This makes the code cleaner and less prone to errors if a URL path needs to be changed in the future.
