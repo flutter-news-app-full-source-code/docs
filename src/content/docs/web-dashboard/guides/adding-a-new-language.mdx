@@ -1,73 +1,79 @@
 ---
-title: Adding a New Language
-description: A guide for developers on how to add a new language for localization.
+title: 'Guide: Localization'
+description: A guide to adding new languages and translations to the web client.
 ---
+import { Steps, Aside } from '@astrojs/starlight/components';
 
-import { Steps } from '@astrojs/starlight/components';
+The web client is fully internationalized using Flutter's built-in localization support. This guide explains how to add new translation strings and support for new languages.
 
-The web dashboard is built with localization in mind, making it straightforward to add support for new languages. The process involves creating a new `.arb` file and updating a few places in the code.
+### Localization Files
+
+All translation strings are stored in Application Resource Bundle (`.arb`) files located in the `lib/l10n/arb/` directory.
+
+-   `app_en.arb`: Contains the English translations. This is the template file.
+-   `app_ar.arb`: Contains the Arabic translations.
+
+Each entry in an `.arb` file consists of a key, the translated string, and an optional description.
+
+```json title="lib/l10n/arb/app_en.arb"
+{
+    "@@locale": "en",
+    "accountPageTitle": "Account",
+    "@accountPageTitle": {
+        "description": "Title for the account page"
+    }
+}
+```
+
+### How to Add a New Translation String
 
 <Steps>
-1.  **Create a New `.arb` File**
+1.  **Add the Key to the English Template**
 
-    Application strings are stored in Application Resource Bundle (`.arb`) files located in `lib/l10n/arb/`.
+    Open `lib/l10n/arb/app_en.arb` and add a new entry for your string. Provide a clear key and a helpful description.
 
-    -   Duplicate the `app_en.arb` file.
-    -   Rename the new file to `app_<language_code>.arb`, where `<language_code>` is the two-letter ISO 639-1 code for the new language (e.g., `app_es.arb` for Spanish).
-    -   Translate all the string values in the new file.
-
-2.  **Update `l10n.yaml`**
-
-    The `l10n.yaml` file in the root of the project configures the code generation for localization.
-
-    -   Open `l10n.yaml`.
-    -   Add your new `.arb` file to the list.
-
-    ```yaml title="l10n.yaml"
-    arb-dir: lib/l10n/arb
-    template-arb-file: app_en.arb
-    output-localization-file: app_localizations.dart
+    ```json
+    "myNewFeatureTitle": "My New Feature",
+    "@myNewFeatureTitle": {
+        "description": "Title for the new feature page"
+    }
     ```
 
-3.  **Run Code Generation**
+2.  **Add Translations to Other Languages**
 
-    Flutter's localization tool will automatically generate the necessary Dart code to support the new language.
+    Open the `.arb` file for each supported language (e.g., `app_ar.arb`) and add the corresponding translated string for the new key.
 
-    Run the following command in your terminal:
+    ```json
+    "myNewFeatureTitle": "ميزتي الجديدة",
+    ```
+
+3.  **Generate Dart Code**
+
+    Flutter's localization tool automatically generates Dart code from your `.arb` files. This process is usually triggered automatically when you save an `.arb` file if you are using a modern IDE with the Flutter extension.
+
+    If you need to run it manually, execute the following command in your terminal:
     ```bash
     flutter gen-l10n
     ```
 
-4.  **Update the Settings Page**
+4.  **Use the String in Your UI**
 
-    To make the new language selectable by the user, you need to add it to the settings page UI.
+    You can now access your new string in any widget that has a `BuildContext` using the generated `AppLocalizations` class.
 
-    -   Open `lib/settings/view/settings_page.dart`.
-    -   Locate the `_LanguageSelectionList` widget.
-    -   Add the new language code to the `_supportedLanguages` list.
-    -   Add a case to the `_getLanguageName` method to provide a display name for the new language.
+    ```dart
+    import 'package:flutter_news_app_web_dashboard_full_source_code/l10n/l10n.dart';
 
-    ```dart title="lib/settings/view/settings_page.dart"
-    class _LanguageSelectionList extends StatelessWidget {
-      // ...
-
-      String _getLanguageName(AppLanguage language, AppLocalizations l10n) {
-        switch (language) {
-          case 'en':
-            return l10n.englishLanguage;
-          case 'ar':
-            return l10n.arabicLanguage;
-          // Add your new language here
-          case 'es':
-            return 'Español'; // This should come from your .arb file
-        }
-      }
-
-      // Add your new language code here
-      static const List<AppLanguage> _supportedLanguages = ['en', 'ar', 'es'];
-    }
+    // ... inside a build method
+    Text(context.l10n.myNewFeatureTitle);
     ```
 
 </Steps>
 
-After completing these steps, the new language will be fully integrated into the web dashboard.
+### How to Add a New Language
+
+To add support for a new language, such as French:
+1.  Create a new file: `lib/l10n/arb/app_fr.arb`.
+2.  Set the locale at the top of the file: `"@@locale": "fr"`.
+3.  Copy all the keys from `app_en.arb` and provide the French translations.
+4.  Run `flutter gen-l10n` to update the generated code.
+5.  Finally, add the new language to the list of supported languages in `lib/app/view/app.dart`.
