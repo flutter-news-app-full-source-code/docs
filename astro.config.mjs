@@ -22,19 +22,24 @@ export default defineConfig({
 				{ label: 'Deployment', link: '/deployment' },
 				{
 					label: 'Architecture & Customization',
-					collapsed: false,
+					collapsed: true,
 					items: [
 						{
+							label: 'Overview',
+							link: '/architecture/index',
+						},
+
+						{
 							label: 'Understanding the Toolkit Architecture',
-							link: '/architecture/01-toolkit-architecture',
+							link: '/architecture/toolkit-architecture',
 						},
 						{
 							label: 'Taking Ownership of Packages',
-							link: '/architecture/02-taking-ownership-of-packages',
+							link: '/architecture/taking-ownership-of-packages',
 						},
 						{
 							label: 'Guide: Customizing the UI Theme',
-							link: '/architecture/03-guide-customizing-the-ui',
+							link: '/architecture/guide-customizing-the-ui',
 						},
 					],
 				},
@@ -54,7 +59,6 @@ export default defineConfig({
 								{ label: 'Email Service', link: '/api-server/features/email-service' },
 								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
 								{ label: 'RBAC', link: '/api-server/features/rbac' },
-								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
 							],
 						},
 						{
@@ -77,6 +81,7 @@ export default defineConfig({
 								{ label: 'Middleware', link: '/api-server/architecture/middleware' },
 								{ label: 'Data Seeding & Fixtures', link: '/api-server/architecture/data-seeding-and-fixtures' },
 								{ label: 'Generic Data Endpoint', link: '/api-server/architecture/generic-data-endpoint' },
+								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
 							],
 						},
 						{
