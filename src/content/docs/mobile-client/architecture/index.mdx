@@ -1,0 +1,26 @@
+---
+title: Architecture Overview
+description: An overview of the mobile client's layered architecture.
+---
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+The Flutter mobile client is built upon a clean, layered architecture designed for scalability, testability, and maintainability. This structure separates concerns, making the codebase easier to understand and extend.
+
+The architecture is divided into four primary layers:
+
+<CardGrid>
+	<Card title="1. Data Layer" icon="data">
+		This is the lowest layer, responsible for all communication with external data sources. It consists of **Data Client** implementations (e.g., `DataApi` for HTTP requests, `DataInMemory` for mock data). This layer handles the raw data fetching and maps external errors to a set of standardized exceptions.
+	</Card>
+	<Card title="2. Repository Layer" icon="repository">
+		The Repository Layer abstracts the data sources from the rest of the application. It uses the Data Clients to perform CRUD operations but hides the implementation details. This layer provides a clean, consistent API for the Business Logic Layer to consume.
+	</Card>
+	<Card title="3. Business Logic Layer (BLoC)" icon="bolt">
+		This layer contains the application's state and business logic, implemented using the **BLoC (Business Logic Component)** pattern. BLoCs respond to events from the UI, interact with repositories to fetch or update data, and emit new states for the UI to render.
+	</Card>
+    <Card title="4. Presentation Layer (UI)" icon="computer">
+        The top layer, responsible for rendering the user interface. It is composed of Flutter widgets that listen to state changes from BLoCs and dispatch events based on user interaction. This layer contains no business logic; it is purely concerned with presentation.
+    </Card>
+</CardGrid>
+
+This layered approach ensures a unidirectional data flow, making the application's state predictable and easy to debug.
