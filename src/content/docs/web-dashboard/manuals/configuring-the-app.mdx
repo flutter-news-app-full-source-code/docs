@@ -1,0 +1,45 @@
+---
+title: Configuring the Mobile App
+description: A user manual for remotely configuring the mobile app from the web dashboard.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The web dashboard provides a powerful set of tools to remotely control the behavior and settings of your live mobile application. This allows you to make dynamic changes without needing to release a new version to the app stores.
+
+<Aside type="caution" title="Critical Operation">
+Changes made in this section can have an immediate and significant impact on all users of your mobile app. Please review your changes carefully before saving.
+</Aside>
+
+### Navigating to App Configuration
+
+1.  After signing in, you will see a navigation menu on the left side of the screen.
+2.  Click on the **"App Configuration"** item in the menu.
+
+This will take you to the main configuration screen, which is organized into three tabs: **Feed**, **Advertisements**, and **General**.
+
+### How to Modify Configuration Settings
+
+The process for changing any setting is the same:
+
+1.  **Navigate to the Correct Tab:** Select the tab that contains the settings you wish to modify.
+2.  **Change the Values:** Interact with the form fields (text inputs, dropdowns, switches) to set your desired new values.
+3.  **Save Your Changes:** After making all your desired changes, click the **"Save Changes"** button in the bottom navigation bar. A confirmation dialog will appear. Click **"Confirm Save"** to apply your changes to the live application.
+
+If you make a mistake, you can click the **"Discard Changes"** button to revert all fields to their last saved state.
+
+### Available Settings
+
+#### Feed Tab
+
+-   **User Content Limits:** Control how many items (topics, sources) a user can follow and how many headlines they can save. You can set these limits independently for Guest, Standard, and Premium users.
+-   **Feed Actions:** Adjust how frequently in-feed prompts (like "Rate the App") are shown to Guest and Standard users.
+
+#### Advertisements Tab
+
+-   **Ad Settings:** Fine-tune your monetization strategy by controlling ad frequency, placement, and when full-screen interstitial ads are shown. These can also be set independently for Guest, Standard, and Premium users.
+
+#### General Tab
+
+-   **Maintenance Mode:** Enable this switch to put the mobile app into maintenance mode. Users will see a maintenance screen and will not be able to access the app's content.
+-   **Force App Update:** Specify the minimum required version of your app. If a user is on an older version, you can force them to update from the app store. You can also set the iOS and Android app store URLs here.
