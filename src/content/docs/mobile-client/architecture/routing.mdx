@@ -30,3 +30,33 @@ Navigation in the mobile client is managed by the powerful `go_router` package. 
         The router is used to pass complex data between pages. For example, when navigating to a details page, the full `Headline` object is passed via the `extra` parameter of the navigation call. This is more efficient than passing an ID and re-fetching data that is already available.
     </Card>
 </CardGrid>
+
+### Route Structure
+
+The main application routes are structured using a `StatefulShellRoute`, which provides the bottom navigation bar. Top-level routes are used for pages that should appear over the main shell, such as authentication or detailed content views.
+
+```tree title="Main Route Tree"
+/
+├─ /feed
+│  ├─ article/:id
+│  ├─ notifications
+│  └─ filter
+│     ├─ topics
+│     └─ sources
+├─ /search
+│  └─ article/:id
+└─ /account
+   ├─ settings
+   │  ├─ appearance
+   │  │  ├─ theme
+   │  │  └─ font
+   │  ├─ feed
+   │  └─ language
+   ├─ manage-followed-items
+   │  ├─ topics
+   │  │  └─ add-topic
+   │  └─ sources
+   │     └─ add-source
+   └─ saved-headlines
+      └─ article/:id
+```

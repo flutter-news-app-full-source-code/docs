@@ -2,98 +2,58 @@
 title: 'Deployment: Mobile Client'
 description: A guide to building and deploying the Flutter mobile app for Android and iOS.
 ---
+import { Steps, Aside } from '@astrojs/starlight/components';
 
-import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+This guide provides a high-level overview of the tasks required to build and deploy the Flutter News App Mobile Client to the Google Play Store and Apple App Store.
 
-This guide covers the essential pre-release tasks for building and deploying the Flutter News App Mobile Client to the Google Play Store and Apple App Store.
+For detailed, step-by-step instructions, this guide will link to the official Flutter and platform documentation. These are the definitive resources and are always kept up-to-date.
 
-<Aside>
-Before you begin, ensure you have configured the app to connect to your production API server by setting the `appEnvironment` constant in `lib/main.dart` to `AppEnvironment.production`.
-</Aside>
+### Prerequisites
 
-<Tabs>
-<TabItem label="Android">
+Before you begin, you will need active developer accounts for the platforms you are targeting:
+-   **Google Play Console:** [developer.android.com/distribute](https://developer.android.com/distribute)
+-   **Apple Developer Program:** [developer.apple.com/programs](https://developer.apple.com/programs/)
+
 <Steps>
-1.  **Update the Package ID**
+1.  **Configure for Production**
 
-    The Android package ID is a unique identifier for your app. You must change it from the default.
-    -   Open `android/app/build.gradle`.
-    -   Locate the `applicationId` field and change its value to your own unique ID (e.g., `com.yourcompany.newsapp`).
+    First, ensure the app is configured to connect to your live production API.
 
-2.  **Change the App Display Name**
+    -   Open the file `lib/main.dart`.
+    -   Locate the `appEnvironment` constant.
+    -   Set its value to `AppEnvironment.production`.
 
-    -   Open `android/app/src/main/AndroidManifest.xml`.
-    -   Find the `android:label` attribute within the `<application>` tag and update its value to your app's name.
-
-3.  **Generate App Icons**
-
-    The project uses the `flutter_launcher_icons` package to generate app icons.
-    -   Replace the placeholder icon file in your project's `assets` folder with your own icon (`1024x1024` recommended).
-    -   Update the `flutter_launcher_icons.yaml` file if your icon has a different name.
-    -   Run the following command to generate the icons:
-        ```bash
-        flutter pub run flutter_launcher_icons
-        ```
-
-4.  **Create a Production Keystore**
-
-    You must sign your Android app with a private key before uploading it to the Play Store.
-    -   Follow the official Android documentation to [generate a new upload key and keystore](https://developer.android.com/studio/publish/app-signing#generate-key).
-    -   Securely store the generated `.jks` file and remember your passwords.
-
-5.  **Configure Gradle for Signing**
-
-    -   Create a file named `android/key.properties` (this file is in `.gitignore` and should not be committed).
-    -   Add your keystore information to this file:
-        ```properties
-        storePassword=YOUR_STORE_PASSWORD
-        keyPassword=YOUR_KEY_PASSWORD
-        keyAlias=YOUR_KEY_ALIAS
-        storeFile=path/to/your/keystore.jks
-        ```
-    -   Open `android/app/build.gradle` and ensure the signing configuration section is set up to read from this `key.properties` file.
-
-6.  **Build the Release Bundle**
-
-    Generate a production-ready Android App Bundle (`.aab`):
-    ```bash
-    flutter build appbundle
+    ```dart title="lib/main.dart"
+    // Use `AppEnvironment.production` to connect to a live backend API.
+    const appEnvironment = AppEnvironment.production; 
     ```
-    The output file will be located at `build/app/outputs/bundle/release/app-release.aab`. You can now upload this file to the Google Play Console.
+
+    <Aside>
+    Ensure that the `baseUrl` for the `production` environment in `lib/app/config/app_config.dart` points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
+    </Aside>
+
+2.  **Follow the Official Flutter Deployment Guides**
+
+    The Flutter team provides comprehensive guides that cover every aspect of building and releasing your application. Please follow the official guide for each platform you intend to deploy to.
+
+    #### **Android (Google Play Store)**
+
+    The official guide covers essential steps including:
+    -   Updating the Package ID (`applicationId`).
+    -   Generating app icons.
+    -   Creating an upload keystore and configuring app signing.
+    -   Building the app bundle (`.aab`) for release.
+
+    **[Official Guide: Build and release an Android app](https://docs.flutter.dev/deployment/android)**
+
+    #### **iOS (Apple App Store)**
+
+    The official guide covers essential steps including:
+    -   Updating the Bundle Identifier and Display Name in Xcode.
+    -   Generating the app icon set.
+    -   Configuring app signing with your Apple Developer account.
+    -   Building the release archive (`.ipa`) for upload.
+
+    **[Official Guide: Build and release an iOS app](https://docs.flutter.dev/deployment/ios)**
 
 </Steps>
-</TabItem>
-<TabItem label="iOS">
-<Steps>
-1.  **Update the Bundle Identifier**
-
-    The iOS bundle identifier is a unique ID for your app.
-    -   Open the project in Xcode (`ios/Runner.xcworkspace`).
-    -   In the Project Navigator, select the `Runner` target.
-    -   Go to the "General" tab and update the "Bundle Identifier" field to your unique ID (e.g., `com.yourcompany.newsapp`).
-
-2.  **Update the Display Name**
-
-    -   In the same "General" tab in Xcode, update the "Display Name" field to your app's name.
-
-3.  **Generate the App Icon Set**
-
-    -   In Xcode, navigate to `Runner/Assets.xcassets` and select `AppIcon`.
-    -   Drag and drop your prepared app icons (`.png` files of various required sizes) into the appropriate slots. You can use an online tool to generate these sizes from a single `1024x1024` image.
-
-4.  **Configure Signing & Capabilities**
-
-    -   In Xcode, go to the "Signing & Capabilities" tab.
-    -   Select your development team and ensure a provisioning profile and signing certificate are correctly configured. This is required for deploying to a real device or the App Store. You will need an active Apple Developer account.
-
-5.  **Build the Release Archive**
-
-    Create a build archive to upload to App Store Connect.
-    ```bash
-    flutter build ipa
-    ```
-    This command will create an `.ipa` file inside the `build/ios/ipa/` directory. You can then upload this archive to App Store Connect using Xcode's Organizer or the Transporter app for testing via TestFlight or submission to the App Store.
-
-</Steps>
-</TabItem>
-</Tabs>

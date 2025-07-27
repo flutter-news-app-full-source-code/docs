@@ -110,7 +110,7 @@ export default defineConfig({
 							collapsed: true,
 							items: [
 								{ label: 'Theming & Customization', link: '/web-dashboard/guides/theming-and-customization' },
-								{ label: 'Adding a New Language', link: '/web-dashboard/guides/adding-a-new-language' },
+								{ label: 'Localization', link: '/web-dashboard/guides/localization' },
 							],
 						},
 						{
@@ -134,8 +134,19 @@ export default defineConfig({
 							label: 'Architecture',
 							collapsed: true,
 							items: [
-								{ label: 'Routing', link: '/mobile-client/architecture/routing' },
+								{ label: 'Overview', link: '/mobile-client/architecture/' },
+								{ label: 'State Management (BLoC)', link: '/mobile-client/architecture/state-management' },
+								{ label: 'Routing & Navigation', link: '/mobile-client/architecture/routing' },
+								{ label: 'Error Handling', link: '/mobile-client/architecture/error-handling' },
 								{ label: 'Shared Components', link: '/mobile-client/architecture/shared-components' },
+							],
+						},
+						{
+							label: 'Guides',
+							collapsed: true,
+							items: [
+								{ label: 'Styling & Theming', link: '/mobile-client/guides/styling-and-theming' },
+								{ label: 'Localization', link: '/mobile-client/guides/localization' },
 							],
 						},
 						{

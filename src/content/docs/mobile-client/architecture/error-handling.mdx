@@ -1,0 +1,50 @@
+---
+title: Error Handling
+description: Learn how errors and exceptions are managed across the application layers.
+---
+import { Aside } from '@astrojs/starlight/components';
+
+The mobile client employs a standardized and robust error handling strategy to ensure that issues are managed gracefully and that users are presented with clear, helpful feedback. The strategy is built upon a set of custom exception classes defined in the shared `core` package.
+
+### The Standardized Exceptions
+
+All exceptions that represent business logic or data fetching errors are subtypes of `HttpException`. This provides a consistent set of errors that can be handled across the entire application. Examples include:
+
+-   `NotFoundException`: Thrown when a requested resource does not exist.
+-   `NetworkException`: Thrown for connectivity issues like timeouts or DNS failures.
+-   `UnauthorizedException`: Thrown for authentication or authorization failures.
+-   `OperationFailedException`: A general-purpose exception for other server-side or unexpected failures.
+
+<Aside>
+You can find the full set of standardized exceptions in the `packages/core/lib/src/exceptions/` directory.
+</Aside>
+
+### The Flow of an Exception
+
+The error handling strategy follows the application's layered architecture, ensuring that exceptions are caught and handled at the appropriate level.
+
+1.  **Data Layer**: The `DataApi` client is responsible for making HTTP requests. It wraps all `try/catch` blocks around these requests. If a `DioException` (from the `http_client` package) occurs, an `ErrorInterceptor` maps it to one of the standardized `HttpException` subtypes. This is the only layer where raw network exceptions are handled.
+
+2.  **Repository Layer**: The `DataRepository` calls the data clients. It does not typically handle exceptions itself but allows them to propagate upwards. This keeps the repository focused on its role as a data aggregator.
+
+3.  **Business Logic Layer (BLoC)**: The BLoC is where exceptions are ultimately handled. A BLoC will wrap its calls to the repository in a `try/catch` block.
+    -   If an operation is successful, it emits a `Success` state with the fetched data.
+    -   If an `HttpException` is caught, it emits a `Failure` state, capturing the exception.
+
+    ```dart title="lib/headlines-feed/bloc/headlines_feed_bloc.dart"
+    // ...
+    try {
+      final headlineResponse = await _headlinesRepository.readAll(/* ... */);
+      // ...
+      emit(state.copyWith(status: HeadlinesFeedStatus.success, /* ... */));
+    } on HttpException catch (e) {
+      emit(state.copyWith(status: HeadlinesFeedStatus.failure, error: e));
+    }
+    // ...
+    ```
+
+4.  **Presentation Layer (UI)**: The UI uses a `BlocBuilder` to listen for state changes from the BLoC.
+    -   When it receives a `Success` state, it renders the data.
+    -   When it receives a `Failure` state, it displays a user-friendly error message using the shared `FailureStateWidget`. This widget takes the exception from the state and uses a helper method (`toFriendlyMessage`) to convert it into a localized, human-readable string.
+
+This structured approach ensures that UI components are never directly responsible for error handling logic, leading to a cleaner and more maintainable codebase.
