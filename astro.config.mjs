@@ -121,7 +121,7 @@ export default defineConfig({
 							label: 'Guides',
 							collapsed: true,
 							items: [
-								{ label: 'Theming & Customization', link: '/web-dashboard/guides/theming-and-customization' },
+								{ label: 'Styling & Theming', link: '/web-dashboard/guides/styling-and-theming' },
 								{ label: 'Localization', link: '/web-dashboard/guides/localization' },
 							],
 						},
