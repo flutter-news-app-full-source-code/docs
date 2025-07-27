@@ -17,7 +17,6 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				{ label: 'Introduction', link: 'introduction' },
 				{ label: 'Core Philosophy', link: 'core-philosophy' },
 				{ label: 'Local Setup', link: 'local-setup' },
 				{ label: 'Deployment', link: 'deployment' },
