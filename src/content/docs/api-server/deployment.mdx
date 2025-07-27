@@ -1,44 +1,38 @@
 ---
-title: Deployment Guide
-description: Learn how to deploy the API server to a production environment.
+title: 'Deployment: API Server'
+description: A guide to building and deploying the Dart Frog API server to a production environment.
 ---
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-This guide outlines the strategy for deploying the API server to a production environment. The recommended method is to use Docker, which creates a portable and consistent container for your application.
+This guide outlines the process for deploying the API server to a production environment. The server is built with Dart Frog and packaged as a Docker container, making it portable and easy to deploy to any hosting provider that supports Docker.
 
 <Aside>
-The world of cloud hosting and deployment tools evolves rapidly. Instead of providing specific commands that could become outdated, this guide focuses on the essential steps and links to the official documentation for the relevant services. This ensures you always have access to the most current and accurate instructions.
+To ensure you have the most reliable and up-to-date instructions, this guide focuses on the project-specific configuration you need to complete. For the deployment itself, we will refer you to the excellent official documentation from the Dart Frog team, which is the definitive resource.
 </Aside>
+
+### Pre-Deployment Configuration
+
+Before you can deploy, you must complete two essential configuration steps.
 
 <Steps>
 1.  **Configure Production Environment Variables**
 
-    Your first step is to prepare the production configuration for the server. Unlike local development which uses a `.env` file, in production you will use your hosting provider's interface to set environment variables securely.
+    In your production environment, you will not use a `.env` file. Instead, you must configure the environment variables directly in your chosen hosting provider's interface. This is a critical step for security and proper configuration.
 
-    For a detailed explanation of each required variable, please see the [Configure Environment Variables](/docs/api-server/guides/configure-environment-variables) guide.
+    For a detailed explanation of each required variable, please see the [**Configure Environment Variables Guide**](/docs/api-server/guides/configure-environment-variables).
 
-2.  **Choose a Deployment Strategy**
+2.  **Configure CORS**
 
-    The API server repository includes a `Dockerfile`, which allows for two main deployment strategies:
+    For the Web Dashboard to communicate with your API in production, you must correctly configure Cross-Origin Resource Sharing (CORS) by setting the `CORS_ALLOWED_ORIGIN` environment variable.
 
-    -   **Deploying a Pre-built Image:** You build the Docker image on your local machine or in a CI/CD pipeline, push it to a container registry (like Docker Hub, Google Container Registry, or Amazon ECR), and then your hosting provider pulls the image from the registry.
-    -   **Deploying from Source:** You connect your Git repository directly to the hosting provider, and it uses the `Dockerfile` to build and deploy the image for you.
-
-3.  **Deploy to a Hosting Provider**
-
-    Choose a hosting provider that supports Docker container deployments. Popular and well-documented options include:
-    -   [Google Cloud Run](https://cloud.google.com/run/docs/deploying)
-    -   [Amazon Elastic Container Service (ECS)](https://aws.amazon.com/ecs/)
-    -   [DigitalOcean App Platform](https://www.digitalocean.com/docs/app-platform/)
-    -   [Render](https://render.com/docs/docker)
-
-    Follow the official documentation from your chosen provider to deploy your container. During the setup process, you will be prompted to configure the environment variables from Step 1.
-
-4.  **Configure CORS**
-
-    For your web-based dashboard to communicate with the API in production, you must correctly configure Cross-Origin Resource Sharing (CORS).
-
-    For instructions, see the [Configure CORS](/docs/api-server/guides/configure-cors) guide.
-
+    For instructions, see the [**Configure CORS Guide**](/docs/api-server/guides/configure-cors).
 </Steps>
+
+### Deployment with Dart Frog
+
+Once your configuration is ready, you can proceed with the deployment. The Dart Frog documentation provides comprehensive guides for various hosting providers and deployment strategies (e.g., using Docker, deploying to Google Cloud Run, etc.).
+
+Following the official documentation is the recommended and most reliable path to a successful deployment.
+
+**[Official Dart Frog Deployment Guides](https://dartfrog.vgv.dev/docs/category/deploy)**
