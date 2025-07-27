@@ -17,29 +17,27 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				{ label: 'Core Philosophy', link: '/core-philosophy' },
-				{ label: 'Local Setup', link: '/local-setup' },
-				{ label: 'Deployment', link: '/deployment' },
 				{
-					label: 'Architecture & Customization',
-					collapsed: true,
+					label: 'Getting Started',
 					items: [
+						{ label: 'Overview', link: '/getting-started/' },
+						{ label: 'Core Philosophy', link: '/getting-started/core-philosophy' },
+						{ label: 'Toolkit Architecture', link: '/getting-started/toolkit-architecture' },
+						{ label: 'Local Setup', link: '/getting-started/local-setup' },
+						{ label: 'Deployment', link: '/getting-started/deployment' },
+					],
+				},
+				{
+					label: 'Customization Guides',
+					items: [
+						{ label: 'Overview', link: '/customization/' },
 						{
-							label: 'Overview',
-							link: '/architecture/index',
-						},
-
-						{
-							label: 'Understanding the Toolkit Architecture',
-							link: '/architecture/toolkit-architecture',
-						},
-						{
-							label: 'Taking Ownership of Packages',
-							link: '/architecture/taking-ownership-of-packages',
+							label: 'Hosting Packages for Customization',
+							link: '/customization/hosting-packages-for-customization',
 						},
 						{
 							label: 'Guide: Customizing the UI Theme',
-							link: '/architecture/guide-customizing-the-ui',
+							link: '/customization/guide-customizing-the-ui',
 						},
 					],
 				},
@@ -81,7 +79,7 @@ export default defineConfig({
 								{ label: 'Middleware', link: '/api-server/architecture/middleware' },
 								{ label: 'Data Seeding & Fixtures', link: '/api-server/architecture/data-seeding-and-fixtures' },
 								{ label: 'Generic Data Endpoint', link: '/api-server/architecture/generic-data-endpoint' },
-								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
+								{ label: 'Error Handling', link: '/api-server/architecture/error-handling' },
 							],
 						},
 						{
@@ -97,7 +95,7 @@ export default defineConfig({
 						{ label: 'Deployment', link: '/api-server/deployment' },
 					],
 				},
-								{
+				{
 					label: 'Web Dashboard',
 					collapsed: true,
 					items: [
