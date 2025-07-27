@@ -1,30 +1,19 @@
 ---
-title: Architecture Overview
+title: Architecture
 description: An overview of the architectural patterns and structure of the Flutter web dashboard.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
 The Flutter News App Web Dashboard is built upon a clean, scalable, and maintainable architecture that separates concerns into distinct layers. This approach, combined with the use of shared packages, ensures that the codebase is both robust and easy to extend.
 
-### Layered Architecture
-
-The dashboard follows a classic layered architecture, ensuring a clear separation of responsibilities:
-
-1.  **Presentation Layer (UI):** This is the user-facing layer, built with Flutter widgets. It is responsible for displaying the UI and capturing user input. It is kept as "dumb" as possible, meaning it contains minimal logic and simply reflects the state provided by the Business Logic Layer.
-
-2.  **Business Logic Layer (BLoC):** This layer contains the application's state management and business rules. We use the **BLoC (Business Logic Component)** pattern to manage the flow of information from user events to UI states. Feature-specific BLoCs (e.g., `ContentManagementBloc`, `DashboardBloc`) orchestrate data from the Repository Layer and emit states for the UI to consume.
-
-3.  **Repository Layer:** This layer abstracts the origin of the data. It provides a clean, simple API for the Business Logic Layer to access data, without needing to know whether the data is coming from a remote API or a local in-memory source. This is a key part of our strategy for testability and environment flexibility.
-
-4.  **Data Layer (Clients):** This is the lowest layer, responsible for the actual data retrieval. It consists of `Client` implementations that communicate with external sources. For the dashboard, this means either an `HttpDataClient` that makes requests to the API server or an `InMemoryDataClient` used for the demo environment.
-
-<Aside>
-The Repository and Data layers are not implemented directly within the dashboard. Instead, the dashboard consumes them as shared packages, which are used across the entire ecosystem (including the mobile app and API server).
-</Aside>
-
-### Core Principles
-
--   **Dependency Injection:** Repositories and other services are provided to the widget tree using `RepositoryProvider` and `BlocProvider`. This decouples our components and makes them highly testable.
--   **Immutability:** All data models and BLoC states are immutable, which leads to more predictable state management and reduces the risk of side effects.
--   **Shared Packages:** The dashboard leverages a suite of shared packages for core functionality (e.g., `core`, `data_repository`, `auth_repository`, `ui_kit`). This promotes code reuse and consistency across the entire project ecosystem.
+<CardGrid>
+  <Card title="State Management (BLoC)" icon="bolt">
+    An explanation of how the BLoC pattern is used for state management.
+    [Read more &rarr;](/docs/web-dashboard/architecture/state-management/)
+  </Card>
+  <Card title="Routing (go_router)" icon="link">
+    An explanation of how navigation and routing are handled using go_router.
+    [Read more &rarr;](/docs/web-dashboard/architecture/routing/)
+  </Card>
+</CardGrid>
