@@ -1,0 +1,93 @@
+---
+title: 'Guide: Customizing the UI Theme'
+description: A practical, step-by-step guide to customizing the UI theme by taking ownership of the ui_kit package.
+---
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+This guide provides a hands-on, practical walkthrough of the most common and impactful customization task: changing the application's visual theme. 
+
+By following this guide, you will learn the complete, end-to-end workflow for modifying a shared package and seeing that change reflected in both the Mobile Client and the Web Dashboard. This process is the key to unlocking the full customization potential of the toolkit.
+
+### The Goal
+
+Our goal is to change the default blue accent color of the application to a new color, for example, deep purple. To do this, we will take ownership of the `ui_kit` package, modify its theme file, and then instruct both of our Flutter applications to use our modified version.
+
+<Steps>
+1.  **Take Ownership of the `ui_kit` Package**
+
+    Before you can change any code, you must have your own version of the `ui_kit` package hosted in a private repository.
+
+    -   Follow the [**Taking Ownership of Packages**](/docs/architecture/02-taking-ownership-of-packages/) guide from start to finish, but for the `ui_kit` repository.
+    -   **Clone URL:** `https://github.com/flutter-news-app-full-source-code/ui-kit.git`
+
+    Once you have successfully pushed the `ui_kit` code to your own private GitHub repository, you are ready to proceed.
+
+2.  **Modify the Theme Code**
+
+    Now, open the `ui_kit` package you cloned to your local machine in your code editor (e.g., VS Code).
+
+    -   Navigate to and open the file: `lib/src/theme/app_theme.dart`.
+    -   Locate the `_commonSubThemesData` constant. This is where you can make global changes to widget styles.
+    -   Let's change the `appBarBackgroundSchemeColor` to `primary` to make the app bar more prominent.
+
+    ```dart title="packages/ui-kit/lib/src/theme/app_theme.dart"
+    const FlexSubThemesData _commonSubThemesData = FlexSubThemesData(
+      // ...
+      // Change the app bar background color
+      appBarBackgroundSchemeColor: SchemeColor.primary, // Changed from .surface
+      // ...
+    );
+    ```
+
+3.  **Commit and Push Your Changes**
+
+    Save the file, then commit and push this change to *your private* `ui_kit` repository.
+
+    ```bash
+    # From inside your local ui_kit directory
+    git add .
+    git commit -m "feat: change app bar theme color"
+    git push
+    ```
+
+4.  **Update the Mobile Client**
+
+    Now it's time to see your change in action. Open the **Mobile Client** project (`flutter-news-app-mobile-client-full-source-code`) in your code editor.
+
+    -   Open the `pubspec.yaml` file.
+    -   Locate the `ui_kit` dependency.
+    -   Change the `url` to point to your private repository's URL.
+
+    ```yaml title="Mobile Client's pubspec.yaml"
+    dependencies:
+      # ... other dependencies
+      ui_kit:
+        git:
+          # Replace this with the URL of YOUR private repository
+          url: https://github.com/YOUR_USERNAME/YOUR_UI_KIT_REPO.git
+      # ... other dependencies
+    ```
+
+    -   Now, run `flutter pub upgrade` in the terminal for the Mobile Client project. This will fetch the updated code from your private repository.
+
+    ```bash
+    flutter pub upgrade ui_kit
+    ```
+
+    -   Relaunch the mobile app (`flutter run`). You should now see your new theme color applied to the app bar!
+
+5.  **Update the Web Dashboard**
+
+    The final step is to apply the exact same change to the Web Dashboard, demonstrating the power of the shared package.
+
+    -   Open the **Web Dashboard** project (`flutter-news-app-web-dashboard-full-source-code`).
+    -   Open its `pubspec.yaml` file.
+    -   Update the `ui_kit` dependency's `url` to point to your private repository, just as you did for the mobile client.
+    -   Run `flutter pub upgrade ui_kit` in the terminal for the Web Dashboard project.
+    -   Relaunch the web app (`flutter run -d chrome`). The dashboard will now also have the new app bar color.
+
+</Steps>
+
+### Conclusion
+
+You have successfully completed the core customization workflow. You now have a privately owned and modified `ui_kit` package that is consumed by both of your client applications. You can use this exact same process to customize any other shared package in the toolkit.

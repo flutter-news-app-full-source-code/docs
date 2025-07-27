@@ -21,6 +21,29 @@ export default defineConfig({
 				{ label: 'Local Setup', link: '/local-setup' },
 				{ label: 'Deployment', link: '/deployment' },
 				{
+					label: 'Architecture & Customization',
+					collapsed: true,
+					items: [
+						{
+							label: 'Overview',
+							link: '/architecture/index',
+						},
+
+						{
+							label: 'Understanding the Toolkit Architecture',
+							link: '/architecture/toolkit-architecture',
+						},
+						{
+							label: 'Taking Ownership of Packages',
+							link: '/architecture/taking-ownership-of-packages',
+						},
+						{
+							label: 'Guide: Customizing the UI Theme',
+							link: '/architecture/guide-customizing-the-ui',
+						},
+					],
+				},
+				{
 					label: 'API Server',
 					collapsed: true,
 					items: [
@@ -36,7 +59,6 @@ export default defineConfig({
 								{ label: 'Email Service', link: '/api-server/features/email-service' },
 								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
 								{ label: 'RBAC', link: '/api-server/features/rbac' },
-								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
 							],
 						},
 						{
@@ -59,6 +81,7 @@ export default defineConfig({
 								{ label: 'Middleware', link: '/api-server/architecture/middleware' },
 								{ label: 'Data Seeding & Fixtures', link: '/api-server/architecture/data-seeding-and-fixtures' },
 								{ label: 'Generic Data Endpoint', link: '/api-server/architecture/generic-data-endpoint' },
+								{ label: 'Error Handling', link: '/api-server/features/error-handling' },
 							],
 						},
 						{
@@ -103,7 +126,7 @@ export default defineConfig({
 							label: 'Guides',
 							collapsed: true,
 							items: [
-								{ label: 'Theming & Customization', link: '/web-dashboard/guides/theming-and-customization' },
+								{ label: 'Styling & Theming', link: '/web-dashboard/guides/styling-and-theming' },
 								{ label: 'Localization', link: '/web-dashboard/guides/localization' },
 							],
 						},
