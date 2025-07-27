@@ -1,25 +1,35 @@
 ---
 title: 'Web Dashboard: Introduction'
-description: An overview of the Flutter News App Web Dashboard.
+description: An overview of the Flutter News App Web Dashboard, the central control panel for your news ecosystem.
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
-
-## Welcome to the Web Dashboard
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
 
 The Flutter News App Web Dashboard is a comprehensive, production-ready web application built with Flutter. It serves as the central control panel for your entire news ecosystem, providing administrators and content publishers with the tools they need to manage content, configure the mobile app's behavior, and monitor key statistics.
 
 <CardGrid>
-  <Card title="Comprehensive Content Management" icon="pencil">
-    Full CRUD (Create, Read, Update, Delete) capabilities for all your core content, including headlines, topics, and sources.
-  </Card>
-  <Card title="Dynamic App Configuration" icon="settings">
-    Remotely control the mobile app's features, such as ad frequency, user content limits, and maintenance status, without needing to publish a new app version.
-  </Card>
-  <Card title="Dashboard Analytics" icon="chart-bar">
-    Get a high-level overview of your content library with at-a-glance statistics for headlines, topics, and sources.
-  </Card>
-  <Card title="Secure & Modern UI" icon="shield">
-    Built with a clean, responsive interface that works on any screen size, and secured with a robust, email-based authentication flow for administrators.
-  </Card>
+	<Card title="Local Setup" icon="rocket">
+		Follow the local setup guide to get the dashboard running on your machine.
+		[Read more &rarr;](/docs/web-dashboard/local-setup/)
+	</Card>
+	<Card title="Deployment" icon="cloud">
+		Learn how to deploy the web dashboard to a production environment.
+		[Read more &rarr;](/docs/web-dashboard/deployment/)
+	</Card>
+	<Card title="Features" icon="puzzle">
+		Explore the key features, from content management to remote app configuration.
+		[Read more &rarr;](/docs/web-dashboard/features/dashboard-overview/)
+	</Card>
+	<Card title="Architecture" icon="structure">
+		Understand the architecture, state management, and navigation patterns.
+		[Read more &rarr;](/docs/web-dashboard/architecture/overview/)
+	</Card>
+	<Card title="Developer Guides" icon="document">
+		Practical guides for developers on theming, customization, and localization.
+		[Read more &rarr;](/docs/web-dashboard/guides/theming-and-customization/)
+	</Card>
+  <Card title="User Manuals" icon="open-book">
+		User-focused manuals for administrators and publishers.
+		[Read more &rarr;](/docs/web-dashboard/manuals/managing-content/)
+	</Card>
 </CardGrid>
