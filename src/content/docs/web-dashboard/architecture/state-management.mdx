@@ -1,0 +1,37 @@
+---
+title: State Management (BLoC)
+description: An explanation of how the BLoC pattern is used for state management in the web dashboard.
+---
+
+State management in the web dashboard is handled predictably and robustly using the **BLoC (Business Logic Component)** pattern. This pattern helps to separate business logic from the UI, leading to a more organized, testable, and scalable application.
+
+We utilize two main categories of BLoCs:
+
+### 1. Global `AppBloc`
+
+The `AppBloc` is a high-level BLoC that is provided at the root of the application. It is responsible for managing global state that affects the entire application. Its key responsibilities include:
+
+-   **Authentication Status:** It listens to the `authStateChanges` stream from the `AuthRepository` and holds the current authentication status (`authenticated`, `unauthenticated`). This is used by the router to handle redirects.
+-   **Current User:** It holds the `User` object for the currently authenticated user.
+-   **User App Settings:** It loads and holds the `UserAppSettings`, which includes the user's preferred theme, language, and other display preferences. This allows the entire UI to react instantly to changes made in the settings page.
+
+### 2. Feature-Specific BLoCs
+
+Each major feature or section of the dashboard has its own dedicated BLoC to manage its specific state. This keeps the logic for each feature encapsulated and independent.
+
+-   **`DashboardBloc`:** Responsible for fetching and holding the dashboard summary statistics and the list of recent headlines.
+-   **`ContentManagementBloc`:** Manages the state for the three content tabs (Headlines, Topics, Sources), including loading, paginating, and deleting content.
+-   **`AppConfigurationBloc`:** Manages the state of the remote configuration form, tracking user edits, handling save operations, and managing the "dirty" state of the form.
+-   **`AuthenticationBloc`:** Manages the state of the sign-in flow, such as handling loading states when a code is requested or verified.
+-   **`SettingsBloc`:** Manages the state of the settings page, loading the user's current settings and processing update events.
+-   **Create/Edit BLoCs:** Each create and edit page (e.g., `CreateHeadlineBloc`, `EditTopicBloc`) has its own BLoC to manage the state of the form fields, validation, and the submission process.
+
+### The Flow of Data
+
+The typical data flow for a feature follows this pattern:
+
+1.  **UI Event:** A user interacts with a widget, which dispatches an `Event` to its corresponding BLoC (e.g., `LoadHeadlinesRequested`).
+2.  **BLoC Processes Event:** The BLoC receives the event, calls one or more methods on its injected `Repository` to fetch or update data.
+3.  **Repository Fetches Data:** The `Repository` communicates with the `DataClient` to get data from the API or in-memory source.
+4.  **BLoC Emits State:** Based on the result from the repository (success or failure), the BLoC emits a new `State` object.
+5.  **UI Rebuilds:** A `BlocBuilder` or `BlocListener` in the UI layer listens for state changes and rebuilds the relevant parts of the widget tree to reflect the new state.
