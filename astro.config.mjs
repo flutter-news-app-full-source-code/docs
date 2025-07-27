@@ -17,9 +17,9 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				{ label: 'Core Philosophy', link: 'core-philosophy' },
-				{ label: 'Local Setup', link: 'local-setup' },
-				{ label: 'Deployment', link: 'deployment' },
+				{ label: 'Core Philosophy', link: '/core-philosophy' },
+				{ label: 'Local Setup', link: '/local-setup' },
+				{ label: 'Deployment', link: '/deployment' },
 				{
 					label: 'API Server',
 					collapsed: true,
