@@ -110,7 +110,7 @@ export default defineConfig({
 							collapsed: true,
 							items: [
 								{ label: 'Theming & Customization', link: '/web-dashboard/guides/theming-and-customization' },
-								{ label: 'Adding a New Language', link: '/web-dashboard/guides/adding-a-new-language' },
+								{ label: 'Localization', link: '/web-dashboard/guides/localization' },
 							],
 						},
 						{
@@ -145,8 +145,6 @@ export default defineConfig({
 							label: 'Guides',
 							collapsed: true,
 							items: [
-								{ label: 'Creating a New Feature', link: '/mobile-client/guides/creating-a-new-feature' },
-								{ label: 'Adding a New Setting', link: '/mobile-client/guides/adding-a-new-setting' },
 								{ label: 'Styling & Theming', link: '/mobile-client/guides/styling-and-theming' },
 								{ label: 'Localization', link: '/mobile-client/guides/localization' },
 							],
