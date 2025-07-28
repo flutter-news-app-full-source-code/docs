@@ -95,9 +95,8 @@ This variable provides a powerful and secure way to set or recover the applicati
 -   **If no admin exists:** A new administrator account will be created with this email.
 -   **If an admin with a DIFFERENT email exists:** The old admin account will be removed and replaced by a new one with this email. All associated data for the old admin will be deleted.
 -   **If an admin with this email already exists:** No changes will be made.
-
-<Aside type="tip" title="How to Change Your Admin Email">
-To change or recover the main administrator account, set this environment variable to the desired email address and restart the server. The system will handle the update automatically.
+<Aside type="caution" title="Email Delivery Note">
+Be aware that if the administrator's email is the same as the `DEFAULT_SENDER_EMAIL`, you may not receive the OTP email required for login. Some email services, including SendGrid, can prevent an address from sending an email to itself. For reliable administrator access, it is recommended to use an admin email that is different from your verified sender email.
 </Aside>
 
 ### Optional Variables
