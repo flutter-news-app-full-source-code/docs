@@ -1,0 +1,22 @@
+---
+title: Managing Your Admin Account
+description: Learn how to change the primary administrator email address for the application.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+As the primary administrator, you may need to change the email address associated with your admin account. For security reasons, this is not an operation that can be performed from within the dashboard itself. Instead, it is handled by a secure, server-level configuration change.
+
+This process ensures that only an individual with access to the server's deployment environment can make this critical change.
+
+### How to Change the Administrator Email
+
+The administrator email is controlled by a special environment variable on the API server. To change it, you or your system administrator will need to perform the following steps.
+
+<Aside type="tip" title="Technical Steps Required">
+The following action requires access to your API server's hosting environment. For detailed, step-by-step instructions on how to set the required environment variable, please follow the guide below:
+
+**[API Guide: How to Change the Admin Account &rarr;](/docs/api-server/guides/managing-admin-account/)**
+</Aside>
+
+By following the linked guide, you will be able to securely set or change the primary administrator account for your entire application.
