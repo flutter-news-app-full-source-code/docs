@@ -120,6 +120,7 @@ export default defineConfig({
 							items: [
 								{ label: 'Managing Content', link: '/web-dashboard/manuals/managing-content' },
 								{ label: 'Configuring the Mobile App', link: '/web-dashboard/manuals/configuring-the-app' },
+								{ label: 'Managing Your Admin Account', link: '/web-dashboard/manuals/managing-admin-account' },
 							],
 						},
 						{ label: 'Deployment', link: '/web-dashboard/deployment' },
