@@ -1,0 +1,41 @@
+---
+title: Managing the Admin Account
+description: Learn how to set, change, or recover the primary administrator account for the application.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The application uses a special environment variable, `OVERRIDE_ADMIN_EMAIL`, to provide a secure and reliable way to manage the primary administrator account. This is the designated method for initial setup or for recovering access if the admin email needs to be changed.
+
+This process is handled at the server level, not through the dashboard UI, to ensure maximum security.
+
+### How It Works
+
+When the API server starts, it checks for the `OVERRIDE_ADMIN_EMAIL` variable. If this variable is set, the server performs an automatic process to ensure the user with that email is the sole administrator.
+
+This provides a powerful mechanism to:
+-   **Set the initial administrator** on first deployment.
+-   **Change the administrator email** if needed.
+-   **Recover access** if the current administrator account is inaccessible.
+
+### How to Change the Admin Account
+
+To set or change the administrator email, you must modify the environment variables in your server's hosting environment.
+
+1.  **Set the Environment Variable:**
+    In your production hosting environment (e.g., Google Cloud Run, Render), set the `OVERRIDE_ADMIN_EMAIL` variable to the desired email address.
+
+    ```env
+    OVERRIDE_ADMIN_EMAIL="new-admin@example.com"
+    ```
+
+2.  **Restart the Server:**
+    Restart your API server application. On startup, the server will automatically handle the admin account update.
+
+<Aside type="note">
+For a detailed explanation of how this variable works and its different behaviors (creating, replacing, or updating), please refer to the **[Administrator Override section in the Environment Variables guide](/docs/api-server/guides/configure-environment-variables/#administrator-override)**.
+</Aside>
+
+<Aside type="caution" title="Security Best Practice">
+Once the server has restarted and the admin account has been successfully updated, it is recommended to remove the `OVERRIDE_ADMIN_EMAIL` variable from your environment. This prevents accidental changes on subsequent server restarts.
+</Aside>
