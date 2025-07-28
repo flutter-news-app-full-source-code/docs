@@ -36,42 +36,38 @@ For guidance on setting up a local MongoDB instance, see the [Configure MongoDB]
 </Aside>
 
 #### `JWT_SECRET_KEY`
-A long, random password used to secure your API.
+A cryptographically secure secret key used to sign and verify JSON Web Tokens (JWTs). This key ensures that authentication tokens are not tampered with.
 
-*   **How to Generate:** The easiest way is to use a free online generator. Search for "**JWT secret generator**" and create a key that is **at least 64 characters long**. Copy the key it gives you.
-*   **Security:** Keep it secret! Never save this key in your code or commit it to version control.
+-   **Recommendation:** Use a secure, randomly generated string with at least 64 characters. You can use an online tool to generate a suitable key.
 
-#### `SENDGRID_API_KEY`
-Your API key for the SendGrid service, which is used to send transactional emails like One-Time Passwords (OTPs).
-
--   **How to Obtain:**
-    1.  create a free [SendGrid account](https://signup.sendgrid.com/).
-    2.  create your API key, follow the [official SendGrid guide](https://www.twilio.com/docs/sendgrid/ui/account-and-settings/api-keys#creating-an-api-key).
-    3.  Copy the generated key and paste it here.
-
-#### `DEFAULT_SENDER_EMAIL`
-The email address that will appear as the sender for all transactional emails. This should be an email address you have verified with SendGrid.
-
-<Aside type="caution">
-SendGrid requires you to prove you own this email address to prevent it from rejecting your emails. This is done through a process called "Single Sender Verification".
+<Aside type="danger" title="Security Warning">
+The `JWT_SECRET_KEY` is highly sensitive. **Never** commit this key to version control or expose it publicly. Treat it with the same level of security as a password.
 </Aside>
 
-**How to Verify:** Follow the [official SendGrid guide](https://www.twilio.com/docs/sendgrid/ui/sending-email/sender-verification). You will need to click a confirmation link sent to that address.
+#### `SENDGRID_API_KEY`
+The API key for your SendGrid account. The server uses SendGrid to send transactional emails, such as One-Time Passwords (OTPs) for user authentication.
 
+-   **To obtain your key:**
+    1.  Log in to your [SendGrid account](https://signup.sendgrid.com/).
+    2.  Follow the [official SendGrid guide](https://www.twilio.com/docs/sendgrid/ui/account-and-settings/api-keys#creating-an-api-key) for detailed instructions.
+
+#### `DEFAULT_SENDER_EMAIL`
+The "From" email address for all outgoing transactional emails.
+
+<Aside type="caution">
+This email address **must** be verified in SendGrid to ensure email delivery. SendGrid will reject emails from unverified senders.
+</Aside>
+
+-   **To verify your sender identity:** Follow the [official SendGrid guide on sender verification](https://www.twilio.com/docs/sendgrid/ui/sending-email/sender-verification).
 
 #### `OTP_TEMPLATE_ID`
-The ID of the dynamic email template in SendGrid used for sending OTP codes.
+The unique ID of the SendGrid dynamic template used for sending OTP codes.
 
--    **Steps to Create the Template:**
-
-    1.  Go directly to SendGrid's [**Dynamic Templates page**](https://mc.sendgrid.com/dynamic-templates).
-
-    2.  Click "**Create a Dynamic Template**" and give it a name (e.g., "OTP Template").
-
-    3.  Click your new template, then click "**Add Version**" and choose the "Blank Template" then the  "**Code Editor**".
-
-    4.  Empty all existing HTML code then paste the code below. It includes the required `{{otp_code}}` placeholder.
-
+-   **To create the template:**
+    1.  Navigate to the [**Dynamic Templates**](https://mc.sendgrid.com/dynamic-templates) page in your SendGrid dashboard.
+    2.  Click **Create a Dynamic Template** and give it a memorable name (e.g., `OTP Template`).
+    3.  Select your new template, click **Add Version**, and choose the **Code Editor**.
+    4.  Replace the default content with the HTML below. This code includes the mandatory `{{otp_code}}` substitution tag.
 
     ```html
     <!DOCTYPE html>
@@ -91,7 +87,7 @@ The ID of the dynamic email template in SendGrid used for sending OTP codes.
     </body>
     </html>
     ```
-5.  **Save the template**. Go back to the main Dynamic Templates page and copy the **Template ID**. You will need this ID for your server configuration.
+    5.  Save the template. From the Dynamic Templates list, copy the **Template ID** and paste it into your `.env` file.
 
 ### Optional Variables
 
