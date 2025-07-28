@@ -51,6 +51,12 @@ The API key for your SendGrid account. The server uses SendGrid to send transact
     1.  Log in to your [SendGrid account](https://signup.sendgrid.com/).
     2.  Follow the [official SendGrid guide](https://www.twilio.com/docs/sendgrid/ui/account-and-settings/api-keys#creating-an-api-key) for detailed instructions.
 
+<Aside type="caution" title="SendGrid Plan Limitations">
+SendGrid's free trial (no credit card required) is an excellent choice for development and initial testing. It provides a limit of 100 emails per day for the first 60 days. After this period, your account will be converted to a Pay As You Go plan, which requires adding a payment method to continue service.
+
+For more details, see the [SendGrid Pricing Page](https://sendgrid.com/en-us/pricing).
+</Aside>
+
 #### `DEFAULT_SENDER_EMAIL`
 The "From" email address for all outgoing transactional emails.
 
