@@ -11,12 +11,20 @@ This process ensures that only an individual with access to the server's deploym
 
 ### How to Change the Administrator Email
 
-The administrator email is controlled by a special environment variable on the API server. To change it, you or your system administrator will need to perform the following steps.
+To set or change the administrator email, you must modify the environment variables in your API server's hosting environment.
 
-<Aside type="tip" title="Technical Steps Required">
-The following action requires access to your API server's hosting environment. For detailed, step-by-step instructions on how to set the required environment variable, please follow the guide below:
+1.  **Set the `OVERRIDE_ADMIN_EMAIL` Variable**
+    
+    In your hosting provider's configuration panel (or in your local `.env` file), set the `OVERRIDE_ADMIN_EMAIL` variable to the email address you want to use for the administrator account.
+    
+    ```env
+    OVERRIDE_ADMIN_EMAIL="new-admin@example.com"
+    ```
 
-**[API Guide: How to Change the Admin Account &rarr;](/docs/api-server/guides/managing-admin-account/)**
+2.  **Restart the API Server**
+
+    After setting the variable, restart your API server. The system will automatically update the administrator account on startup.
+
+<Aside type="note">
+This process uses environment variables. For a detailed explanation of what these variables are and how `OVERRIDE_ADMIN_EMAIL` works, please see the [API Server: Configure Environment Variables](/docs/api-server/guides/configure-environment-variables/) guide.
 </Aside>
-
-By following the linked guide, you will be able to securely set or change the primary administrator account for your entire application.
