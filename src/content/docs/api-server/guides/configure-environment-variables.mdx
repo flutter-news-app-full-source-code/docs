@@ -109,3 +109,18 @@ For more details on CORS, see the [Configure CORS](/docs/api-server/guides/confi
 The base URL for the SendGrid API.
 -   **Default:** `https://api.sendgrid.com`
 -   **EU Accounts:** If your SendGrid account is based in the EU, you may need to set this to `https://api.eu.sendgrid.com`.
+
+---
+
+### Administrator Override
+
+#### `OVERRIDE_ADMIN_EMAIL`
+This variable provides a powerful and secure way to set or recover the application's single administrator account. On server startup, the system ensures that the user with this email is the one and only administrator.
+
+-   **If no admin exists:** A new administrator account will be created with this email.
+-   **If an admin with a DIFFERENT email exists:** The old admin account will be removed and replaced by a new one with this email. All associated data for the old admin will be deleted.
+-   **If an admin with this email already exists:** No changes will be made.
+
+<Aside type="tip" title="How to Change Your Admin Email">
+To change or recover the main administrator account, set this environment variable to the desired email address and restart the server. The system will handle the update automatically.
+</Aside>
