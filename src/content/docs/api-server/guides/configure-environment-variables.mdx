@@ -36,14 +36,10 @@ For guidance on setting up a local MongoDB instance, see the [Configure MongoDB]
 </Aside>
 
 #### `JWT_SECRET_KEY`
-A long, complex, and randomly generated secret used for signing JSON Web Tokens (JWTs). This key is critical for securing user authentication.
+A long, random password used to secure your API.
 
--   **How to Generate:** You can use any secure random string generator. For example, the `dcli_scripts` package can generate one for you:
-    ```bash
-    dart pub global activate dcli_scripts
-    dcli_scripts create_key
-    ```
--   **Security:** Never commit this key to version control or expose it publicly.
+*   **How to Generate:** The easiest way is to use a free online generator. Search for "**JWT secret generator**" and create a key that is **at least 64 characters long**. Copy the key it gives you.
+*   **Security:** Keep it secret! Never save this key in your code or commit it to version control.
 
 #### `SENDGRID_API_KEY`
 Your API key for the SendGrid service, which is used to send transactional emails like One-Time Passwords (OTPs).
