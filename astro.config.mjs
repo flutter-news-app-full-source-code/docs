@@ -28,20 +28,6 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Customization Guides',
-					items: [
-						{ label: 'Overview', link: '/customization/' },
-						{
-							label: 'Hosting Packages for Customization',
-							link: '/customization/hosting-packages-for-customization',
-						},
-						{
-							label: 'Guide: Customizing the UI Theme',
-							link: '/customization/guide-customizing-the-ui',
-						},
-					],
-				},
-				{
 					label: 'API Server',
 					collapsed: true,
 					items: [
@@ -178,6 +164,21 @@ export default defineConfig({
 							],
 						},
 						{ label: 'Deployment', link: '/mobile-client/deployment' },
+					],
+				},
+				{
+					label: 'Customization Guides',
+					collapsed: true,
+					items: [
+						{ label: 'Overview', link: '/customization/' },
+						{
+							label: 'Hosting Packages for Customization',
+							link: '/customization/hosting-packages-for-customization',
+						},
+						{
+							label: 'Guide: Customizing the UI Theme',
+							link: '/customization/guide-customizing-the-ui',
+						},
 					],
 				},
 			],
