@@ -11,7 +11,7 @@ This is crucial for preventing abuse, such as brute-force attacks on the authent
 
 ### How It Works
 
-The rate-limiting mechanism is implemented as a middleware that runs on specific routes. It uses the client's IP address as the primary identifier for tracking requests.
+The rate-limiting mechanism is implemented as a middleware that runs on specific routes. It uses the client's IP address to identify unauthenticated requests and the user's ID for authenticated requests.
 
 There are two distinct rate-limiting configurations applied to different parts of the API:
 
@@ -40,7 +40,7 @@ When a client exceeds a rate limit, the API will respond with an HTTP `429 Too M
 ```json
 {
   "error": {
-    "code": "forbidden",
+    "code": "tooManyRequests",
     "message": "You have made too many requests. Please try again later."
   }
 }
