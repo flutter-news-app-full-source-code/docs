@@ -26,7 +26,7 @@ Here is the typical execution order for a request to a protected data endpoint l
 
 3.  **Data Route Middleware (`/routes/api/v1/data/_middleware.dart`)**
     -   **Require Authentication:** Checks if a `User` object exists in the context. If not, it immediately aborts the request with a `401 Unauthorized` error.
-    -   **Rate Limiting:** If the user is not an admin, it applies a rate limit based on the user's ID. If the limit is exceeded, it aborts with a `429 Too Many Requests` error.
+    -   **Rate Limiting:** If the user is not an admin or a publisher, it applies a rate limit based on the user's ID. If the limit is exceeded, it aborts with a `429 Too Many Requests` error.
     -   **Model Validation:** Validates the `?model=` query parameter and injects the corresponding `ModelConfig` into the context.
     -   **Authorization:** Checks if the authenticated user has the required permissions to perform the requested action on the specified model. If not, it aborts with a `403 Forbidden` error.
 
