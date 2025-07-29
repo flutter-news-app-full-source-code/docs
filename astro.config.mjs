@@ -43,6 +43,7 @@ export default defineConfig({
 								{ label: 'Email Service', link: '/api-server/features/email-service' },
 								{ label: 'Data Management', link: '/api-server/features/data-management-api' },
 								{ label: 'RBAC', link: '/api-server/features/rbac' },
+								{ label: 'Rate Limiting', link: '/api-server/features/rate-limiting' },
 							],
 						},
 						{
