@@ -125,3 +125,17 @@ For more details on CORS, see the [Configure CORS](/docs/api-server/guides/confi
 The base URL for the SendGrid API.
 -   **Default:** `https://api.sendgrid.com`
 -   **EU Accounts:** If your SendGrid account is based in the EU, you may need to set this to `https://api.eu.sendgrid.com`.
+
+#### `RATE_LIMIT_REQUEST_CODE_LIMIT`
+The number of times a user can request a sign-in code within the defined window.
+-   **Default:** `3`
+
+#### `RATE_LIMIT_REQUEST_CODE_WINDOW_HOURS`
+The time window, in hours, for the sign-in code request limit.
+-   **Default:** `24`
+
+#### `RATE_LIMIT_DATA_API_LIMIT`
+The number of general data API requests a user can make within the defined window.
+-   **Default:** `1000`
+
+#### `RATE_LIMIT_DATA_API_WINDOW_MINUTES`
