@@ -111,7 +111,11 @@ These variables have default values but can be customized for your environment.
 
 #### `JWT_EXPIRY_HOURS`
 The duration, in hours, for which a JWT is valid.
--   **Default:** `1` (1 hour)
+-   **Default:** `720` (1 month)
+
+<Aside type="caution" title="Cost & User Experience Implications">
+Lowering this value will require users to sign in more often. Each sign-in sends a verification code via email, which may incur costs from your email provider (e.g., SendGrid). The default value of one month is recommended to balance security with a smooth user experience and predictable costs.
+</Aside>
 
 #### `CORS_ALLOWED_ORIGIN`
 The specific origin URL of your web client (e.g., the Flutter Web Dashboard) that is allowed to make requests to this API. This is **required for production** to prevent Cross-Origin Resource Sharing (CORS) errors.
@@ -125,3 +129,21 @@ For more details on CORS, see the [Configure CORS](/docs/api-server/guides/confi
 The base URL for the SendGrid API.
 -   **Default:** `https://api.sendgrid.com`
 -   **EU Accounts:** If your SendGrid account is based in the EU, you may need to set this to `https://api.eu.sendgrid.com`.
+
+#### `RATE_LIMIT_REQUEST_CODE_LIMIT`
+The number of times a user can request a sign-in code within the defined window.
+-   **Default:** `3`
+
+<Aside type="caution" title="Security & Cost Implications">
+This limit is a critical security measure to prevent abuse of the email sign-in system. Increasing this value could allow a malicious actor to trigger a large number of emails to a specific address, potentially incurring significant costs from your email provider. It is strongly recommended to keep this value low.
+</Aside>
+
+#### `RATE_LIMIT_REQUEST_CODE_WINDOW_HOURS`
+The time window, in hours, for the sign-in code request limit.
+-   **Default:** `24`
+
+#### `RATE_LIMIT_DATA_API_LIMIT`
+The number of general data API requests a user can make within the defined window.
+-   **Default:** `1000`
+
+#### `RATE_LIMIT_DATA_API_WINDOW_MINUTES`
