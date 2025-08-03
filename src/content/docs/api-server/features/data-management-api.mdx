@@ -40,11 +40,16 @@ The generic data endpoint can manage the following models out-of-the-box:
 -   `topic`
 -   `source`
 -   `country`
+-   `language`
 -   `user`
 -   `user_app_settings`
 -   `user_content_preferences`
 -   `remote_config`
 -   `dashboard_summary`
+
+<Aside type="caution" title="Read-Only Models">
+The `country` and `language` models are configured to be **read-only** through the API. This is an intentional design choice. This foundational data is managed centrally via the database seeding process and is not intended to be modified by users.
+</Aside>
 
 <Aside type="note">
 Some actions are intentionally unsupported through this generic endpoint for security or logical reasons. For example, creating a new user is handled exclusively by the dedicated `/api/v1/auth/verify-code` endpoint, not by a POST request to `?model=user`. These restrictions are defined in the `ModelConfig` for each model.
