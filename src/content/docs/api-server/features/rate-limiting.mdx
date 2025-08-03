@@ -11,19 +11,21 @@ This is crucial for preventing abuse, such as brute-force attacks on the authent
 
 ### How It Works
 
-The rate-limiting mechanism is implemented as a middleware that runs on specific routes. It uses the client's IP address to identify unauthenticated requests and the user's ID for authenticated requests.
+The rate-limiting mechanism is implemented as a middleware that runs on specific routes. It uses a different strategy for identifying clients depending on the endpoint's sensitivity and authentication requirements.
 
 There are two distinct rate-limiting configurations applied to different parts of the API:
 
-1.  **Sensitive Endpoint Limiting:**
+1.  **IP-Based Limiting for Sensitive Unauthenticated Endpoints:**
     -   **Target:** The `/api/v1/auth/request-code` endpoint.
-    -   **Purpose:** This endpoint is more sensitive as it triggers an email to be sent. The rate limit here is intentionally strict to prevent spamming users with verification codes.
-    -   **Default Limit:** 3 requests per 24 hours.
+    -   **Identification:** Requests are tracked by the client's **IP address**.
+    -   **Purpose:** This endpoint is unauthenticated and triggers a costly action (sending an email). The rate limit is strict to prevent anonymous users from spamming the service.
+    -   **Default Limit:** 3 requests per IP address per 24 hours.
 
-2.  **General Data API Limiting:**
+2.  **User-Based Limiting for Authenticated Endpoints:**
     -   **Target:** All endpoints under `/api/v1/data`.
-    -   **Purpose:** This provides a generous limit for general application usage while still protecting the server from excessively frequent requests from a single client.
-    -   **Default Limit:** 1000 requests per 60 minutes.
+    -   **Identification:** Requests are tracked by the authenticated **user's ID**.
+    -   **Purpose:** This provides a generous limit for general application usage while still protecting the server from excessively frequent requests from a single authenticated user.
+    -   **Default Limit:** 1000 requests per user per 60 minutes.
 
 <Aside type="note" title="Bypassing Limits">
 Users with the `admin` or `publisher` role automatically bypass all rate limits, ensuring that administrative tasks are never blocked.
