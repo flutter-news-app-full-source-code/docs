@@ -105,6 +105,7 @@ export default defineConfig({
 								{ label: 'Overview', link: '/web-dashboard/architecture/' },
 								{ label: 'State Management (BLoC)', link: '/web-dashboard/architecture/state-management' },
 								{ label: 'Routing (go_router)', link: '/web-dashboard/architecture/routing' },
+								{ label: 'Data Loading Strategy', link: '/web-dashboard/architecture/data-loading-strategy' },
 							],
 						},
 						{
