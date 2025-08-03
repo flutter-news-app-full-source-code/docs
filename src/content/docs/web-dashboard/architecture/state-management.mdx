@@ -20,7 +20,8 @@ The `AppBloc` is a high-level BLoC that is provided at the root of the applicati
 Each major feature or section of the dashboard has its own dedicated BLoC to manage its specific state. This keeps the logic for each feature encapsulated and independent.
 
 -   **`DashboardBloc`:** Responsible for fetching and holding the dashboard summary statistics and the list of recent headlines.
--   **`ContentManagementBloc`:** Manages the state for the three content tabs (Headlines, Topics, Sources), including loading, paginating, and deleting content.
+-   **`ContentManagementBloc`:** Manages the state for the three content tabs (Headlines, Topics, Sources), including loading, paginating, and archiving content. It is also responsible for pre-fetching and caching shared data like the full list of countries and languages, which are then consumed by the create/edit BLoCs.
+-   **`ArchivedHeadlinesBloc`, `ArchivedTopicsBloc`, `ArchivedSourcesBloc`:** Each of these BLoCs is responsible for managing the state of its respective archived content page, including loading, restoring, and permanently deleting items.
 -   **`AppConfigurationBloc`:** Manages the state of the remote configuration form, tracking user edits, handling save operations, and managing the "dirty" state of the form.
 -   **`AuthenticationBloc`:** Manages the state of the sign-in flow, such as handling loading states when a code is requested or verified.
 -   **`SettingsBloc`:** Manages the state of the settings page, loading the user's current settings and processing update events.
