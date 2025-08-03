@@ -24,11 +24,16 @@ The following model names are supported:
 -   `topic`
 -   `source`
 -   `country`
+-   `language`
 -   `user`
 -   `user_app_settings`
 -   `user_content_preferences`
 -   `remote_config`
 -   `dashboard_summary`
+
+<Aside type="caution" title="Read-Only Models">
+The `country` and `language` models are configured to be **read-only** through the API (i.e., they do not support `POST`, `PUT`, or `DELETE` requests). This is an intentional design choice, as this foundational data is managed via the database seeding process.
+</Aside>
 
 <Aside type="caution">
 Attempting to use an unsupported model name will result in a `400 Bad Request` error.
