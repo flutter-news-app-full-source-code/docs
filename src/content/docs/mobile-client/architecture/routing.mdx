@@ -1,11 +1,109 @@
 ---
 title: Routing & Navigation
-description: Learn about the navigation structure and routing implementation in the mobile client.
+description: Learn about the startup flow and routing architecture that powers the mobile client.
 ---
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
-Navigation in the mobile client is managed by the powerful `go_router` package. This provides a declarative, URL-based routing system that is robust, type-safe, and easy to maintain. All routing configuration is centralized within the `lib/router/` directory.
+The mobile client employs a sophisticated, multi-path startup sequence to handle authentication and remote configuration checks gracefully. This ensures the app is always in a valid state before rendering the main UI.
 
+## The Application Startup Flow
+
+The startup logic is orchestrated by the `AppBloc` and the root `_AppView` widget. The path the user experiences depends on their initial authentication status.
+
+<Aside>
+A key architectural decision is that the **Remote Configuration API requires authentication**. This means the app must first establish a user session (even an anonymous one) before it can check for maintenance mode or required updates.
+</Aside>
+
+### Path 1: New or Logged-Out User
+
+This is the flow for a user with no existing session.
+
+1.  **Auth Check**: On startup, the `AppBloc` checks for a user. None is found.
+2.  **State Transition**: The `AppBloc` immediately emits the `AppStatus.unauthenticated` state.
+3.  **Router Activation**: The `_AppView` widget sees a "running" state (`unauthenticated`) and builds the main `MaterialApp.router`, activating `GoRouter`.
+4.  **Redirection**: `GoRouter`'s `redirect` logic intercepts the navigation, sees the `unauthenticated` status, and immediately redirects the user to the `/authentication` page.
+
+In this scenario, the user is taken directly to the sign-in screen without any intermediate loading pages.
+
+### Path 2: Existing User (Authenticated or Anonymous)
+
+This flow handles users who already have an active session.
+
+1.  **Auth Check**: On startup, the `AppBloc` finds an existing user session.
+2.  **Initial State**: The `AppBloc` emits the corresponding status (`authenticated` or `anonymous`) and immediately dispatches an `AppConfigFetchRequested` event.
+3.  **Pre-Router Status Pages**: The `_onAppConfigFetchRequested` handler sets the state to `AppStatus.configFetching`. The `_AppView` widget detects this critical status and displays a full-screen `StatusPage` *before* building the main router. This pre-flight check handles several possibilities:
+    -   **Loading**: A `StatusPage` with a loading indicator is shown.
+    -   **Failure**: If the config fetch fails, the `StatusPage` shows a retry button.
+    -   **Maintenance/Update**: If the config dictates, a `MaintenancePage` or `UpdateRequiredPage` is shown.
+4.  **Router Activation**: Only after the remote config is successfully fetched and no critical status is found does the `_AppView` build the `MaterialApp.router`.
+5.  **Redirection**: `GoRouter`'s `redirect` logic sees the `authenticated` or `anonymous` status and navigates the user to the main `/feed`.
+
+This two-path system correctly prioritizes authentication and then uses that session to securely fetch critical app configuration.
+
+<Aside title="Automatic Status Re-checks" icon="sync">
+The application includes an `AppStatusService` that automatically re-fetches the remote configuration in the background. This service triggers a check when the app is resumed from the background or at a periodic interval (e.g., every 15 minutes).
+
+These background fetches are "silent" (`isBackgroundCheck: true`), meaning they do not show a loading screen. If the new configuration indicates a critical status (like maintenance mode), the app will immediately transition to the appropriate status page. This ensures the app can react to server-side changes in near real-time without disrupting the user unless absolutely necessary.
+</Aside>
+
+## GoRouter Implementation Details
+
+Once the startup flow is complete and the router is active, `go_router` manages all in-app navigation.
+
+### Core Concepts
+
+-   **`GoRouter`**: The main router instance that controls the application's navigation stack. It is configured with a list of routes, redirect logic, and a refresh listener.
+
+-   **`Routes` Class**: A class located in `lib/router/routes.dart` that defines all route paths and names as `static const String` constants. Using named routes (e.g., `context.goNamed(Routes.settingsName)`) instead of raw path strings is a best practice that prevents typos and makes the code more maintainable.
+
+-   **`StatefulShellRoute`**: This is a key component from `go_router` used to implement persistent UI elements, such as the main bottom navigation bar. It wraps the main sections of the app (e.g., Headlines Feed, Search, Account) and manages a separate navigation stack for each section, preserving the navigation state as the user switches between tabs.
+
+### Key Implementations
+
+<CardGrid>
+	<Card title="Centralized Configuration" icon="file-tree">
+		All route definitions are located in `lib/router/router.dart`. This file contains the `GoRouter` setup, including the tree of `GoRoute` and `StatefulShellRoute` widgets that define the entire navigation map of the application.
+	</Card>
+	<Card title="Authentication-Aware Redirects" icon="shield-check">
+		The router is configured with a `redirect` logic that depends on the application's authentication status, which is provided by the `AppBloc`. This ensures that unauthenticated users are automatically redirected to the sign-in page, while authenticated users are directed to the main app content, creating a secure and seamless user experience.
+	</Card>
+	<Card title="Type-Safe Navigation" icon="shield">
+		By using named routes defined in the `Routes` class, navigation calls throughout the app are type-safe. This approach reduces runtime errors and makes it easy to refactor or update routes, as any changes only need to be made in one central location.
+	</Card>
+    <Card title="Passing Arguments" icon="box">
+        The router is used to pass complex data between pages. For example, when navigating to a details page, the full `Headline` object is passed via the `extra` parameter of the navigation call. This is more efficient than passing an ID and re-fetching data that is already available.
+    </Card>
+</CardGrid>
+
+### Route Structure
+
+The main application routes are structured using a `StatefulShellRoute`, which provides the bottom navigation bar. Top-level routes are used for pages that should appear over the main shell, such as authentication or detailed content views.
+
+```tree title="Main Route Tree"
+/
+├─ /feed
+│  ├─ article/:id
+│  ├─ notifications
+│  └─ filter
+│     ├─ topics
+│     └─ sources
+├─ /search
+│  └─ article/:id
+└─ /account
+   ├─ settings
+   │  ├─ appearance
+   │  │  ├─ theme
+   │  │  └─ font
+   │  ├─ feed
+   │  └─ language
+   ├─ manage-followed-items
+   │  ├─ topics
+   │  │  └─ add-topic
+   │  └─ sources
+   │     └─ add-source
+   └─ saved-headlines
+      └─ article/:id
+```
 ## Core Concepts
 
 -   **`GoRouter`**: The main router instance that controls the application's navigation stack. It is configured with a list of routes, redirect logic, and a refresh listener.
