@@ -157,6 +157,7 @@ export default defineConfig({
 							label: 'Features',
 							collapsed: true,
 							items: [
+								{ label: 'Overview', link: '/mobile-client/features/' },
 								{ label: 'Account', link: '/mobile-client/features/account' },
 								{ label: 'Authentication', link: '/mobile-client/features/authentication' },
 								{ label: 'Entity Details', link: '/mobile-client/features/entity-details' },
@@ -164,6 +165,7 @@ export default defineConfig({
 								{ label: 'Headlines Feed', link: '/mobile-client/features/headlines-feed' },
 								{ label: 'Search', link: '/mobile-client/features/search' },
 								{ label: 'Settings', link: '/mobile-client/features/settings' },
+								{ label: 'Status Pages', link: '/mobile-client/features/status-pages' },
 							],
 						},
 						{ label: 'Deployment', link: '/mobile-client/deployment' },
