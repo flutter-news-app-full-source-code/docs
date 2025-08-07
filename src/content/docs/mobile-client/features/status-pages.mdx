@@ -1,0 +1,29 @@
+---
+title: 'Feature: Status Pages'
+description: Learn about the critical, app-wide status pages for maintenance and required updates.
+---
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+The mobile client includes a set of full-screen status pages designed to handle critical, app-wide states. These pages are a key part of the [two-tiered routing architecture](/docs/mobile-client/architecture/routing) and are displayed *before* the main application UI and router are ever built.
+
+This mechanism is triggered by the `RemoteConfig` object fetched from the backend upon application startup. It allows administrators to communicate important information to all users or enforce mandatory updates.
+
+<Aside>
+The logic for displaying these pages resides in the `_AppView` widget (`lib/app/view/app.dart`), which listens to the `AppStatus` from the `AppBloc`.
+</Aside>
+
+## The Status Pages
+
+<CardGrid>
+	<Card title="Maintenance Page" icon="construction">
+		When the `isUnderMaintenance` flag in the `RemoteConfig` is set to `true`, the application will display the `MaintenancePage`. This page informs the user that the app is temporarily unavailable and prevents them from proceeding further. It's a crucial tool for performing server-side updates without disrupting users with a broken app.
+	</Card>
+	<Card title="Update Required Page" icon="system-update">
+		If the `isLatestVersionOnly` flag is `true` in the `RemoteConfig`, the `UpdateRequiredPage` is shown. This page instructs the user that they must update to the latest version of the app to continue. It includes a button that links directly to the appropriate app store (Apple App Store or Google Play Store), using the URL also provided in the `RemoteConfig`.
+	</Card>
+    <Card title="Initial Status Page" icon="cloud-download">
+        This is the very first UI the user sees when a remote configuration check is required. The `StatusPage` handles two states:
+        - **Loading**: Displays a loading indicator while the app is fetching the remote config (`AppStatus.configFetching`).
+        - **Failure**: If the fetch fails, it shows an error message and a "Retry" button, allowing the user to attempt the connection again (`AppStatus.configFetchFailed`).
+    </Card>
+</CardGrid>
