@@ -4,12 +4,15 @@ description: Learn about the critical, app-wide status pages for maintenance and
 ---
 import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
-The mobile client includes a set of full-screen status pages designed to handle critical, app-wide states. These pages are a key part of the [two-tiered routing architecture](/docs/mobile-client/architecture/routing) and are displayed *before* the main application UI and router are ever built.
+The mobile client includes a set of full-screen status pages designed to handle critical, app-wide states. These pages are a key part of the [application startup flow](/docs/mobile-client/architecture/routing) and are displayed *before* the main application UI and router are ever built.
 
 This mechanism is triggered by the `RemoteConfig` object fetched from the backend upon application startup. It allows administrators to communicate important information to all users or enforce mandatory updates.
 
 <Aside>
 The logic for displaying these pages resides in the `_AppView` widget (`lib/app/view/app.dart`), which listens to the `AppStatus` from the `AppBloc`.
+</Aside>
+<Aside type="note" title="Automatic Re-checks">
+The app can also enter these states after startup. An `AppStatusService` periodically re-checks the remote configuration in the background. If it detects a change (e.g., maintenance mode has been enabled), it will immediately transition the app to the appropriate status page.
 </Aside>
 
 ## The Status Pages
