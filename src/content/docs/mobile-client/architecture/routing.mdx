@@ -1,37 +1,48 @@
 ---
 title: Routing & Navigation
-description: Learn about the two-tiered routing architecture that powers the mobile client.
+description: Learn about the startup flow and routing architecture that powers the mobile client.
 ---
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
-The mobile client employs a robust, two-tiered architecture to manage application startup and navigation. This ensures the app is in a stable, valid state before rendering the main UI and its nested routes.
+The mobile client employs a sophisticated, multi-path startup sequence to handle authentication and remote configuration checks gracefully. This ensures the app is always in a valid state before rendering the main UI.
 
-## Tier 1: Pre-Router Status Pages
+## The Application Startup Flow
 
-The first tier of logic acts as a global gatekeeper. It is handled by the root `_AppView` widget (`lib/app/view/app.dart`) and the `AppBloc`. This tier determines if a critical, full-screen status page should be displayed *before* the main `GoRouter` instance is ever built.
+The startup logic is orchestrated by the `AppBloc` and the root `_AppView` widget. The path the user experiences depends on their initial authentication status.
 
-This pre-flight check is essential for handling states that must block the entire application.
+<Aside>
+A key architectural decision is that the **Remote Configuration API requires authentication**. This means the app must first establish a user session (even an anonymous one) before it can check for maintenance mode or required updates.
+</Aside>
 
-<CardGrid>
-	<Card title="AppStatus.configFetching" icon="cloud-download">
-		On startup, the `AppBloc` immediately attempts to fetch the remote configuration. During this time, the `_AppView` displays a `StatusPage` with a loading indicator.
-	</Card>
-	<Card title="AppStatus.configFetchFailed" icon="error">
-		If the configuration fetch fails (e.g., due to a network error), the `StatusPage` updates to show an error message and a retry button, allowing the user to attempt the fetch again.
-	</Card>
-	<Card title="AppStatus.underMaintenance" icon="construction">
-		If the fetched config indicates that the app is in maintenance mode, the `_AppView` replaces the UI with a dedicated `MaintenancePage`.
-	</Card>
-    <Card title="AppStatus.updateRequired" icon="system-update">
-        If the config indicates a mandatory update is required, the `_AppView` displays an `UpdateRequiredPage` with a link to the appropriate app store.
-    </Card>
-</CardGrid>
+### Path 1: New or Logged-Out User
 
-In any of these critical states, the main application router is not active. This architecture prevents race conditions and ensures the app only proceeds once it has confirmed it is in a healthy, runnable state.
+This is the flow for a user with no existing session.
 
-## Tier 2: Authenticated Routing with GoRouter
+1.  **Auth Check**: On startup, the `AppBloc` checks for a user. None is found.
+2.  **State Transition**: The `AppBloc` immediately emits the `AppStatus.unauthenticated` state.
+3.  **Router Activation**: The `_AppView` widget sees a "running" state (`unauthenticated`) and builds the main `MaterialApp.router`, activating `GoRouter`.
+4.  **Redirection**: `GoRouter`'s `redirect` logic intercepts the navigation, sees the `unauthenticated` status, and immediately redirects the user to the `/authentication` page.
 
-Once the pre-flight checks in Tier 1 are passed, the `_AppView` builds the main `MaterialApp.router`, activating `go_router`. From this point on, `go_router` is responsible for all in-app navigation.
+In this scenario, the user is taken directly to the sign-in screen without any intermediate loading pages.
+
+### Path 2: Existing User (Authenticated or Anonymous)
+
+This flow handles users who already have an active session.
+
+1.  **Auth Check**: On startup, the `AppBloc` finds an existing user session.
+2.  **Initial State**: The `AppBloc` emits the corresponding status (`authenticated` or `anonymous`) and immediately dispatches an `AppConfigFetchRequested` event.
+3.  **Pre-Router Status Pages**: The `_onAppConfigFetchRequested` handler sets the state to `AppStatus.configFetching`. The `_AppView` widget detects this critical status and displays a full-screen `StatusPage` *before* building the main router. This pre-flight check handles several possibilities:
+    -   **Loading**: A `StatusPage` with a loading indicator is shown.
+    -   **Failure**: If the config fetch fails, the `StatusPage` shows a retry button.
+    -   **Maintenance/Update**: If the config dictates, a `MaintenancePage` or `UpdateRequiredPage` is shown.
+4.  **Router Activation**: Only after the remote config is successfully fetched and no critical status is found does the `_AppView` build the `MaterialApp.router`.
+5.  **Redirection**: `GoRouter`'s `redirect` logic sees the `authenticated` or `anonymous` status and navigates the user to the main `/feed`.
+
+This two-path system correctly prioritizes authentication and then uses that session to securely fetch critical app configuration.
+
+## GoRouter Implementation Details
+
+Once the startup flow is complete and the router is active, `go_router` manages all in-app navigation.
 
 ### Core Concepts
 
