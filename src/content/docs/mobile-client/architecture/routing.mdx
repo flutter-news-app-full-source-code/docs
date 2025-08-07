@@ -41,7 +41,7 @@ This flow handles users who already have an active session.
 This two-path system correctly prioritizes authentication and then uses that session to securely fetch critical app configuration.
 
 <Aside type="note">
-The application includes an `AppStatusService` that automatically re-fetches the remote configuration in the background. This service triggers a check when the app is resumed from the background or at a periodic interval (e.g., every 15 minutes).
+The application includes an `AppStatusService` that automatically re-fetches the remote configuration in the background. This service triggers a check when the app is resumed from the background and at a periodic interval (e.g., every 15 minutes).
 
 These background fetches are "silent" (`isBackgroundCheck: true`), meaning they do not show a loading screen. If the new configuration indicates a critical status (like maintenance mode), the app will immediately transition to the appropriate status page. This ensures the app can react to server-side changes in near real-time without disrupting the user unless absolutely necessary.
 </Aside>
