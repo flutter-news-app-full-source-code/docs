@@ -27,7 +27,7 @@ The following table lists the most common error codes and their corresponding HT
 
 | HTTP Status | Error Code             | Description                                                                                             |
 | :---------- | :--------------------- | :------------------------------------------------------------------------------------------------------ |
-| `400`       | `badRequest`           | The request was malformed, such as having invalid JSON or incorrect parameter formats.                  |
+| `400`       | `badRequest`           | The request was malformed. This can be due to invalid JSON in the body, or incorrect parameter formats (e.g., an invalid `filter` or `sort` query). |
 | `400`       | `invalidInput`         | A specific field in the request body or query parameter was invalid or missing.                         |
 | `401`       | `unauthorized`         | Authentication is required, but the request lacks a valid Bearer token. This can also mean the token is expired or has been invalidated (e.g., after sign-out). |
 | `401`       | `authenticationFailed` | The provided credentials (e.g., verification code) are incorrect.                                       |
