@@ -1,0 +1,80 @@
+---
+title: 'Architectural Deep Dive: Data Access Flow'
+description: A detailed walkthrough of how the API server processes a generic data request from start to finish.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+This document provides a comprehensive, step-by-step explanation of the entire request lifecycle for the generic data endpoint (`/api/v1/data`). Understanding this flow is key to appreciating the server's robust, maintainable, and extensible design.
+
+The architecture relies on a series of middleware and two central registries working in concert to process requests securely and efficiently.
+
+### Core Components
+
+-   **`ModelRegistry`**: A map that links a model's string name (e.g., `"headline"`) to a `ModelConfig` object. This config holds metadata for authorization rules and type-specific functions (`fromJson`, `getOwnerId`). It answers the question: **"What are the rules for this model?"**
+
+-   **`DataOperationRegistry`**: A map that links a model's string name to the actual functions that perform CRUD operations (e.g., `create`, `read`, `update`, `delete`). It answers the question: **"How do I perform this action for this model?"**
+
+-   **Middleware**: A chain of functions that process the request sequentially. Each middleware has a specific responsibility, such as authentication, authorization, or data fetching.
+
+---
+
+### Request Lifecycle for a Collection (`GET /api/v1/data?model=...`)
+
+This flow applies to requests for a collection of items.
+
+<Steps>
+1.  **Authentication (`authenticationProvider`)**
+    The first middleware validates the `Bearer` token and injects the `User` object into the request context. If the token is invalid, the user is considered unauthenticated.
+
+2.  **Enforce Authentication (`requireAuthentication`)**
+    This middleware checks if a `User` object is present in the context. Since the `/data` endpoint is protected, it will throw an `UnauthorizedException` if the user is not authenticated, aborting the request.
+
+3.  **Rate Limiting (`_dataRateLimiterMiddleware`)**
+    The user's request count is checked. If the limit is exceeded, the request is aborted with a `429 Too Many Requests` error. Admins and publishers bypass this check.
+
+4.  **Model Validation (`_modelValidationAndProviderMiddleware`)**
+    The `?model=` query parameter is read and validated against the `ModelRegistry`. If the model is valid, its `ModelConfig` is fetched and injected into the context for later use. If not, a `400 Bad Request` is thrown.
+
+5.  **Authorization (`authorizationMiddleware`)**
+    This crucial middleware uses the `ModelConfig` to determine the required permission for a `GET` collection request. It checks if the authenticated user has this permission. If not, a `403 Forbidden` error is thrown.
+
+6.  **Route Handler (`/routes/api/v1/data/index.dart`)**
+    The request finally reaches the handler. The handler uses the `DataOperationRegistry` to find the correct `readAll` function for the specified model and executes it, passing along any filter, sort, or pagination parameters.
+
+7.  **Response**
+    The handler wraps the data from the repository in a standard `SuccessApiResponse` and sends it back to the client.
+</Steps>
+
+---
+
+### Request Lifecycle for a Single Item (`GET /api/v1/data/[id]?model=...`)
+
+This flow is more complex, involving additional middleware to handle fetching and ownership checks.
+
+<Steps>
+1.  **Authentication, Rate Limiting, Model Validation, and Authorization**
+    The first five steps are identical to the collection request lifecycle. The `authorizationMiddleware` checks the `getItemPermission` from the `ModelConfig`.
+
+2.  **Data Fetching (`dataFetchMiddleware`)**
+    This is the first item-specific middleware. It reads the item `id` from the URL and uses the `DataOperationRegistry` to find and execute the correct `read` function for the model.
+    -   If the item is not found, it throws a `NotFoundException`.
+    -   If found, it wraps the item in a `FetchedItem` object and injects it into the context.
+
+3.  **Ownership Check (`ownershipCheckMiddleware`)**
+    This middleware inspects the `ModelConfig`. If the action requires an ownership check (`requiresOwnershipCheck: true`) and the user is not an admin, it:
+    -   Reads the pre-fetched item from the context.
+    -   Uses the `getOwnerId` function from the `ModelConfig` to get the item's owner ID.
+    -   Compares the owner ID to the authenticated user's ID.
+    -   If they don't match, it throws a `403 Forbidden` error.
+
+4.  **Route Handler (`/routes/api/v1/data/[id]/index.dart`)**
+    The request reaches the final handler. Because of the preceding middleware, the handler can safely assume the item exists and the user is authorized to access it. It simply reads the `FetchedItem` from the context and prepares the success response.
+
+5.  **Response**
+    The handler wraps the pre-fetched item in a `SuccessApiResponse` and sends it to the client.
+</Steps>
+
+<Aside type="note" title="PUT and DELETE Requests">
+The flow for `PUT` and `DELETE` requests is identical to the single item `GET` request. The only difference is that the `authorizationMiddleware` checks the `putPermission` or `deletePermission` from the `ModelConfig`, and the final route handler calls the appropriate `update` or `delete` function from the `DataOperationRegistry`.
+</Aside>
