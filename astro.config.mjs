@@ -63,9 +63,10 @@ export default defineConfig({
 							items: [
 								{ label: 'Overview', link: '/api-server/architecture/' },
 								{ label: 'Dependency Injection', link: '/api-server/architecture/dependency-injection' },
-								{ label: 'Middleware', link: '/api-server/architecture/middleware' },
-								{ label: 'Data Seeding & Fixtures', link: '/api-server/architecture/data-seeding-and-fixtures' },
-								{ label: 'Generic Data Endpoint', link: '/api-server/architecture/generic-data-endpoint' },
+								{ label: 'Middleware & Request Lifecycle', link: '/api-server/architecture/middleware' },
+								{ label: 'Generic Data Endpoint & Registries', link: '/api-server/architecture/generic-data-endpoint' },
+								{ label: 'Deep Dive: Data Access Flow', link: '/api-server/architecture/data-access-flow' },
+								{ label: 'Data Seeding & System Initialization', link: '/api-server/architecture/data-seeding-and-fixtures' },
 								{ label: 'Error Handling', link: '/api-server/architecture/error-handling' },
 							],
 						},

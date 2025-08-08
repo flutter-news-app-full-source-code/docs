@@ -1,37 +1,38 @@
 ---
-title: 'Advanced: Middleware'
-description: An explanation of the API server's middleware architecture and request lifecycle.
+title: 'Advanced: Middleware & Request Lifecycle'
+description: An explanation of the API server's middleware architecture and the detailed request lifecycle for different endpoints.
 ---
 
-import { Steps, Aside } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
 The API server uses a layered middleware architecture to handle requests. Middleware are functions that process a request before it reaches its final destination (the route handler). This approach allows for the separation of concerns like logging, authentication, and error handling from the core business logic.
 
-## Request Lifecycle
+An incoming request flows through a series of middleware in an "onion-skin" fashion. The outermost middleware runs first, and the innermost middleware runs last, just before the route handler.
 
-An incoming request to the API server flows through a series of middleware in an "onion-skin" fashion. The outermost middleware runs first, and the innermost middleware runs last, just before the route handler.
+### The Middleware Chain
 
-Here is the typical execution order for a request to a protected data endpoint like `/api/v1/data?model=headline`:
+The server defines middleware at different levels of the route tree. Here’s a breakdown of the key middleware and where they are applied:
 
-<Steps>
-1.  **Root Middleware (`/routes/_middleware.dart`)**
-    -   **Dependency Injection:** Initializes and provides all application-wide dependencies (repositories, services, etc.) into the request context. This happens once per request.
-    -   **Request ID Generation:** Assigns a unique ID to the request for logging and traceability.
-    -   **Request Logger:** Logs the incoming request details.
-    -   **Error Handler:** This is the outermost layer, wrapping the entire request to catch any exceptions thrown by inner layers and format them into a standardized JSON error response.
+-   **Root Middleware (`/routes/_middleware.dart`)**:
+    -   `errorHandler`: The final safety net that catches all exceptions and formats them into standard JSON error responses.
+    -   `requestLogger`: Logs details of every incoming request.
+    -   `requestIdProvider`: Assigns a unique ID to each request for tracing.
+    -   `dependencyProvider`: Initializes and injects all application-wide dependencies (repositories, services, registries) into the request context.
 
-2.  **API v1 Middleware (`/routes/api/v1/_middleware.dart`)**
-    -   **CORS Handling:** Applies Cross-Origin Resource Sharing (CORS) headers to the response, allowing the web dashboard to communicate with the API.
-    -   **Authentication Provider:** Checks for a `Bearer` token in the `Authorization` header. If present, it validates the token and injects the corresponding `User` object (or `null`) into the request context.
+-   **API v1 Middleware (`/routes/api/v1/_middleware.dart`)**:
+    -   `corsHeaders`: Applies Cross-Origin Resource Sharing (CORS) headers to responses.
+    -   `authenticationProvider`: Validates the `Bearer` token and injects a `User` object (or `null`) into the context.
 
-3.  **Data Route Middleware (`/routes/api/v1/data/_middleware.dart`)**
-    -   **Require Authentication:** Checks if a `User` object exists in the context. If not, it immediately aborts the request with a `401 Unauthorized` error.
-    -   **Rate Limiting:** If the user is not an admin or a publisher, it applies a rate limit based on the user's ID. If the limit is exceeded, it aborts with a `429 Too Many Requests` error.
-    -   **Model Validation:** Validates the `?model=` query parameter and injects the corresponding `ModelConfig` into the context.
-    -   **Authorization:** Checks if the authenticated user has the required permissions to perform the requested action on the specified model. If not, it aborts with a `403 Forbidden` error.
+-   **Data Route Group Middleware (`/routes/api/v1/data/_middleware.dart`)**:
+    -   `requireAuthentication`: Aborts the request if no authenticated user is found.
+    -   `_dataRateLimiterMiddleware`: Applies rate limiting based on the user's ID.
+    -   `_modelValidationAndProviderMiddleware`: Validates the `?model=` query parameter and injects the `ModelConfig` and model name into the context.
+    -   `authorizationMiddleware`: Performs high-level permission checks based on the `ModelConfig`.
 
-4.  **Route Handler (`/routes/api/v1/data/index.dart` or `[id].dart`)**
-    -   Finally, if all middleware checks pass, the request reaches the route handler, which contains the core business logic for the endpoint (e.g., fetching data from a repository and returning it).
-</Steps>
+-   **Item-Specific Middleware (`/routes/api/v1/data/[id]/_middleware.dart`)**:
+    -   `dataFetchMiddleware`: Fetches the specific item by its ID and injects it into the context.
+    -   `ownershipCheckMiddleware`: Verifies if the authenticated user is the owner of the fetched item, if required by the `ModelConfig`.
 
-This layered approach ensures that by the time a request reaches its route handler, it has been logged, authenticated, authorized, and has all necessary dependencies available via the request context.
+<Aside type="note">
+For a complete, step-by-step walkthrough of how these middleware interact with the data registries, see the [**Architectural Deep Dive: Data Access Flow**](./data-access-flow) guide.
+</Aside>

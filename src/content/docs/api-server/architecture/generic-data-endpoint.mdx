@@ -1,52 +1,38 @@
 ---
-title: Generic Data Endpoint
-description: Understand the powerful generic data endpoint and model registry pattern used in the API server.
+title: 'Pattern: Generic Data Endpoint & Registries'
+description: Understand the powerful generic data endpoint and registry patterns used in the API server.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-A significant architectural pattern in the API server is the use of a generic data endpoint powered by a `model_registry`. This design provides a single, consistent, and powerful interface for all standard CRUD (Create, Read, Update, Delete) operations, reducing code duplication and simplifying both the backend and client-side implementations.
+A significant architectural pattern in the API server is the use of a generic data endpoint powered by two central registries. This design provides a single, consistent, and powerful interface for all standard CRUD (Create, Read, Update, Delete) operations, reducing code duplication and simplifying both the backend and client-side implementations.
 
 ### The Challenge: Avoiding Boilerplate
 
-A typical REST API might have separate endpoints for each data type:
--   `/api/v1/headlines`
--   `/api/v1/topics`
--   `/api/v1/sources`
--   ...and so on.
+A typical REST API might have separate endpoints for each data type: `/headlines`, `/topics`, `/sources`, etc. This approach leads to a lot of boilerplate code, as the logic for handling GET, POST, PUT, and DELETE requests is often very similar for each model.
 
-While clear, this approach leads to a lot of boilerplate code, as the logic for handling GET, POST, PUT, and DELETE requests is often very similar for each model.
+### The Solution: A Single Endpoint with Registries
 
-### The Solution: A Single Endpoint with a Model Registry
-
-This API server solves the problem by using a single, dynamic endpoint:
-
-```
-/api/v1/data
-```
-
-This endpoint handles requests for **all** standard data models. The specific model to be acted upon is determined by a `?model=` query parameter.
+This API server solves the problem by using a single, dynamic endpoint: `/api/v1/data`. This endpoint handles requests for all standard data models, with the specific model determined by a `?model=` query parameter.
 
 -   `GET /api/v1/data?model=headline` -> Returns a list of headlines.
--   `GET /api/v1/data/some-id?model=topic` -> Returns a single topic.
 -   `POST /api/v1/data?model=source` -> Creates a new source.
 
-### The `model_registry`
+This is made possible by two key components:
 
-The magic behind this is the `model_registry`, a map defined in `lib/src/registry/model_registry.dart`. This registry links the string name of a model (e.g., "headline") to a `ModelConfig` object.
+1.  **`ModelRegistry`**: This registry maps a model name (e.g., `"headline"`) to a `ModelConfig` object. The config defines the **rules** for the model, such as authorization requirements and type-specific functions (`fromJson`, `getOwnerId`).
 
-Each `ModelConfig` contains:
--   **Type-Specific Functions:** Functions like `fromJson` to deserialize the data correctly.
--   **Authorization Rules:** A detailed permission configuration for each HTTP method (GET, POST, PUT, DELETE), specifying what roles or permissions are required for that action.
+2.  **`DataOperationRegistry`**: This registry maps a model name to the actual **functions** that perform the CRUD operations (e.g., the function to fetch all headlines, the function to create a new source).
 
-When a request comes in, the server's middleware looks up the `model` parameter in the registry, retrieves the correct configuration, and uses it to:
-1.  Authorize the request based on the user's role and the action's permission requirements.
-2.  Forward the request to the correct generic `DataRepository`.
-3.  Deserialize and serialize data using the correct model class.
+When a request comes in, middleware uses the `ModelRegistry` to authorize the request and the route handlers use the `DataOperationRegistry` to execute the correct data operation.
 
 <Aside type="note" title="Architectural Benefits">
--   **DRY (Don't Repeat Yourself):** Eliminates redundant route handlers for CRUD operations.
+-   **DRY (Don't Repeat Yourself):** Eliminates redundant route handlers.
 -   **Consistency:** Provides a uniform API for all data models.
--   **Extensibility:** Adding CRUD support for a new data model is as simple as adding a new entry to the `model_registry`.
--   **Centralized Authorization:** Security rules for data access are defined in one central, easy-to-audit location.
+-   **Extensibility:** Adding CRUD support for a new model is as simple as adding entries to the two registries.
+-   **Centralized Logic:** Authorization rules and data operations are defined in central, easy-to-audit locations.
+</Aside>
+
+<Aside type="tip">
+For a complete, step-by-step walkthrough of how the endpoint, registries, and middleware work together, see the [**Architectural Deep Dive: Data Access Flow**](./data-access-flow) guide.
 </Aside>
