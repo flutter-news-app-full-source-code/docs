@@ -55,6 +55,10 @@ Retrieves a paginated list of items for a specific model.
 -   **`limit`** (integer, optional): The maximum number of items to return.
 -   **`cursor`** (string, optional): The pagination cursor from a previous response to fetch the next page.
 
+<Aside type="note">
+Malformed `filter` or `sort` parameters will result in a `400 Bad Request` error with a descriptive message.
+</Aside>
+
 <Tabs>
 <TabItem label="Simple Filter">
 **Request:**
@@ -106,6 +110,10 @@ Updates an existing item by its unique ID.
 -   **Method:** `PUT`
 -   **Path:** `/api/v1/data/<item_id>?model=<model_name>`
 -   **Body (JSON):** The full JSON representation of the model with the updated fields.
+
+<Aside type="note" title="Partial Updates for Users">
+When updating a `user` model, the API enforces a secure partial update mechanism. Non-admin users can only modify specific, whitelisted fields (such as `feedActionStatus`). Any attempts to change sensitive fields like `appRole` or `email` will be ignored, ensuring data integrity.
+</Aside>
 
 -   **Success Response:**
     -   `200 OK`: Returns a standard success response with the updated item object as the data payload.
