@@ -23,15 +23,17 @@ GET /api/v1/data?model=headline
 GET /api/v1/data/some-topic-id?model=topic
 ```
 
-### The Model Registry
+### The Dual Registry System
 
-The magic behind this generic endpoint is the **Model Registry** (`model_registry.dart`). This is a central map that links the string name of a model (e.g., `"headline"`) to a configuration object (`ModelConfig`).
+The power behind this generic endpoint comes from two central registries:
 
-Each `ModelConfig` contains all the information the generic endpoint needs to handle a specific model, including:
--   **Deserialization:** A function to convert incoming JSON into the correct Dart object.
--   **ID Extraction:** A function to get the unique ID from a model instance.
--   **Ownership Information:** A function to identify the owner of a user-specific item (like `user_app_settings`).
--   **Authorization Rules:** A detailed permission configuration for every HTTP method (GET, POST, PUT, DELETE), specifying who is allowed to perform each action.
+1.  **The Model Registry (`ModelRegistry`)**: This registry defines the **rules** for each model. It maps a model name (e.g., `"headline"`) to a configuration object that specifies authorization requirements, ownership details, and how to handle JSON data for that model.
+
+2.  **The Data Operation Registry (`DataOperationRegistry`)**: This registry provides the **actions**. It maps a model name to the actual functions that perform the CRUD operations (Create, Read, Update, Delete).
+
+<Aside type="tip">
+For a detailed technical explanation of how these registries and the middleware work together, see the [**Architectural Deep Dive: Data Access Flow**](../architecture/data-access-flow) guide.
+</Aside>
 
 ### Supported Models
 
@@ -52,5 +54,5 @@ The `country` and `language` models are configured to be **read-only** through t
 </Aside>
 
 <Aside type="note">
-Some actions are intentionally unsupported through this generic endpoint for security or logical reasons. For example, creating a new user is handled exclusively by the dedicated `/api/v1/auth/verify-code` endpoint, not by a POST request to `?model=user`. These restrictions are defined in the `ModelConfig` for each model.
+Some actions are intentionally unsupported through this generic endpoint for security or logical reasons. For example, creating a new user is handled exclusively by the dedicated `/api/v1/auth/verify-code` endpoint, not by a POST request to `?model=user`. These restrictions are defined in the `ModelRegistry` for each model.
 </Aside>
