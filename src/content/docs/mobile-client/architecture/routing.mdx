@@ -11,7 +11,7 @@ The mobile client employs a sophisticated, multi-path startup sequence to handle
 The startup logic is orchestrated by the `AppBloc` and the root `_AppView` widget. The path the user experiences depends on their initial authentication status.
 
 <Aside>
-A key architectural decision is that the **Remote Configuration API requires authentication**. This means the app must first establish a user session (even an anonymous one) before it can check for maintenance mode or required updates.
+A key architectural decision is that the **Remote Configuration API requires authentication**. This means the app must first establish a user session (even an anonymous one) before it can check for maintenance mode or required updates. This pre-flight check is crucial for the app's stability and security.
 </Aside>
 
 ### Path 1: New or Logged-Out User
@@ -27,11 +27,11 @@ In this scenario, the user is taken directly to the sign-in screen without any i
 
 ### Path 2: Existing User (Authenticated or Anonymous)
 
-This flow handles users who already have an active session.
+This flow handles users who already have an active session, ensuring stability by performing critical checks before rendering the main UI.
 
 1.  **Auth Check**: On startup, the `AppBloc` finds an existing user session.
 2.  **Initial State**: The `AppBloc` emits the corresponding status (`authenticated` or `anonymous`) and immediately dispatches an `AppConfigFetchRequested` event.
-3.  **Pre-Router Status Pages**: The `_onAppConfigFetchRequested` handler sets the state to `AppStatus.configFetching`. The `_AppView` widget detects this critical status and displays a full-screen `StatusPage` *before* building the main router. This pre-flight check handles several possibilities:
+3.  **Pre-Router Status Pages**: The `_onAppConfigFetchRequested` handler sets the state to `AppStatus.configFetching`. The `_AppView` widget detects this critical status and displays a full-screen `StatusPage` *before* building the main router. This stable startup sequence is critical and handles several possibilities:
     -   **Loading**: A `StatusPage` with a loading indicator is shown.
     -   **Failure**: If the config fetch fails, the `StatusPage` shows a retry button.
     -   **Maintenance/Update**: If the config dictates, a `MaintenancePage` or `UpdateRequiredPage` is shown.
