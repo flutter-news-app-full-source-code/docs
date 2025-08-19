@@ -6,6 +6,8 @@ import { Aside } from '@astrojs/starlight/components';
 
 The mobile client uses the **BLoC (Business Logic Component)** pattern for state management. This pattern helps to separate the presentation layer from the business logic, making the application more structured, testable, and maintainable.
 
+While most features have their own dedicated BLoC, the most important one is the global `AppBloc`, which manages the application's core state, including user authentication, settings, and the overall application status (`AppStatus`).
+
 Every feature in the application that requires managing state has its own BLoC.
 
 ### The Core Components of BLoC
