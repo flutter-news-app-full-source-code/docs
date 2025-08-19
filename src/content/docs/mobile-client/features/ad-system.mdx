@@ -1,0 +1,42 @@
+---
+title: 'Feature: Ad System'
+description: Learn about the provider-agnostic ad system for monetization.
+---
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+The mobile client includes a sophisticated, provider-agnostic ad system designed for monetization while ensuring architectural stability and a smooth user experience.
+
+## Core Architecture
+
+The ad system is built on a decoupled architecture that avoids tying the application to a single ad network SDK.
+
+<CardGrid>
+	<Card title="Provider-Agnostic Design" icon="interoperability">
+		The system uses a generic `NativeAd` model and an abstract `AdProvider` interface. This allows the application to use different ad networks by creating a new implementation of the `AdProvider`. The initial implementation is for **Google AdMob**.
+	</Card>
+	<Card title="Lifecycle Management" icon="lifecycle">
+		A critical challenge with native ad SDKs is managing the lifecycle of ad objects, which can lead to crashes if not handled correctly. This system solves this by managing ad objects within a `StatefulWidget` (`AdmobNativeAdWidget`) and a central `AdCacheService`, preventing premature disposal of ads that are scrolled off-screen.
+	</Card>
+	<Card title="Performance via Caching" icon="cache">
+		The `AdCacheService` acts as a singleton that stores loaded native ads. When an ad slot scrolls into view, the app first checks the cache. This prevents redundant network requests, leading to smoother scrolling and reduced data usage. The cache is strategically cleared on major content refreshes to ensure ad relevance.
+	</Card>
+    <Card title="Platform Safety" icon="shield">
+        On platforms where native ad SDKs are not supported (like web), a `NoOpAdProvider` is used. This provider renders a visual placeholder instead of a real ad, which prevents `MissingPluginException` crashes at startup and allows for consistent UI testing across all platforms.
+    </Card>
+</CardGrid>
+
+## Integration with the Feed
+
+The ad system is seamlessly integrated into any scrollable list of content, such as the main headlines feed or entity details pages.
+
+-   **`FeedDecoratorService`**: This service is responsible for injecting `AdPlaceholder` objects into the feed's content list based on rules defined in the `RemoteConfig`. These placeholders are simple, stateless markers indicating where an ad should appear.
+
+-   **`AdLoaderWidget`**: This `StatefulWidget` is rendered when an `AdPlaceholder` is in the list. It contains the logic to:
+    1.  Check the `AdCacheService` for a cached ad corresponding to the placeholder's ID.
+    2.  If no ad is cached, it requests a new one from the `AdService`.
+    3.  It manages its own loading and error states, displaying a shimmer while loading or a placeholder on failure.
+    4.  Once an ad is loaded, it is stored in the cache and displayed.
+
+-   **Theme & Format Aware Ads**: The `AdService` requests ads with theme-aware styling (`AdThemeStyle`) and the correct template size (`HeadlineImageStyle`). This ensures that ads match the user's current theme (light/dark mode) and the visual density of the surrounding content.
+
+This architecture ensures that the complex, stateful logic of ad loading is encapsulated at the widget level, keeping the BLoC layer clean and focused on managing the primary content.
