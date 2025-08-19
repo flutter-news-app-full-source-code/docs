@@ -8,7 +8,7 @@ The mobile client features a robust authentication system that supports both ema
 
 ## The Authentication Flow
 
-The authentication flow is designed to be simple and secure, using a passwordless email and code verification system.
+The authentication flow is designed to be simple and secure, using a passwordless email and code verification system. It also includes user-friendly improvements for a smoother experience.
 
 <Steps>
 1.  **Choose Sign-In Method**
@@ -21,7 +21,7 @@ The authentication flow is designed to be simple and secure, using a passwordles
 
 3.  **Verify Code**
 
-    After a code is sent, the user is taken to the `EmailCodeVerificationPage`. They enter the 6-digit code they received. The `AuthenticationBloc` processes an `AuthenticationVerifyCodeRequested` event, which calls the `AuthRepository` to verify the code.
+    After a code is sent, the user is taken to the `EmailCodeVerificationPage`. They enter the 6-digit code they received into an improved code entry field powered by the `pinput` widget. The `AuthenticationBloc` processes an `AuthenticationVerifyCodeRequested` event, which calls the `AuthRepository` to verify the code.
 
 4.  **Authenticated State**
 
@@ -31,6 +31,11 @@ The authentication flow is designed to be simple and secure, using a passwordles
 ## Anonymous Access
 
 The app also supports an anonymous sign-in flow. When the user chooses to continue anonymously, the `AuthenticationBloc` dispatches an `AuthenticationAnonymousSignInRequested` event. The `AuthRepository` creates a new anonymous user, and the `AppBloc` transitions to a special `anonymous` state. This allows guest users to browse content with certain limitations, and they can choose to link their account to a permanent email address at any time.
+
+## Security and UX Enhancements
+
+-   **Request Cooldown**: To prevent abuse of the email service, a 60-second cooldown is enforced between sign-in code requests. The UI provides a visual countdown timer, informing the user when they can request a new code.
+-   **Enhanced Code Input**: The code verification screen uses the `pinput` widget to provide a more polished and user-friendly experience for entering the 6-digit code.
 
 ## Core Components
 
