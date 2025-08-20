@@ -23,7 +23,7 @@ The following model names are supported:
 -   `headline`
 -   `topic`
 -   `source`
--   `country`
+-   `country` (supports specialized filtering by `usage` for 'eventCountry' or 'headquarters')
 -   `language`
 -   `user`
 -   `user_app_settings`
@@ -51,6 +51,12 @@ Retrieves a paginated list of items for a specific model.
 #### Query Parameters
 
 -   **`filter`** (string, optional): A URL-encoded JSON string representing a MongoDB-style query.
+    <Aside type="note" title="Special Filter for Country Model">
+    For the `country` model, the `filter` parameter supports a special `usage` key. This allows you to retrieve countries based on their role in other data:
+    -   `filter={"usage":"eventCountry"}`: Returns countries referenced as `eventCountry` in headlines.
+    -   `filter={"usage":"headquarters"}`: Returns countries referenced as `headquarters` in sources.
+    When using the `usage` filter for the `country` model, the response will **not** be paginated and will return the complete filtered set of countries.
+    </Aside>
 -   **`sort`** (string, optional): A comma-separated list of fields to sort by (e.g., `createdAt:desc,title:asc`).
 -   **`limit`** (integer, optional): The maximum number of items to return.
 -   **`cursor`** (string, optional): The pagination cursor from a previous response to fetch the next page.
@@ -73,6 +79,13 @@ This fetches all headlines where the `status` field is `"active"`.
 GET /api/v1/data?model=headline&filter={"topic.id":{"$in":["topicId1","topicId2"]}}&sort=createdAt:desc
 ```
 This fetches headlines belonging to specific topics, sorted by creation date.
+</TabItem>
+<TabItem label="Country Usage Filter">
+**Request:**
+```
+GET /api/v1/data?model=country&filter={"usage":"eventCountry"}
+```
+This fetches all countries that are referenced as 'event countries' in headlines.
 </TabItem>
 </Tabs>
 
