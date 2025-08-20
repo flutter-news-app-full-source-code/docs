@@ -13,7 +13,7 @@ The primary goal of this system is to **guarantee a consistent and predictable s
 
 This process is designed to be **lean and focused on system setup, not content population**. It handles two critical, one-time tasks:
 
-1.  **Ensuring Database Indexes:** It creates all necessary MongoDB indexes, including TTL (Time-To-Live) indexes for temporary data like verification codes and text indexes for search functionality.
+1.  **Ensuring Database Indexes:** It creates all necessary MongoDB indexes, including TTL (Time-To-Live) indexes for temporary data like verification codes, text indexes for search functionality, and compound indexes to optimize country-related aggregation queries.
 2.  **Initializing the Admin User:** It securely sets up the single administrator account based on the `OVERRIDE_ADMIN_EMAIL` environment variable.
 
 ### Idempotent and Safe to Run
