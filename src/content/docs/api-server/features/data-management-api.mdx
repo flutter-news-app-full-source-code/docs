@@ -23,6 +23,18 @@ GET /api/v1/data?model=headline
 GET /api/v1/data/some-topic-id?model=topic
 ```
 
+**Example: Fetching countries by usage**
+```http
+GET /api/v1/data?model=country&filter={"usage":"eventCountry"}
+```
+This fetches countries that are referenced as 'event countries' in headlines. Similarly, `filter={"usage":"headquarters"}` can be used to fetch countries that are headquarters for sources.
+
+<Aside type="note" title="Why use the 'usage' filter for countries?">
+The `usage` filter for the `country` model is designed to enhance the client-side user experience and optimize data retrieval. Instead of fetching a comprehensive list of all countries globally, this filter allows client applications to retrieve only those countries that are *relevant* to existing content.
+
+For instance, when a user wants to filter headlines by the country where the news event occurred, it's often more practical to present a list of countries for which actual headlines exist. Similarly, when filtering by the headquarters of news sources, displaying only countries that host active sources provides a more focused and actionable selection. This approach avoids presenting users with a long list of irrelevant options, streamlining navigation and improving the efficiency of data display.
+</Aside>
+
 ### The Dual Registry System
 
 The power behind this generic endpoint comes from two central registries:
@@ -41,7 +53,7 @@ The generic data endpoint can manage the following models out-of-the-box:
 -   `headline`
 -   `topic`
 -   `source`
--   `country`
+-   `country` (supports specialized filtering by `usage` for 'eventCountry' or 'headquarters')
 -   `language`
 -   `user`
 -   `user_app_settings`
