@@ -40,7 +40,7 @@ This flow applies to requests for a collection of items.
     This crucial middleware uses the `ModelConfig` to determine the required permission for a `GET` collection request. It checks if the authenticated user has this permission. If not, a `403 Forbidden` error is thrown.
 
 6.  **Route Handler (`/routes/api/v1/data/index.dart`)**
-    The request finally reaches the handler. The handler uses the `DataOperationRegistry` to find the correct `readAll` function for the specified model and executes it, passing along any filter, sort, or pagination parameters.
+    The request finally reaches the handler. The handler uses the `DataOperationRegistry` to find the correct `readAll` function for the specified model and executes it. For the `country` model, if a `usage` filter is present, the request is delegated to the `CountryService` for specialized, non-paginated results; otherwise, it proceeds with standard pagination and sorting.
 
 7.  **Response**
     The handler wraps the data from the repository in a standard `SuccessApiResponse` and sends it back to the client.
