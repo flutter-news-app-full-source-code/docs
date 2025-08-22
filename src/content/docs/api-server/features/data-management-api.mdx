@@ -29,10 +29,17 @@ GET /api/v1/data?model=country&filter={"usage":"eventCountry"}
 ```
 This fetches countries that are referenced as 'event countries' in headlines. Similarly, `filter={"usage":"headquarters"}` can be used to fetch countries that are headquarters for sources.
 
-<Aside type="note" title="Why use the 'usage' filter for countries?">
-The `usage` filter for the `country` model is designed to enhance the client-side user experience and optimize data retrieval. Instead of fetching a comprehensive list of all countries globally, this filter allows client applications to retrieve only those countries that are *relevant* to existing content.
+**Example: Fetching countries by name**
+```http
+GET /api/v1/data?model=country&filter={"name":"United"}
+```
+This fetches countries whose names contain "United", supporting partial and case-insensitive matches.
 
-For instance, when a user wants to filter headlines by the country where the news event occurred, it's often more practical to present a list of countries for which actual headlines exist. Similarly, when filtering by the headquarters of news sources, displaying only countries that host active sources provides a more focused and actionable selection. This approach avoids presenting users with a long list of irrelevant options, streamlining navigation and improving the efficiency of data display.
+<Aside type="note" title="Specialized Filters for Countries: 'usage' and 'name'">
+The `country` model supports two specialized filters: `usage` and `name`.
+
+-   The `usage` filter is designed to enhance the client-side user experience and optimize data retrieval. Instead of fetching a comprehensive list of all countries globally, this filter allows client applications to retrieve only those countries that are *relevant* to existing content. For instance, when a user wants to filter headlines by the country where the news event occurred, it's often more practical to present a list of countries for which actual headlines exist. Similarly, when filtering by the headquarters of news sources, displaying only countries that host active sources provides a more focused and actionable selection. This approach avoids presenting users with a long list of irrelevant options, streamlining navigation and improving the efficiency of data display.
+-   The `name` filter allows users to search for countries using full or partial names, supporting case-insensitive matches. This is particularly useful for search functionalities, enabling users to quickly find countries by typing part of their name.
 </Aside>
 
 ### The Dual Registry System
@@ -53,7 +60,7 @@ The generic data endpoint can manage the following models out-of-the-box:
 -   `headline`
 -   `topic`
 -   `source`
--   `country` (supports specialized filtering by `usage` for 'eventCountry' or 'headquarters')
+-   `country`
 -   `language`
 -   `user`
 -   `user_app_settings`
