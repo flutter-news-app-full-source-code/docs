@@ -20,9 +20,6 @@ export default defineConfig({
 				{
 					label: 'Getting Started',
 					items: [
-						{ label: 'Overview', link: '/getting-started/' },
-						{ label: 'Core Philosophy', link: '/getting-started/core-philosophy' },
-						{ label: 'Toolkit Architecture', link: '/getting-started/toolkit-architecture' },
 						{ label: 'Local Setup', link: '/getting-started/local-setup' },
 						{ label: 'Deployment', link: '/getting-started/deployment' },
 					],
