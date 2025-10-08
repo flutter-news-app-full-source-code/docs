@@ -1,0 +1,60 @@
+---
+title: Connecting to a Local API from a Physical Device
+description: A guide to configuring the development environment to test the mobile app on a physical device with a local API server.
+---
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+This guide explains how to connect the mobile client running on a physical device to an API server running on your local machine.
+
+### The `localhost` Challenge
+
+When the API server runs locally, it is accessible at `http://localhost:8080` on your computer. However, a physical mobile device connected to the same network cannot access your computer using the `localhost` address, as `localhost` refers to the device itself.
+
+To resolve this, your local API server must be made accessible over the network. A tunneling service like **ngrok** can accomplish this by creating a secure public URL that forwards traffic to your local server.
+
+<Aside>
+The use of tunneling services is intended for development and testing purposes only and is not a substitute for a properly deployed production environment.
+</Aside>
+
+### Configuration Steps
+
+<Steps>
+1.  **Start Your Local API Server**
+
+    Ensure your API server is running locally on the designated port.
+    -   See the [API Server Local Setup Guide](/docs/api-server/local-setup/) for instructions.
+
+2.  **Install and Run ngrok**
+
+    You will need to install `ngrok` and use it to expose your local server's port (e.g., `8080`). For detailed instructions on installation and usage, please refer to the official documentation.
+
+    -   **Official Guide:** [ngrok Documentation](https://ngrok.com/docs)
+
+    Once installed, run the following command to expose your local server:
+    ```bash
+    ngrok http 8080
+    ```
+    ngrok will provide a public forwarding URL (e.g., `https://....ngrok-free.app`).
+
+3.  **Set the Development Environment**
+
+    -   Open the file `lib/main.dart`.
+    -   Locate the `appEnvironment` constant.
+    -   Set its value to `AppEnvironment.development`.
+
+    ```dart title="lib/main.dart"
+    // Use `AppEnvironment.development` to connect to a live backend API.
+    const appEnvironment = AppEnvironment.development; 
+    ```
+
+4.  **Verify the API Base URL**
+
+    -   Open the file `lib/app/config/app_config.dart`.
+    -   Ensure that the `baseUrl` for the `development` case points to the ngrok forwarding URL for your local API server.
+
+
+5.  **Run the Application in Development Mode**
+
+    With the configuration updated, you can now run the application on your physical device in `development` mode, and it will successfully connect to your local API server.
+
+</Steps>
