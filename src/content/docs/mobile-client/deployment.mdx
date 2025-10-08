@@ -11,7 +11,6 @@ To ensure you have the most reliable and up-to-date instructions, this guide foc
 </Aside>
 
 ### Pre-Deployment Configuration
-
 Before you can build the app for production, you must configure it to connect to your live API server.
 
 <Steps>
@@ -31,6 +30,35 @@ Before you can build the app for production, you must configure it to connect to
     -   Open the file `lib/app/config/app_config.dart`.
     -   Ensure that the `baseUrl` for the `production` case points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
 
+3.  **Configure App Icons**
+
+    The project uses `flutter_launcher_icons` to generate app icons. You will need to update the configuration in `pubspec.yaml` to use your own icon assets.
+
+    -   Open `pubspec.yaml`.
+    -   Locate the `flutter_launcher_icons` section.
+    -   Update the `image_path` to point to your desired icon image.
+    -   After updating, run the following command to generate the new icons:
+        ```bash
+        flutter pub run flutter_launcher_icons:main
+        ```
+    <Aside type="tip">
+    For more details, refer to the [flutter_launcher_icons documentation](https://pub.dev/packages/flutter_launcher_icons).
+    </Aside>
+
+4.  **Configure Native Splash Screen**
+
+    The project uses `flutter_native_splash` for native splash screens. You will need to update the configuration in `pubspec.yaml` to use your own splash screen assets and colors.
+
+    -   Open `pubspec.yaml`.
+    -   Locate the `flutter_native_splash` section.
+    -   Update `color`, `color_dark`, `image`, and `image_dark` to match your branding.
+    -   After updating, run the following command to generate the new splash screens:
+        ```bash
+        flutter pub run flutter_native_splash:create
+        ```
+    <Aside type="tip">
+    For more details, refer to the [flutter_native_splash documentation](https://pub.dev/packages/flutter_native_splash).
+    </Aside>
 </Steps>
 
 ### Building and Releasing
