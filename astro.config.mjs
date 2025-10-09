@@ -9,6 +9,10 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Flutter News App Toolkit',
+			logo: {
+    			light: './src/assets/flutter-news-app-toolkit-light-logo.png',
+    			dark: './src/assets/flutter-news-app-toolkit-dark-logo.png',
+      		},
 			social: [
 				{
 					icon: 'github',
