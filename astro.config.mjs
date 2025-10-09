@@ -23,34 +23,7 @@ export default defineConfig({
 						{ label: 'Local Setup', link: '/getting-started/local-setup' },
 						{ label: 'Deployment', link: '/getting-started/deployment' },
 					],
-				},
-				{
-					label: 'API Server',
-					collapsed: true,
-					items: [
-						{ label: 'Introduction', link: '/api-server/' },
-						{ label: 'Local Setup', link: '/api-server/local-setup' },
-						{ label: 'Deployment', link: '/api-server/deployment' },
-					],
-				},
-				{
-					label: 'Web Dashboard',
-					collapsed: true,
-					items: [
-						{ label: 'Introduction', link: '/web-dashboard/' },
-						{ label: 'Local Setup', link: '/web-dashboard/local-setup' },
-						{ label: 'Deployment', link: '/web-dashboard/deployment' },
-					],
-				},
-				{
-					label: 'Mobile Client',
-					collapsed: true,
-					items: [
-						{ label: 'Introduction', link: '/mobile-client/' },
-						{ label: 'Local Setup', link: '/mobile-client/local-setup' },
-						{ label: 'Deployment', link: '/mobile-client/deployment' },
-					],
-				},
+				},	
 			],
 		}),
 	],
