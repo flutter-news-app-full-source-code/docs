@@ -10,8 +10,8 @@ export default defineConfig({
 		starlight({
 			title: 'Flutter News App Toolkit',
 			logo: {
-    			light: '/docs/flutter-news-app-toolkit-light-logo.png',
-    			dark: '/docs/flutter-news-app-toolkit-dark-logo.png',
+    			light: '/docs/logo/flutter-news-app-toolkit-light-logo.png',
+    			dark: '/docs/logo/flutter-news-app-toolkit-dark-logo.png',
       		},
 			social: [
 				{
