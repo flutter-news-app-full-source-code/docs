@@ -1,0 +1,64 @@
+---
+title: Configuring VS Code Launch Environments
+description: A guide to setting up VS Code launch configurations for different app environments.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+To streamline the development process, you can configure Visual Studio Code to easily run your Flutter application in different environments (`demo`, `development`, or `production`) directly from the "Run and Debug" panel. This avoids the need to manually type the `flutter run` command with the correct `--dart-define` arguments each time.
+
+<Aside type="caution" title="Important Security Note">
+  The `launch.json` file can contain sensitive information, such as production API URLs or other secrets. To prevent accidentally exposing these values, it is strongly recommended to add `.vscode/launch.json` to your project's `.gitignore` file.
+
+  This ensures it remains a local-only configuration and is not committed to your version control system.
+</Aside>
+
+
+### Create a `launch.json` File
+
+1.  In your project's root directory, create a folder named `.vscode` if it doesn't already exist.
+2.  Inside the `.vscode` folder, create a new file named `launch.json`.
+3.  Copy and paste the following JSON configuration into your `launch.json` file.
+
+```json title=".vscode/launch.json"
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Demo - Flutter News App",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=APP_ENVIRONMENT=demo"
+            ]
+        },
+        {
+            "name": "Development - Flutter News App",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=APP_ENVIRONMENT=development",
+                "--dart-define=BASE_URL=http://localhost:8080"
+            ]
+        },
+        {
+            "name": "Production - Flutter News App",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=APP_ENVIRONMENT=production",
+                "--dart-define=BASE_URL=https://api.your-production-domain.com"
+            ]
+        }
+    ]
+}
+```
+
+### How to Use
+
+After saving the file, open the "Run and Debug" panel in VS Code (you can use the shortcut `Ctrl+Shift+D`). You will now see a dropdown menu at the top with the launch configurations: "Demo - Flutter News App", "Development - Flutter News App", and "Production - Flutter News App".
+
+Simply select the environment you want to run and press the green play button (or `F5`) to launch the application with the correct settings.
