@@ -36,25 +36,26 @@ The use of tunneling services is intended for development and testing purposes o
     ```
     ngrok will provide a public forwarding URL (e.g., `https://....ngrok-free.app`).
 
-3.  **Set the Development Environment**
+3.  **Run the Application**
 
-    -   Open the file `lib/main.dart`.
-    -   Locate the `appEnvironment` constant.
-    -   Set its value to `AppEnvironment.development`.
+    <Aside type="tip">
+        If you are using VS Code, you can simplify this process with a launch configuration. Open your `.vscode/launch.json` file and update the `BASE_URL` in the **"Development - Flutter News App"** configuration to use your ngrok URL.
 
-    ```dart title="lib/main.dart"
-    // Use `AppEnvironment.development` to connect to a live backend API.
-    const appEnvironment = AppEnvironment.development; 
+        For more details, see the Configuring VS Code Launch Environments guide.
+    </Aside>
+
+
+    Now, run the mobile client on your physical device. You must pass two `--dart-define` flags:
+    -   `APP_ENVIRONMENT=development`: To tell the app to run in development mode.
+    -   `BASE_URL`: Set this to the public forwarding URL provided by ngrok.
+
+    Your command will look like this:
+
+    ```bash
+    flutter run --dart-define=APP_ENVIRONMENT=development --dart-define=BASE_URL=https://<your-ngrok-url>.ngrok-free.app
     ```
 
-4.  **Verify the API Base URL**
+    The application will launch on your device and connect to your local API server through the ngrok tunnel.
 
-    -   Open the file `lib/app/config/app_config.dart`.
-    -   Ensure that the `baseUrl` for the `development` case points to the ngrok forwarding URL for your local API server.
-
-
-5.  **Run the Application in Development Mode**
-
-    With the configuration updated, you can now run the application on your physical device in `development` mode, and it will successfully connect to your local API server.
 
 </Steps>
