@@ -6,6 +6,9 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	site: 'https://flutter-news-app-full-source-code.github.io',
 	base: '/docs',
+	redirects: {
+		'/': '/local-setup',
+	},
 	integrations: [
 		starlight({
 			title: 'Flutter News App Toolkit',
