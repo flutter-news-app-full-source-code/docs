@@ -13,7 +13,31 @@ This guide will walk you through setting up and running the Flutter News App Mob
 
     -   **Flutter SDK:** Please follow the [Official Flutter Installation Guide](https://flutter.dev/docs/get-started/install) for your specific operating system.
 
-2.  **Download the Latest Release**
+2.  **Set Up a Firebase Project (Required)**
+
+    The mobile client requires a Firebase project for core features like push notifications. You will need to create your own Firebase project as the configuration files are not included in the source code.
+
+    -   **Create a Firebase Project:** Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
+
+    -   **Add an Android App:**
+        -   In your Firebase project, add an Android app.
+        -   The package name must match the one in the project: `com.example.flutter_news_app_mobile_client_full_source_code`.
+        -   Download the generated `google-services.json` file.
+
+    -   **Add an iOS App:**
+        -   In the same Firebase project, add an iOS app.
+        -   The iOS bundle ID must match the one in the project: `com.example.flutterNewsAppMobileClientFullSourceCode`.
+        -   Download the generated `GoogleService-Info.plist` file.
+
+    -   **Place the Configuration Files:**
+        -   Place the `google-services.json` file in the `android/app/` directory of the mobile client project.
+        -   Place the `GoogleService-Info.plist` file in the `ios/Runner/` directory of the mobile client project.
+
+3.  **Set Up OneSignal (Optional)**
+
+    If you plan to use OneSignal for push notifications, create an account and a project on the OneSignal Dashboard. You will need the App IDs for Android and iOS from the **Keys & IDs** section of your OneSignal project settings.
+
+4.  **Download the Latest Release**
 
     Download the source code of the latest release from the GitHub releases page for the Mobile Client:
 
@@ -21,7 +45,7 @@ This guide will walk you through setting up and running the Flutter News App Mob
 
     After downloading and extracting the archive, navigate into the project directory.
 
-3.  **Install Dependencies**
+5.  **Install Dependencies**
 
     Fetch all the required Dart and Flutter packages for the project:
 
@@ -29,28 +53,56 @@ This guide will walk you through setting up and running the Flutter News App Mob
     flutter pub get
     ```
 
-4.  **Configure the Environment**
+6.  **Configure the Environment**
 
     The mobile client uses compile-time variables to configure its environment. This allows you to easily switch between mock data, a local API, or a live production API without changing the code.
 
-    You can specify the environment by passing a `--dart-define` flag to the `flutter run` command.
+    #### Required Environment Variables
 
-    -   **Demo (Default):** Runs the app with in-memory mock data. No backend API is required, making it perfect for focusing on UI changes and component testing.
-        ```bash
-        flutter run
-        ```
-    -   **Development:** Connects the app to a locally running instance of the API server.
-        ```bash
-        flutter run --dart-define=APP_ENVIRONMENT=development
-        ```
-    -   **Production:** Connects the app to your live, deployed backend API. You must also provide the base URL for your API.
-        ```bash
-        flutter run --dart-define=APP_ENVIRONMENT=production --dart-define=BASE_URL=https://your.api.com
-        ```
+    For a `development` or `production` build, you must provide the following variables. The Firebase values can be copied directly from the `google-services.json` and `GoogleService-Info.plist` files you downloaded earlier.
+
+    -   `APP_ENVIRONMENT`: `development` or `production`.
+    -   `BASE_URL`: The URL of your API server (e.g., `http://localhost:8080` for local development).
+
+    **OneSignal Keys:**
+    -   `ONE_SIGNAL_ANDROID_APP_ID`: Your OneSignal Android App ID.
+    -   `ONE_SIGNAL_IOS_APP_ID`: Your OneSignal iOS App ID.
+
+    **Firebase Keys (from `google-services.json` & `GoogleService-Info.plist`):**
+    -   `FIREBASE_PROJECT_ID`: from `project_info.project_id`
+    -   `FIREBASE_MESSAGING_SENDER_ID`: from `project_info.project_number`
+    -   `FIREBASE_STORAGE_BUCKET`: from `project_info.storage_bucket`
+    -   `FIREBASE_ANDROID_API_KEY`: from `client[0].api_key[0].current_key`
+    -   `FIREBASE_ANDROID_APP_ID`: from `client[0].client_info.mobilesdk_app_id`
+    -   `FIREBASE_IOS_API_KEY`: from the `API_KEY` field in your `.plist` file.
+    -   `FIREBASE_IOS_APP_ID`: from the `GOOGLE_APP_ID` field in your `.plist` file.
 
     <Aside type="tip">
         For an even easier workflow, you can configure your editor to run these commands for you. Check out the [Configuring VS Code Launch Environments](/docs/vscode-launch-configurations/) guide.
     </Aside>
+
+7.  **Run the Application**
+
+    Start the application using one of the commands below. Ensure you have a simulator/emulator running or a physical device connected.
+
+    -   **Demo Mode (Default):**
+        Runs the app with in-memory mock data. No backend API or extra variables are required, making it perfect for focusing on UI changes.
+        ```bash
+        flutter run
+        ```
+
+    -   **Development Mode:**
+        Connects the app to a locally running instance of the API server. You must provide all the required `--dart-define` variables.
+
+        ```bash
+        # Example for Android
+        flutter run \
+          --dart-define=APP_ENVIRONMENT=development \
+          --dart-define=BASE_URL=http://localhost:8080 \
+          --dart-define=ONE_SIGNAL_ANDROID_APP_ID=YOUR_ONESIGNAL_ID \
+          --dart-define=FIREBASE_ANDROID_API_KEY=YOUR_FIREBASE_ANDROID_API_KEY \
+          # ... and all other required keys
+        ```
 
     <Aside>
     For the `development` environment, you must have the [API Server running locally](/docs/api-server/local-setup/) first.
@@ -59,16 +111,6 @@ This guide will walk you through setting up and running the Flutter News App Mob
     <Aside type="note">
     To connect to your local API server from a physical mobile device, additional configuration is required. Please see the [Connecting to a Local API from a Physical Device](/docs/development-environment-setup/) guide.
     </Aside>
-
-5.  **Run the Application**
-
-    Start the application using one of the commands from the previous step. Ensure you have a simulator/emulator running or a physical device connected.
-
-    For example, to run in `demo` mode:
-
-    ```bash
-    flutter run
-    ```
 
     The application will now launch on your selected device.
 

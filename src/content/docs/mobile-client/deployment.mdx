@@ -7,30 +7,25 @@ import { Steps, Aside } from '@astrojs/starlight/components';
 This guide outlines the process for deploying the Flutter News App Mobile Client to the Google Play Store and Apple App Store.
 
 <Aside>
-To ensure you have the most reliable and up-to-date instructions, this guide focuses on the project-specific configuration you need to complete. For the deployment itself, we will refer you to the official Flutter documentation, which is the definitive resource for releasing mobile applications.
+To ensure you have the most reliable and up-to-date instructions, this guide focuses on the project-specific configuration you need to complete. For the platform-specific signing and release process, we will refer you to the official Flutter documentation, which is the definitive resource.
 </Aside>
 
 ### Pre-Deployment Configuration
-Before you can build the app for production, you must configure it to connect to your live API server.
 
 <Steps>
-1.  **Set the Production Environment**
+1.  **Configure Production Environment Variables**
 
-    -   Open the file `lib/main.dart`.
-    -   Locate the `appEnvironment` constant.
-    -   Set its value to `AppEnvironment.production`.
+    The application is designed to be configured at compile time using `--dart-define` variables. This is the same method used for local setup, but with your production values. This approach ensures that no secret keys are ever hardcoded in the source code.
 
-    ```dart title="lib/main.dart"
-    // Use `AppEnvironment.production` to connect to a live backend API.
-    const appEnvironment = AppEnvironment.production; 
-    ```
+    When you run `flutter build`, you must provide all the required variables for a production environment.
 
-2.  **Verify the API Base URL**
+    For a complete list of all required variables and where to find them, please refer to the [Configure Environment Variables](/docs/api-server/guides/configure-environment-variables) guide.
 
-    -   Open the file `lib/app/config/app_config.dart`.
-    -   Ensure that the `baseUrl` for the `production` case points to the correct URL of your deployed [API Server](/docs/api-server/deployment/).
+    <Aside type="caution">
+    Forgetting to provide these variables or providing placeholder values will cause the build to fail, which is a safety feature to prevent misconfigured releases.
+    </Aside>
 
-3.  **Configure App Icons**
+2.  **Configure App Icons**
 
     The project uses `flutter_launcher_icons` to generate app icons. You will need to update the configuration in `pubspec.yaml` to use your own icon assets.
 
@@ -42,10 +37,10 @@ Before you can build the app for production, you must configure it to connect to
         flutter pub run flutter_launcher_icons:main
         ```
     <Aside type="tip">
-    For more details, refer to the [flutter_launcher_icons documentation](https://pub.dev/packages/flutter_launcher_icons).
-    </Aside>
+For more details, refer to the [flutter_launcher_icons documentation](https://pub.dev/packages/flutter_launcher_icons).    
+</Aside>
 
-4.  **Configure Native Splash Screen**
+3.  **Configure Native Splash Screen**
 
     The project uses `flutter_native_splash` for native splash screens. You will need to update the configuration in `pubspec.yaml` to use your own splash screen assets and colors.
 
@@ -57,13 +52,13 @@ Before you can build the app for production, you must configure it to connect to
         flutter pub run flutter_native_splash:create
         ```
     <Aside type="tip">
-    For more details, refer to the [flutter_native_splash documentation](https://pub.dev/packages/flutter_native_splash).
+        For more details, refer to the [flutter_native_splash documentation](https://pub.dev/packages/flutter_native_splash).    
     </Aside>
 </Steps>
 
 ### Building and Releasing
 
-Once your configuration is ready, you can proceed with building and releasing the application. The official Flutter documentation provides comprehensive, platform-specific guides that cover every required step, from generating app icons to configuring code signing and uploading to the stores.
+Once your configuration is ready, you can proceed with building and releasing the application. The official Flutter documentation provides comprehensive, platform-specific guides that cover every required step, from code signing to uploading to the stores.
 
 Following these official guides is the recommended and most reliable path to a successful release.
 
