@@ -40,7 +40,24 @@ To streamline the development process, you can configure Visual Studio Code to e
             "program": "lib/main.dart",
             "args": [
                 "--dart-define=APP_ENVIRONMENT=development",
-                "--dart-define=BASE_URL=http://localhost:8080"
+                "--dart-define=BASE_URL=http://localhost:8080",
+
+                // --- OneSignal ---
+                "--dart-define=ONE_SIGNAL_ANDROID_APP_ID=YOUR_DEV_ONESIGNAL_ANDROID_APP_ID",
+                "--dart-define=ONE_SIGNAL_IOS_APP_ID=YOUR_DEV_ONESIGNAL_IOS_APP_ID",
+
+                // --- Firebase (Android) ---
+                "--dart-define=FIREBASE_ANDROID_API_KEY=YOUR_DEV_FIREBASE_ANDROID_API_KEY",
+                "--dart-define=FIREBASE_ANDROID_APP_ID=YOUR_DEV_FIREBASE_ANDROID_APP_ID",
+
+                // --- Firebase (iOS) ---
+                "--dart-define=FIREBASE_IOS_API_KEY=YOUR_DEV_FIREBASE_IOS_API_KEY",
+                "--dart-define=FIREBASE_IOS_APP_ID=YOUR_DEV_FIREBASE_IOS_APP_ID",
+
+                // --- Firebase (Shared) ---
+                "--dart-define=FIREBASE_MESSAGING_SENDER_ID=YOUR_DEV_FIREBASE_MESSAGING_SENDER_ID",
+                "--dart-define=FIREBASE_PROJECT_ID=YOUR_DEV_FIREBASE_PROJECT_ID",
+                "--dart-define=FIREBASE_STORAGE_BUCKET=YOUR_DEV_FIREBASE_STORAGE_BUCKET"
             ]
         },
         {
