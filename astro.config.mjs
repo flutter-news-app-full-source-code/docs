@@ -17,13 +17,8 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				{
-					label: 'Getting Started',
-					items: [
-						{ label: 'Local Setup', link: '/getting-started/local-setup' },
-						{ label: 'Deployment', link: '/getting-started/deployment' },
-					],
-				},	
+				{ label: 'Local Setup', link: '/local-setup' },
+				{ label: 'Deployment', link: '/deployment' },
 			],
 		}),
 	],
