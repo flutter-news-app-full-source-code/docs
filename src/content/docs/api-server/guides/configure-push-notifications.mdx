@@ -1,0 +1,93 @@
+---
+title: Configure Push Notifications
+description: A guide to obtaining the necessary credentials for the API server to send push notifications via Firebase and OneSignal.
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+The API server requires its own set of credentials to authenticate with and send notifications through push provider services like Firebase Cloud Messaging (FCM) and OneSignal. This guide explains how to obtain the required keys for each service.
+
+<Aside>
+You only need to configure the provider(s) you intend to use. The server can still function with only one provider enabled.
+</Aside>
+
+### Firebase Cloud Messaging (FCM)
+
+To send notifications via FCM, the server needs a **Service Account Key**. This is a secure JSON file that grants the server administrative access to your Firebase project's services.
+
+<Steps>
+1.  **Navigate to your Firebase Project**
+
+    Open the [Firebase Console](https://console.firebase.google.com/) and select the same project you are using for the mobile client.
+
+2.  **Generate a New Private Key**
+
+    -   Go to **Project Settings** (click the gear icon ⚙️ next to "Project Overview").
+    -   Select the **Service accounts** tab.
+    -   Click the **Generate new private key** button.
+
+    A JSON file will be downloaded to your computer. This file contains the credentials your server needs.
+
+    <Aside type="danger" title="Security Warning">
+        Treat this downloaded JSON file as a password. It provides administrative access to your Firebase project. **Never** commit it to version control or expose it publicly.
+    </Aside>
+
+3.  **Update Your `.env` File**
+
+    Open the downloaded JSON file and find the following values:
+    -   `project_id`
+    -   `client_email`
+    -   `private_key`
+
+    Copy these values into your API server's `.env` file.
+
+    ```env title=".env"
+    # --- Firebase Cloud Messaging (FCM) ---
+    FIREBASE_PROJECT_ID="<your-project-id-from-the-json-file>"
+    FIREBASE_CLIENT_EMAIL="<your-client-email-from-the-json-file>"
+    FIREBASE_PRIVATE_KEY="<your-private-key-from-the-json-file>"
+    ```
+
+    <Aside>
+    For more information, see the official Firebase documentation on generating a service account key.
+    </Aside>
+
+</Steps>
+
+---
+
+### OneSignal
+
+To send notifications via OneSignal, the server needs your **App ID** and a **REST API Key**.
+
+<Steps>
+1.  **Navigate to Your OneSignal Dashboard**
+
+    Open your OneSignal Dashboard and select your application.
+
+2.  **Find Your Keys & IDs**
+
+    -   Go to **Settings**.
+    -   Select the **Keys & IDs** tab.
+
+    You will find your `App ID` and `REST API Key` here.
+
+3.  **Update Your `.env` File**
+
+    Copy these two values into your API server's `.env` file.
+
+    ```env title=".env"
+    # --- OneSignal ---
+    ONESIGNAL_APP_ID="<your-onesignal-app-id>"
+    ONESIGNAL_REST_API_KEY="<your-onesignal-rest-api-key>"
+    ```
+
+    <Aside type="caution" title="Security Warning">
+        The `ONESIGNAL_REST_API_KEY` is a secret and should be protected. Do not expose it in any client-side code.
+    </Aside>
+
+    <Aside>
+    For more information, see the official OneSignal documentation on Keys and IDs.
+    </Aside>
+
+</Steps>
